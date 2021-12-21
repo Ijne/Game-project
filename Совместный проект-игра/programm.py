@@ -114,6 +114,31 @@ class Stones:
         self.power = 10
 
 
+# Классы травы
+class Grass_image(pygame.sprite.Sprite):
+    image = load_image('grass.png')
+
+    def __init__(self, grass, *group):
+        super().__init__(*group)
+        self.image = Grass_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = grass.position[0] * board.cell_size + board.left
+        self.rect.y = grass.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        if arg and self.rect.collidepoint(position):
+            pass
+        elif not arg and self.rect.collidepoint(position):
+            self.kill()
+
+
+class Grass:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 0
+
+
 # Класс поля
 class Board:
     def __init__(self, width, height, screen):
@@ -160,6 +185,7 @@ if __name__ == '__main__':
     # Создание спрайтов
     all_sticks = pygame.sprite.Group()
     all_stones = pygame.sprite.Group()
+    all_grass = pygame.sprite.Group()
 
     # Формирование объектов в списке
     for x in range(len(board.field)):
@@ -167,13 +193,17 @@ if __name__ == '__main__':
             if board.field[x][y] == '0':
                 board.field[x][y] = 0
             elif board.field[x][y] == 'S':
-                element = Sticks((y, x), random.randrange(1, 10, 1))
+                element = Sticks((x, y), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Sticks_image(element, all_sticks)
             elif board.field[x][y] == 'T':
-                element = Stones((y, x), random.randrange(1, 10, 1))
+                element = Stones((x, y), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Stones_image(element, all_stones)
+            elif board.field[x][y] == 'G':
+                element = Grass((x, y), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Grass_image(element, all_grass)
 
     # Непосредственно запуск
     running = True
@@ -187,6 +217,7 @@ if __name__ == '__main__':
         # Отрисовка объектов
         all_sticks.draw(screen)
         all_stones.draw(screen)
+        all_grass.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
