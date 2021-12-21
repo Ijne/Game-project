@@ -89,6 +89,31 @@ class Sticks:
         self.power = 0
 
 
+# Классы камней
+class Stones_image(pygame.sprite.Sprite):
+    image = load_image('stones.png')
+
+    def __init__(self, stone, *group):
+        super().__init__(*group)
+        self.image = Stones_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = stone.position[0] * board.cell_size + board.left
+        self.rect.y = stone.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        if arg and self.rect.collidepoint(position):
+            pass
+        elif not arg and self.rect.collidepoint(position):
+            self.kill()
+
+
+class Stones:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 10
+
+
 # Класс поля
 class Board:
     def __init__(self, width, height, screen):
@@ -134,16 +159,21 @@ if __name__ == '__main__':
 
     # Создание спрайтов
     all_sticks = pygame.sprite.Group()
+    all_stones = pygame.sprite.Group()
 
     # Формирование объектов в списке
     for x in range(len(board.field)):
         for y in range(len(board.field[x])):
             if board.field[x][y] == '0':
                 board.field[x][y] = 0
-            if board.field[x][y] == 'S':
+            elif board.field[x][y] == 'S':
                 element = Sticks((y, x), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Sticks_image(element, all_sticks)
+            elif board.field[x][y] == 'T':
+                element = Stones((y, x), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Stones_image(element, all_stones)
 
     # Непосредственно запуск
     running = True
@@ -153,7 +183,10 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+        # Отрисовка объектов
         all_sticks.draw(screen)
+        all_stones.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
