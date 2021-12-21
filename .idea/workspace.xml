@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Add stones-object">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-field.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-field.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
-    </list>
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Made board, loading level, background and board-rendering" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,7 +10,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Field" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,28 +81,7 @@
       <option name="project" value="LOCAL" />
       <updated>1640025341566</updated>
     </task>
-    <task id="LOCAL-00003" summary="Test commit">
-      <created>1640025813194</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1640025813194</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Add sicks-object">
-      <created>1640073570195</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1640073570195</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Add stones-object">
-      <created>1640074147175</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1640074147175</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,9 +98,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Begining" />
     <MESSAGE value="Made board, loading level, background and board-rendering" />
-    <MESSAGE value="Test commit" />
-    <MESSAGE value="Add sticks-object" />
-    <MESSAGE value="Add stones-object" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add stones-object" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made board, loading level, background and board-rendering" />
   </component>
 </project>
