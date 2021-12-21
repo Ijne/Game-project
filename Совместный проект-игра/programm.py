@@ -194,6 +194,17 @@ class Hero:
                 self.view = 90
         hero_sprite.update(self)
 
+    def rotate(self, arg):
+        if arg.key == pygame.K_w:
+            self.view = 0
+        elif arg.key == pygame.K_s:
+            self.view = 180
+        elif arg.key == pygame.K_a:
+            self.view = 270
+        elif arg.key == pygame.K_d:
+            self.view = 90
+        hero_sprite.update(self)
+
 
 # Класс поля
 class Board:
@@ -277,7 +288,11 @@ if __name__ == '__main__':
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w or event.key == pygame.K_a or \
                         event.key == pygame.K_d or event.key == pygame.K_s:
-                    hero.move(event)
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_LSHIFT]:
+                        hero.rotate(event)
+                    else:
+                        hero.move(event)
 
         # Отрисовка объектов
         all_sticks.draw(screen)
