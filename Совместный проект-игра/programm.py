@@ -74,8 +74,19 @@ class Hero_image(pygame.sprite.Sprite):
         self.rect.x = hero.position[0] * board.cell_size + board.left
         self.rect.y = hero.position[1] * board.cell_size + board.top
 
-    def update(self, *args):
-        pass
+    def update(self, hero, *args):
+        self.image = Hero_image.image
+        self.rect.x = hero.position[0] * board.cell_size + board.left
+        self.rect.y = hero.position[1] * board.cell_size + board.top
+        if hero.view == 0:
+            self.image = pygame.transform.rotate(self.image, 90)
+            hero.view = 0
+        elif hero.view == 270:
+            self.image = pygame.transform.rotate(self.image, 180)
+            hero.view = 270
+        elif hero.view == 180:
+            self.image = pygame.transform.rotate(self.image, -90)
+            hero.view = 180
 
 
 class Hero:
@@ -83,6 +94,29 @@ class Hero:
         self.hp = 100
         self.position = position
         self.view = 90
+
+    def move(self, arg):
+        if arg.key == pygame.K_w:
+            if board.field[self.position[0]][self.position[1] - 1] == 0 and \
+                    board.on_click((self.position[0], self.position[1] - 1)):
+                self.position = (self.position[0], self.position[1] - 1)
+                self.view = 0
+        elif arg.key == pygame.K_s:
+            if board.on_click((self.position[0], self.position[1] + 1)) and \
+                    board.field[self.position[0]][self.position[1] + 1] == 0:
+                self.position = (self.position[0], self.position[1] + 1)
+                self.view = 180
+        elif arg.key == pygame.K_a:
+            if board.field[self.position[0] - 1][self.position[1]] == 0 and \
+                    board.on_click((self.position[0] - 1, self.position[1])):
+                self.position = (self.position[0] - 1, self.position[1])
+                self.view = 270
+        elif arg.key == pygame.K_d:
+            if board.on_click((self.position[0] + 1, self.position[1])) and \
+                    board.field[self.position[0] + 1][self.position[1]] == 0:
+                self.position = (self.position[0] + 1, self.position[1])
+                self.view = 90
+        hero_sprite.update(self)
 
 
 # Класс поля
@@ -131,10 +165,12 @@ if __name__ == '__main__':
     hero_sprite = pygame.sprite.Group()
     for x in range(len(board.field)):
         for y in range(len(board.field[x])):
-            if board.field[x][y] == 'H':
-                element = Hero((x, y))
-                board.field[x][y] = element
-                Hero_image(element, hero_sprite)
+            if board.field[x][y] == '0':
+                board.field[x][y] = 0
+            elif board.field[x][y] == 'H':
+                hero = Hero((x, y))
+                board.field[x][y] = hero
+                Hero_image(hero, hero_sprite)
 
     # Непосредственно запуск
     running = True
@@ -144,6 +180,10 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w or event.key == pygame.K_a or \
+                        event.key == pygame.K_d or event.key == pygame.K_s:
+                    hero.move(event)
         hero_sprite.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
