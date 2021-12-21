@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Made board, loading level, background and board-rendering" />
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Made hero-object">
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640025341566</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Made hero-object">
+      <created>1640077499750</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1640077499750</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -98,6 +107,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Begining" />
     <MESSAGE value="Made board, loading level, background and board-rendering" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made board, loading level, background and board-rendering" />
+    <MESSAGE value="Made hero-object" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made hero-object" />
   </component>
 </project>

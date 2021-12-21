@@ -58,9 +58,31 @@ def load_level(filename):
 
 # Функция генерации уровня (создание списка)
 def generate_level(level):
-    for y in range(len(level)):
-        for x in range(len(level[y])):
-            board.field[y][x] = level[y][x]
+    for x in range(len(level)):
+        for y in range(len(level[x])):
+            board.field[x][y] = level[x][y]
+
+
+# Классы героя
+class Hero_image(pygame.sprite.Sprite):
+    image = load_image('hero.png')
+
+    def __init__(self, hero, *group):
+        super().__init__(*group)
+        self.image = Hero_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = hero.position[0] * board.cell_size + board.left
+        self.rect.y = hero.position[1] * board.cell_size + board.top
+
+    def update(self, *args):
+        pass
+
+
+class Hero:
+    def __init__(self, position):
+        self.hp = 100
+        self.position = position
+        self.view = 90
 
 
 # Класс поля
@@ -106,6 +128,14 @@ if __name__ == '__main__':
     background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
     generate_level(load_level('level_1.txt'))
 
+    hero_sprite = pygame.sprite.Group()
+    for x in range(len(board.field)):
+        for y in range(len(board.field[x])):
+            if board.field[x][y] == 'H':
+                element = Hero((x, y))
+                board.field[x][y] = element
+                Hero_image(element, hero_sprite)
+
     # Непосредственно запуск
     running = True
     while running:
@@ -114,6 +144,7 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        hero_sprite.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
