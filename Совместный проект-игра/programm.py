@@ -1,6 +1,7 @@
 import pygame
 import os
 import sys
+import random
 
 # Готовим игру к работе
 pygame.init()
@@ -58,9 +59,34 @@ def load_level(filename):
 
 # Функция генерации уровня (создание списка)
 def generate_level(level):
-    for y in range(len(level)):
-        for x in range(len(level[y])):
-            board.field[y][x] = level[y][x]
+    for x in range(len(level)):
+        for y in range(len(level[x])):
+            board.field[x][y] = level[x][y]
+
+
+# Классы палок
+class Sticks_image(pygame.sprite.Sprite):
+    image = load_image('sticks.png')
+
+    def __init__(self, stick, *group):
+        super().__init__(*group)
+        self.image = Sticks_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = stick.position[0] * board.cell_size + board.left
+        self.rect.y = stick.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        if arg and self.rect.collidepoint(position):
+            pass
+        elif not arg and self.rect.collidepoint(position):
+            self.kill()
+
+
+class Sticks:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 0
 
 
 # Класс поля
@@ -106,6 +132,19 @@ if __name__ == '__main__':
     background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
     generate_level(load_level('level_1.txt'))
 
+    # Создание спрайтов
+    all_sticks = pygame.sprite.Group()
+
+    # Формирование объектов в списке
+    for x in range(len(board.field)):
+        for y in range(len(board.field[x])):
+            if board.field[x][y] == '0':
+                board.field[x][y] = 0
+            if board.field[x][y] == 'S':
+                element = Sticks((y, x), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Sticks_image(element, all_sticks)
+
     # Непосредственно запуск
     running = True
     while running:
@@ -114,6 +153,7 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        all_sticks.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
