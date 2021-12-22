@@ -64,6 +64,151 @@ def generate_level(level):
             board.field[x][y] = level[x][y]
 
 
+# Функция выбора нового уровня
+def choose_level(level, arg):
+    if level == 'level_1.txt':
+        if arg == pygame.K_w:
+            return 'level_2.txt'
+        elif arg == pygame.K_s:
+            return 'level_3.txt'
+        elif arg == pygame.K_a:
+            return 'level_4.txt'
+        elif arg == pygame.K_d:
+            return 'level_5.txt'
+    elif level == 'level_2.txt':
+        if arg == pygame.K_w:
+            return False
+        elif arg == pygame.K_s:
+            return 'level_1.txt'
+        elif arg == pygame.K_a:
+            return 'level_8.txt'
+        elif arg == pygame.K_d:
+            return 'level_9.txt'
+    elif level == 'level_3.txt':
+        if arg == pygame.K_w:
+            return 'level_1.txt'
+        elif arg == pygame.K_s:
+            return False
+        elif arg == pygame.K_a:
+            return 'level_7.txt'
+        elif arg == pygame.K_d:
+            return 'level_6.txt'
+    elif level == 'level_4.txt':
+        if arg == pygame.K_w:
+            return 'level_8.txt'
+        elif arg == pygame.K_s:
+            return 'level_7.txt'
+        elif arg == pygame.K_a:
+            return False
+        elif arg == pygame.K_d:
+            return 'level_1.txt'
+    elif level == 'level_5.txt':
+        if arg == pygame.K_w:
+            return 'level_9.txt'
+        elif arg == pygame.K_s:
+            return 'level_6.txt'
+        elif arg == pygame.K_a:
+            return 'level_1.txt'
+        elif arg == pygame.K_d:
+            return False
+    elif level == 'level_6.txt':
+        if arg == pygame.K_w:
+            return 'level_5.txt'
+        elif arg == pygame.K_s:
+            return False
+        elif arg == pygame.K_a:
+            return 'level_3.txt'
+        elif arg == pygame.K_d:
+            return False
+    elif level == 'level_7.txt':
+        if arg == pygame.K_w:
+            return 'level_4.txt'
+        elif arg == pygame.K_s:
+            return False
+        elif arg == pygame.K_a:
+            return False
+        elif arg == pygame.K_d:
+            return 'level_3.txt'
+    elif level == 'level_8.txt':
+        if arg == pygame.K_w:
+            return False
+        elif arg == pygame.K_s:
+            return 'level_4.txt'
+        elif arg == pygame.K_a:
+            return False
+        elif arg == pygame.K_d:
+            return 'level_2.txt'
+    elif level == 'level_9.txt':
+        if arg == pygame.K_w:
+            return False
+        elif arg == pygame.K_s:
+            return 'level_5.txt'
+        elif arg == pygame.K_a:
+            return 'level_2.txt'
+        elif arg == pygame.K_d:
+            return False
+
+
+# Функция загрузки нового уровня
+def reload_level(new_level):
+    global level, hero
+    if new_level:
+        generate_level(load_level(new_level))
+        level = new_level
+
+        # Создание спрайтов
+        all_sticks.update(False, None)
+        all_stones.update(False, None)
+        all_grass.update(False, None)
+        hero_sprite.update(False)
+
+        # Формирование объектов в списке
+        for x in range(len(board.field)):
+            for y in range(len(board.field[x])):
+                if board.field[x][y] == '0':
+                    board.field[x][y] = 0
+                elif board.field[x][y] == 'S':
+                    element = Sticks((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Sticks_image(element, all_sticks)
+                elif board.field[x][y] == 'T':
+                    element = Stones((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Stones_image(element, all_stones)
+                elif board.field[x][y] == 'G':
+                    element = Grass((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Grass_image(element, all_grass)
+                elif board.field[x][y] == 'H':
+                    hero = Hero((x, y))
+                    board.field[x][y] = hero
+                    Hero_image(hero, hero_sprite)
+                    hero_sprite.update(hero)
+
+
+# Функция записи уровня
+def update_level(level):
+    output = []
+    for x in range(len(board.field)):
+        s = ''
+        for y in range(len(board.field[x])):
+            if board.field[x][y] == 0:
+                s += '0'
+            elif type(board.field[x][y]) == Sticks:
+                s += 'S'
+            elif type(board.field[x][y]) == Stones:
+                s += 'T'
+            elif type(board.field[x][y]) == Grass:
+                s += 'G'
+            elif type(board.field[x][y]) == Hero:
+                s += 'H'
+        output.append(s + '\n')
+
+    filename = 'data/levels/' + level
+    with open(filename, 'w') as mapFile:
+        mapFile.writelines(output)
+
+
 # Классы палок
 class Sticks_image(pygame.sprite.Sprite):
     image = load_image('sticks.png')
@@ -76,10 +221,10 @@ class Sticks_image(pygame.sprite.Sprite):
         self.rect.y = stick.position[1] * board.cell_size + board.top
 
     def update(self, arg, position):
+        if not arg:
+            self.kill()
         if arg and self.rect.collidepoint(position):
             pass
-        elif not arg and self.rect.collidepoint(position):
-            self.kill()
 
 
 class Sticks:
@@ -101,10 +246,10 @@ class Stones_image(pygame.sprite.Sprite):
         self.rect.y = stone.position[1] * board.cell_size + board.top
 
     def update(self, arg, position):
+        if not arg:
+            self.kill()
         if arg and self.rect.collidepoint(position):
             pass
-        elif not arg and self.rect.collidepoint(position):
-            self.kill()
 
 
 class Stones:
@@ -126,10 +271,10 @@ class Grass_image(pygame.sprite.Sprite):
         self.rect.y = grass.position[1] * board.cell_size + board.top
 
     def update(self, arg, position):
+        if not arg:
+            self.kill()
         if arg and self.rect.collidepoint(position):
             pass
-        elif not arg and self.rect.collidepoint(position):
-            self.kill()
 
 
 class Grass:
@@ -151,18 +296,21 @@ class Hero_image(pygame.sprite.Sprite):
         self.rect.y = hero.position[1] * board.cell_size + board.top
 
     def update(self, hero, *args):
-        self.image = Hero_image.image
-        self.rect.x = hero.position[0] * board.cell_size + board.left
-        self.rect.y = hero.position[1] * board.cell_size + board.top
-        if hero.view == 0:
-            self.image = pygame.transform.rotate(self.image, 90)
-            hero.view = 0
-        elif hero.view == 270:
-            self.image = pygame.transform.rotate(self.image, 180)
-            hero.view = 270
-        elif hero.view == 180:
-            self.image = pygame.transform.rotate(self.image, -90)
-            hero.view = 180
+        if not hero:
+            self.kill()
+        else:
+            self.image = Hero_image.image
+            self.rect.x = hero.position[0] * board.cell_size + board.left
+            self.rect.y = hero.position[1] * board.cell_size + board.top
+            if hero.view == 0:
+                self.image = pygame.transform.rotate(self.image, 90)
+                hero.view = 0
+            elif hero.view == 270:
+                self.image = pygame.transform.rotate(self.image, 180)
+                hero.view = 270
+            elif hero.view == 180:
+                self.image = pygame.transform.rotate(self.image, -90)
+                hero.view = 180
 
 
 class Hero:
@@ -172,36 +320,87 @@ class Hero:
         self.view = 90
 
     def move(self, arg):
-        if arg.key == pygame.K_w:
+        if arg == pygame.K_w:
             if board.field[self.position[0]][self.position[1] - 1] == 0 and \
                     board.on_click((self.position[0], self.position[1] - 1)):
                 self.position = (self.position[0], self.position[1] - 1)
                 self.view = 0
-        elif arg.key == pygame.K_s:
+                board.field[self.position[0]][self.position[1]] = self
+                hero_sprite.update(self)
+            elif not board.on_click((self.position[0], self.position[1] - 1)):
+                process = True
+                while process:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                            process = False
+                            board.field[self.position[0]][self.position[1]] = self
+                            update_level(level)
+                            reload_level(choose_level(level, arg))
+                        elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                            process = False
+        elif arg == pygame.K_s:
             if board.on_click((self.position[0], self.position[1] + 1)) and \
                     board.field[self.position[0]][self.position[1] + 1] == 0:
                 self.position = (self.position[0], self.position[1] + 1)
                 self.view = 180
-        elif arg.key == pygame.K_a:
+                board.field[self.position[0]][self.position[1]] = self
+                hero_sprite.update(self)
+            elif not board.on_click((self.position[0], self.position[1] + 1)):
+                process = True
+                while process:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                            process = False
+                            board.field[self.position[0]][self.position[1]] = self
+                            update_level(level)
+                            reload_level(choose_level(level, arg))
+                        elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                            process = False
+        elif arg == pygame.K_a:
             if board.field[self.position[0] - 1][self.position[1]] == 0 and \
                     board.on_click((self.position[0] - 1, self.position[1])):
                 self.position = (self.position[0] - 1, self.position[1])
                 self.view = 270
-        elif arg.key == pygame.K_d:
+                board.field[self.position[0]][self.position[1]] = self
+                hero_sprite.update(self)
+            elif not board.on_click((self.position[0] - 1, self.position[1])):
+                process = True
+                while process:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                            process = False
+                            board.field[self.position[0]][self.position[1]] = self
+                            update_level(level)
+                            reload_level(choose_level(level, arg))
+                        elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                            process = False
+        elif arg == pygame.K_d:
             if board.on_click((self.position[0] + 1, self.position[1])) and \
                     board.field[self.position[0] + 1][self.position[1]] == 0:
                 self.position = (self.position[0] + 1, self.position[1])
                 self.view = 90
-        hero_sprite.update(self)
+                board.field[self.position[0]][self.position[1]] = self
+                hero_sprite.update(self)
+            elif not board.on_click((self.position[0] + 1, self.position[1])):
+                process = True
+                while process:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                            process = False
+                            board.field[self.position[0]][self.position[1]] = self
+                            update_level(level)
+                            reload_level(choose_level(level, arg))
+                        elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                            process = False
 
     def rotate(self, arg):
-        if arg.key == pygame.K_w:
+        if arg == pygame.K_w:
             self.view = 0
-        elif arg.key == pygame.K_s:
+        elif arg == pygame.K_s:
             self.view = 180
-        elif arg.key == pygame.K_a:
+        elif arg == pygame.K_a:
             self.view = 270
-        elif arg.key == pygame.K_d:
+        elif arg == pygame.K_d:
             self.view = 90
         hero_sprite.update(self)
 
@@ -248,6 +447,7 @@ if __name__ == '__main__':
     board = Board(20, 20, screen)
     background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
     generate_level(load_level('level_1.txt'))
+    level = 'level_1.txt'
 
     # Создание спрайтов
     all_sticks = pygame.sprite.Group()
@@ -290,9 +490,10 @@ if __name__ == '__main__':
                         event.key == pygame.K_d or event.key == pygame.K_s:
                     keys = pygame.key.get_pressed()
                     if keys[pygame.K_LSHIFT]:
-                        hero.rotate(event)
+                        hero.rotate(event.key)
                     else:
-                        hero.move(event)
+                        board.field[hero.position[0]][hero.position[1]] = 0
+                        hero.move(event.key)
 
         # Отрисовка объектов
         all_sticks.draw(screen)

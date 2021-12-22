@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Add hero's move-function">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Add hero's rotate-function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,7 +14,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Hero" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -56,6 +57,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.programm" />
+        <item itemvalue="Python.programm" />
         <item itemvalue="Python.programm" />
         <item itemvalue="Python.programm" />
         <item itemvalue="Python.programm" />
@@ -106,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640082029714</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add hero's rotate-function">
+      <created>1640083312053</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1640083312053</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,6 +135,7 @@
     <MESSAGE value="Made board, loading level, background and board-rendering" />
     <MESSAGE value="Made hero-object" />
     <MESSAGE value="Add hero's move-function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add hero's move-function" />
+    <MESSAGE value="Add hero's rotate-function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add hero's rotate-function" />
   </component>
 </project>
