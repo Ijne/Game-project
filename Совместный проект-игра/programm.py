@@ -286,11 +286,13 @@ class Grass:
 
 # Классы героя
 class Hero_image(pygame.sprite.Sprite):
-    image = load_image('hero.png')
+    image_90 = load_image('hero_90.png')
+    image_0 = load_image('hero_0.png')
+    image_180 = load_image('hero_180.png')
 
     def __init__(self, hero, *group):
         super().__init__(*group)
-        self.image = Hero_image.image
+        self.image = Hero_image.image_90
         self.rect = self.image.get_rect()
         self.rect.x = hero.position[0] * board.cell_size + board.left
         self.rect.y = hero.position[1] * board.cell_size + board.top
@@ -299,17 +301,16 @@ class Hero_image(pygame.sprite.Sprite):
         if not hero:
             self.kill()
         else:
-            self.image = Hero_image.image
+            self.image = Hero_image.image_90
             self.rect.x = hero.position[0] * board.cell_size + board.left
             self.rect.y = hero.position[1] * board.cell_size + board.top
             if hero.view == 0:
-                self.image = pygame.transform.rotate(self.image, 90)
-                hero.view = 0
+                self.image = Hero_image.image_0
             elif hero.view == 270:
-                self.image = pygame.transform.rotate(self.image, 180)
+                self.image = pygame.transform.flip(Hero_image.image_90, True, False)
                 hero.view = 270
             elif hero.view == 180:
-                self.image = pygame.transform.rotate(self.image, -90)
+                self.image = Hero_image.image_180
                 hero.view = 180
 
 
@@ -445,7 +446,6 @@ if __name__ == '__main__':
 
     # Генерация уровня
     board = Board(20, 20, screen)
-    background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
     generate_level(load_level('level_1.txt'))
     level = 'level_1.txt'
 
@@ -480,8 +480,11 @@ if __name__ == '__main__':
     # Непосредственно запуск
     running = True
     while running:
+        if level == 'level_1.txt' or level == 'level_8.txt' or level == 'level_6.txt':
+            background = pygame.transform.scale(load_image('background-field(2).png'), (880, 880))
+        else:
+            background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
         screen.blit(background, (0, 0))
-        board.render()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
