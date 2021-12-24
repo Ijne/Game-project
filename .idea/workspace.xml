@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Made level-generation">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New pictures">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-field.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-field.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/grass.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/grass.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/hero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/sticks.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/sticks.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/stones.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/stones.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_4.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_7.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_8.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_9.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +15,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Hero" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

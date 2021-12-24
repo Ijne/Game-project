@@ -224,7 +224,8 @@ class Sticks_image(pygame.sprite.Sprite):
         if not arg:
             self.kill()
         if arg and self.rect.collidepoint(position):
-            pass
+            if arg == 'kill':
+                self.kill()
 
 
 class Sticks:
@@ -249,7 +250,8 @@ class Stones_image(pygame.sprite.Sprite):
         if not arg:
             self.kill()
         if arg and self.rect.collidepoint(position):
-            pass
+            if arg == 'kill':
+                self.kill()
 
 
 class Stones:
@@ -262,6 +264,7 @@ class Stones:
 # Классы травы
 class Grass_image(pygame.sprite.Sprite):
     image = load_image('grass.png')
+    text = load_image('grass-text.png')
 
     def __init__(self, grass, *group):
         super().__init__(*group)
@@ -274,7 +277,8 @@ class Grass_image(pygame.sprite.Sprite):
         if not arg:
             self.kill()
         if arg and self.rect.collidepoint(position):
-            pass
+            if arg == 'kill':
+                self.kill()
 
 
 class Grass:
@@ -326,6 +330,7 @@ class Hero:
                     board.on_click((self.position[0], self.position[1] - 1)):
                 self.position = (self.position[0], self.position[1] - 1)
                 self.view = 0
+                board.field[hero.position[0]][hero.position[1] + 1] = 0
                 board.field[self.position[0]][self.position[1]] = self
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0], self.position[1] - 1)):
@@ -344,6 +349,7 @@ class Hero:
                     board.field[self.position[0]][self.position[1] + 1] == 0:
                 self.position = (self.position[0], self.position[1] + 1)
                 self.view = 180
+                board.field[hero.position[0]][hero.position[1] - 1] = 0
                 board.field[self.position[0]][self.position[1]] = self
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0], self.position[1] + 1)):
@@ -362,6 +368,7 @@ class Hero:
                     board.on_click((self.position[0] - 1, self.position[1])):
                 self.position = (self.position[0] - 1, self.position[1])
                 self.view = 270
+                board.field[hero.position[0] + 1][hero.position[1]] = 0
                 board.field[self.position[0]][self.position[1]] = self
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0] - 1, self.position[1])):
@@ -380,6 +387,7 @@ class Hero:
                     board.field[self.position[0] + 1][self.position[1]] == 0:
                 self.position = (self.position[0] + 1, self.position[1])
                 self.view = 90
+                board.field[hero.position[0] - 1][hero.position[1]] = 0
                 board.field[self.position[0]][self.position[1]] = self
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0] + 1, self.position[1])):
@@ -393,6 +401,7 @@ class Hero:
                             reload_level(choose_level(level, arg))
                         elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                             process = False
+        return True
 
     def rotate(self, arg):
         if arg == pygame.K_w:
@@ -404,6 +413,33 @@ class Hero:
         elif arg == pygame.K_d:
             self.view = 90
         hero_sprite.update(self)
+
+    def take(self, position, rect_position):
+        flag = False
+        for i in range(position[0] - 1, position[0] + 2):
+            for j in range(position[1] - 1, position[1] + 2):
+                if board.width - 1 >= i > -1 and j <= board.height - 1 and i > -1:
+                    if type(board.field[i][j]) == Hero:
+                        if position[0] == i or position[1] == j:
+                            if position[0] == i:
+                                if position[1] > j:
+                                    if hero.view == 180:
+                                        flag = True
+                                elif position[1] < j:
+                                    if hero.view == 0:
+                                        flag = True
+                            elif position[1] == j:
+                                if position[0] > i:
+                                    if hero.view == 90:
+                                        flag = True
+                                elif position[0] < i:
+                                    if hero.view == 270:
+                                        flag = True
+                        if flag:
+                            board.field[position[0]][position[1]] = 0
+                            all_sticks.update('kill', rect_position)
+                            all_stones.update('kill', rect_position)
+                            all_grass.update('kill', rect_position)
 
 
 # Класс поля
@@ -448,6 +484,13 @@ if __name__ == '__main__':
     board = Board(20, 20, screen)
     generate_level(load_level('level_1.txt'))
     level = 'level_1.txt'
+
+    # Создание курсора
+    arrow_sprite = pygame.sprite.Group()
+    arrow = pygame.sprite.Sprite()
+    arrow.image = load_image('arrow-hand.png')
+    arrow.rect = arrow.image.get_rect()
+    arrow_sprite.add(arrow)
 
     # Создание спрайтов
     all_sticks = pygame.sprite.Group()
@@ -495,14 +538,27 @@ if __name__ == '__main__':
                     if keys[pygame.K_LSHIFT]:
                         hero.rotate(event.key)
                     else:
-                        board.field[hero.position[0]][hero.position[1]] = 0
                         hero.move(event.key)
+            if event.type == pygame.MOUSEMOTION:
+                arrow.rect.x = event.pos[0]
+                arrow.rect.y = event.pos[1]
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if board.get_click(event.pos):
+                        if type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Sticks or \
+                                type(board.field[board.get_cell(event.pos)[0]][
+                                         board.get_cell(event.pos)[1]]) == Stones or \
+                                type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Grass:
+                            hero.take(board.get_cell(event.pos), event.pos)
 
         # Отрисовка объектов
         all_sticks.draw(screen)
         all_stones.draw(screen)
         all_grass.draw(screen)
         hero_sprite.draw(screen)
+        if pygame.mouse.get_focused():
+            pygame.mouse.set_visible(False)
+            arrow_sprite.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
