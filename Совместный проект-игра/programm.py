@@ -5,7 +5,7 @@ import random
 
 # Готовим игру к работе
 pygame.init()
-screen = pygame.display.set_mode((880, 880))
+screen = pygame.display.set_mode((1180, 880))
 clock = pygame.time.Clock()
 FPS = 60
 
@@ -209,6 +209,18 @@ def update_level(level):
         mapFile.writelines(output)
 
 
+# Вывод текста во второе меню
+def print_text(text_coord, message_text):
+    top = 0
+    for line in message_text:
+        string_rendered = font.render(line, 1, pygame.Color('black'))
+        message_rect = string_rendered.get_rect()
+        message_rect.x = text_coord[0]
+        message_rect.y = text_coord[1] + top
+        top += 15
+        screen.blit(string_rendered, message_rect)
+
+
 # Классы палок
 class Sticks_image(pygame.sprite.Sprite):
     image = load_image('sticks.png')
@@ -335,7 +347,9 @@ class Hero:
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0], self.position[1] - 1)):
                 process = True
+                message_text = ['Нажмите E для перехода',  'или F для отмены']
                 while process:
+                    print_text(text_coord, message_text)
                     for event in pygame.event.get():
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                             process = False
@@ -344,6 +358,21 @@ class Hero:
                             reload_level(choose_level(level, arg))
                         elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                             process = False
+                        elif event.type == pygame.QUIT:
+                            update_level(level)
+                            pygame.quit()
+
+                    # Отрисовка объектов
+                    all_sticks.draw(screen)
+                    all_stones.draw(screen)
+                    all_grass.draw(screen)
+                    hero_sprite.draw(screen)
+                    if pygame.mouse.get_focused():
+                        pygame.mouse.set_visible(False)
+                        arrow_sprite.draw(screen)
+                    pygame.display.flip()
+                    clock.tick(FPS)
+
         elif arg == pygame.K_s:
             if board.on_click((self.position[0], self.position[1] + 1)) and \
                     board.field[self.position[0]][self.position[1] + 1] == 0:
@@ -354,7 +383,9 @@ class Hero:
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0], self.position[1] + 1)):
                 process = True
+                message_text = ['Нажмите E для перехода',  'или F для отмены']
                 while process:
+                    print_text(text_coord, message_text)
                     for event in pygame.event.get():
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                             process = False
@@ -363,6 +394,21 @@ class Hero:
                             reload_level(choose_level(level, arg))
                         elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                             process = False
+                        elif event.type == pygame.QUIT:
+                            update_level(level)
+                            pygame.quit()
+
+                    # Отрисовка объектов
+                    all_sticks.draw(screen)
+                    all_stones.draw(screen)
+                    all_grass.draw(screen)
+                    hero_sprite.draw(screen)
+                    if pygame.mouse.get_focused():
+                        pygame.mouse.set_visible(False)
+                        arrow_sprite.draw(screen)
+                    pygame.display.flip()
+                    clock.tick(FPS)
+
         elif arg == pygame.K_a:
             if board.field[self.position[0] - 1][self.position[1]] == 0 and \
                     board.on_click((self.position[0] - 1, self.position[1])):
@@ -373,7 +419,9 @@ class Hero:
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0] - 1, self.position[1])):
                 process = True
+                message_text = ['Нажмите E для перехода',  'или F для отмены']
                 while process:
+                    print_text(text_coord, message_text)
                     for event in pygame.event.get():
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                             process = False
@@ -382,6 +430,21 @@ class Hero:
                             reload_level(choose_level(level, arg))
                         elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                             process = False
+                        elif event.type == pygame.QUIT:
+                            update_level(level)
+                            pygame.quit()
+
+                    # Отрисовка объектов
+                    all_sticks.draw(screen)
+                    all_stones.draw(screen)
+                    all_grass.draw(screen)
+                    hero_sprite.draw(screen)
+                    if pygame.mouse.get_focused():
+                        pygame.mouse.set_visible(False)
+                        arrow_sprite.draw(screen)
+                    pygame.display.flip()
+                    clock.tick(FPS)
+
         elif arg == pygame.K_d:
             if board.on_click((self.position[0] + 1, self.position[1])) and \
                     board.field[self.position[0] + 1][self.position[1]] == 0:
@@ -392,7 +455,9 @@ class Hero:
                 hero_sprite.update(self)
             elif not board.on_click((self.position[0] + 1, self.position[1])):
                 process = True
+                message_text = ['Нажмите E для перехода',  'или F для отмены']
                 while process:
+                    print_text(text_coord, message_text)
                     for event in pygame.event.get():
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                             process = False
@@ -401,6 +466,21 @@ class Hero:
                             reload_level(choose_level(level, arg))
                         elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                             process = False
+                        elif event.type == pygame.QUIT:
+                            update_level(level)
+                            pygame.quit()
+
+                    # Отрисовка объектов
+                    all_sticks.draw(screen)
+                    all_stones.draw(screen)
+                    all_grass.draw(screen)
+                    hero_sprite.draw(screen)
+                    if pygame.mouse.get_focused():
+                        pygame.mouse.set_visible(False)
+                        arrow_sprite.draw(screen)
+                    pygame.display.flip()
+                    clock.tick(FPS)
+
         return True
 
     def rotate(self, arg):
@@ -484,6 +564,8 @@ if __name__ == '__main__':
     board = Board(20, 20, screen)
     generate_level(load_level('level_1.txt'))
     level = 'level_1.txt'
+    second_menu_background = load_image('second-menu.png')
+    inventory_menu_background = load_image('inventory-menu.png')
 
     # Создание курсора
     arrow_sprite = pygame.sprite.Group()
@@ -497,6 +579,12 @@ if __name__ == '__main__':
     all_stones = pygame.sprite.Group()
     all_grass = pygame.sprite.Group()
     hero_sprite = pygame.sprite.Group()
+
+    # Текст
+    message_text = []
+
+    font = pygame.font.Font(None, 25)
+    text_coord = (910, 670)
 
     # Формирование объектов в списке
     for x in range(len(board.field)):
@@ -527,7 +615,10 @@ if __name__ == '__main__':
             background = pygame.transform.scale(load_image('background-field(2).png'), (880, 880))
         else:
             background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
+        screen.fill((255, 255, 255))
         screen.blit(background, (0, 0))
+        screen.blit(second_menu_background, (880, 640))
+        screen.blit(inventory_menu_background, (880, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -539,6 +630,7 @@ if __name__ == '__main__':
                         hero.rotate(event.key)
                     else:
                         hero.move(event.key)
+                        message_text = []
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
                 arrow.rect.y = event.pos[1]
@@ -562,4 +654,5 @@ if __name__ == '__main__':
         pygame.display.flip()
         clock.tick(FPS)
 
+    update_level(level)
     pygame.quit()

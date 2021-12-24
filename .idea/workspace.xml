@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New pictures">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New arrow and touching-animation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_4.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_9.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640083312053</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="New arrow and touching-animation">
+      <created>1640360529637</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1640360529637</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,6 +151,7 @@
     <MESSAGE value="Made hero-object" />
     <MESSAGE value="Add hero's move-function" />
     <MESSAGE value="Add hero's rotate-function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add hero's rotate-function" />
+    <MESSAGE value="New arrow and touching-animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="New arrow and touching-animation" />
   </component>
 </project>
