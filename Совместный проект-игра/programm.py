@@ -161,6 +161,7 @@ def reload_level(new_level):
         all_stones.update(False, None)
         all_grass.update(False, None)
         hero_sprite.update(False)
+        npc_1_sprite.update(False)
 
         # Формирование объектов в списке
         for x in range(len(board.field)):
@@ -179,6 +180,10 @@ def reload_level(new_level):
                     element = Grass((x, y), random.randrange(1, 10, 1))
                     board.field[x][y] = element
                     Grass_image(element, all_grass)
+                elif board.field[x][y] == '1':
+                    element = NPS_1((x, y))
+                    board.field[x][y] = element
+                    NPS_1_Image(element, npc_1_sprite)
         flag = False
         for x in range(len(board.field[:8])):
             if flag:
@@ -209,6 +214,8 @@ def update_level(level):
                 s += 'G'
             elif type(board.field[x][y]) == Hero:
                 s += '0'
+            elif type(board.field[x][y]) == NPS_1:
+                s += '1'
         output.append(s + '\n')
 
     filename = 'data/levels/' + level
@@ -240,10 +247,13 @@ class Sticks_image(pygame.sprite.Sprite):
         self.rect.y = stick.position[1] * board.cell_size + board.top
 
     def update(self, arg, position):
+        global message_text
         if not arg:
             self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
+                message_text = ['"Полезная штука...', '',
+                                '                                    Ваня"']
                 self.kill()
 
 
@@ -266,10 +276,13 @@ class Stones_image(pygame.sprite.Sprite):
         self.rect.y = stone.position[1] * board.cell_size + board.top
 
     def update(self, arg, position):
+        global message_text
         if not arg:
             self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
+                message_text = ['"Как мне их тоскать...', '',
+                                '                                    Ваня"']
                 self.kill()
 
 
@@ -283,7 +296,6 @@ class Stones:
 # Классы травы
 class Grass_image(pygame.sprite.Sprite):
     image = load_image('grass.png')
-    text = load_image('grass-text.png')
 
     def __init__(self, grass, *group):
         super().__init__(*group)
@@ -293,10 +305,13 @@ class Grass_image(pygame.sprite.Sprite):
         self.rect.y = grass.position[1] * board.cell_size + board.top
 
     def update(self, arg, position):
+        global message_text
         if not arg:
             self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
+                message_text = ['"Травка...', '',
+                                '                                    Ваня"']
                 self.kill()
 
 
@@ -375,6 +390,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         hero_sprite.draw(screen)
+                        npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
                             pygame.mouse.set_visible(False)
                             arrow_sprite.draw(screen)
@@ -412,6 +428,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         hero_sprite.draw(screen)
+                        npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
                             pygame.mouse.set_visible(False)
                             arrow_sprite.draw(screen)
@@ -449,6 +466,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         hero_sprite.draw(screen)
+                        npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
                             pygame.mouse.set_visible(False)
                             arrow_sprite.draw(screen)
@@ -486,6 +504,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         hero_sprite.draw(screen)
+                        npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
                             pygame.mouse.set_visible(False)
                             arrow_sprite.draw(screen)
@@ -531,6 +550,88 @@ class Hero:
                             all_sticks.update('kill', rect_position)
                             all_stones.update('kill', rect_position)
                             all_grass.update('kill', rect_position)
+
+
+# НПС-Оборванец
+class NPS_1_Image(pygame.sprite.Sprite):
+    image = load_image('npc-1.png')
+
+    def __init__(self, npc, *group):
+        super().__init__(*group)
+        self.image = NPS_1_Image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = npc.position[0] * board.cell_size + board.left
+        self.rect.y = npc.position[1] * board.cell_size + board.top
+
+    def update(self, arg):
+        if not arg:
+            self.kill()
+
+
+class NPS_1:
+    def __init__(self, position):
+        self.position = position
+        self.name = 'Оборванец'
+        self.questions = [('-Кто ты?', '-Кто ты?'), ('-Что ты здесь делаешь?', '-Что ты здесь делаешь?'),
+                          ('-Давно ты тут?', '-Давно ты тут?'), ('-Нам больше не о чем говорить',
+                                                                 '-Я не хочу с тобой говорить')]
+        self.answers = [('Пусто', 'Пусто'), ('-Приятно познакомиться', '-Я и сам не знаю'),
+                        ('-Чтож, я тоже', '-Будь менее грубым'), ('-Пока', '-Иди')]
+        self.hero_answers = [('E - Я Ваня', 'F - Скажи кто ты'), ('E - Я даже не знаю где я', 'F - Не твоё дело'),
+                             ('E - Только очнулся', 'F - Не знаю'), ('E - Пока', 'F - Я ухожу')]
+        self.step = 0
+        self.feel = 0
+
+    def start_dialog(self):
+        process = True
+        while process:
+            screen.blit(background, (0, 0))
+            screen.blit(second_menu_background, (880, 640))
+            screen.blit(inventory_menu_background, (880, 0))
+            if 0 < self.step <= len(self.questions) - 1:
+                message_text = ['Оборванец:', '', self.answers[self.step][self.feel], '',
+                                self.questions[self.step][self.feel], '',
+                                self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]]
+            else:
+                message_text = ['Оборванец:', '', self.questions[self.step][self.feel], '',
+                                self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]]
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_e and self.step <= len(self.answers) - 1:
+                    message_text = ['Оборванец:', '', self.answers[self.step][0], '',
+                                    'Оборванец:', self.questions[self.step][self.feel], '',
+                                    self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]
+                                    ]
+                    self.step += 1
+                    self.feel = 0
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_f and self.step <= len(self.answers) - 1:
+                    message_text = ['Оборванец:', self.answers[self.step][1], '',
+                                    'Оборванец:', self.questions[self.step][self.feel], '',
+                                    self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]
+                                    ]
+                    self.step += 1
+                    self.feel = 1
+                elif self.step > len(self.answers) - 1:
+                    self.step = 0
+                    self.feel = 0
+                    process = False
+                if event.type == pygame.MOUSEMOTION:
+                    arrow.rect.x = event.pos[0]
+                    arrow.rect.y = event.pos[1]
+
+            # Отрисовка объектов
+            all_sticks.draw(screen)
+            all_stones.draw(screen)
+            all_grass.draw(screen)
+            hero_sprite.draw(screen)
+            npc_1_sprite.draw(screen)
+            print_text(text_coord, message_text)
+            if pygame.mouse.get_focused():
+                pygame.mouse.set_visible(False)
+                arrow_sprite.draw(screen)
+            pygame.display.flip()
+            clock.tick(FPS)
 
 
 # Класс поля
@@ -581,7 +682,7 @@ if __name__ == '__main__':
     passive_text = 'Passive'
     list_of_messages = [['"Пустота...', '',
                          '                                    Ваня"'],
-                        ['"Опять грустить...', '',
+                        ['"Грущу в одиночестве...', '',
                          '                                    Ваня"'],
                         ['"Ауу...', '',
                          '                                    Ваня"']
@@ -599,6 +700,7 @@ if __name__ == '__main__':
     all_stones = pygame.sprite.Group()
     all_grass = pygame.sprite.Group()
     hero_sprite = pygame.sprite.Group()
+    npc_1_sprite = pygame.sprite.Group()
 
     # Текст
     message_text = []
@@ -623,6 +725,10 @@ if __name__ == '__main__':
                 element = Grass((x, y), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Grass_image(element, all_grass)
+            elif board.field[x][y] == '1':
+                element = NPS_1((x, y))
+                board.field[x][y] = element
+                NPS_1_Image(element, npc_1_sprite)
     flag = False
     for x in range(len(board.field[:8])):
         if flag:
@@ -642,7 +748,6 @@ if __name__ == '__main__':
             background = pygame.transform.scale(load_image('background-field(2).png'), (880, 880))
         else:
             background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
-        screen.fill((255, 255, 255))
         screen.blit(background, (0, 0))
         screen.blit(second_menu_background, (880, 640))
         screen.blit(inventory_menu_background, (880, 0))
@@ -672,7 +777,10 @@ if __name__ == '__main__':
                         message_text = ['Зелёная трава:', '', '"В хозяйстве пригодиться...', '',
                                         '                                    Ваня"']
                     elif type(board.field[position[0]][position[1]]) == Hero:
-                        message_text = ['"Я действительно крут...', '',
+                        message_text = ['"Да-да, это я...', '',
+                                        '                                    Ваня"']
+                    elif type(board.field[position[0]][position[1]]) == NPS_1:
+                        message_text = ['"Какой-то оборванец...', '',
                                         '                                    Ваня"']
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -682,6 +790,8 @@ if __name__ == '__main__':
                                          board.get_cell(event.pos)[1]]) == Stones or \
                                 type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Grass:
                             hero.take(board.get_cell(event.pos), event.pos)
+                        elif type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == NPS_1:
+                            board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]].start_dialog()
 
         # Вывод сообщений
         message_clock += 2
@@ -703,6 +813,7 @@ if __name__ == '__main__':
         all_stones.draw(screen)
         all_grass.draw(screen)
         hero_sprite.draw(screen)
+        npc_1_sprite.draw(screen)
         print_text(text_coord, message_text)
         if pygame.mouse.get_focused():
             pygame.mouse.set_visible(False)
