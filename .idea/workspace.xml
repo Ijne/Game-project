@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New arrow and touching-animation">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New 'inventory-menu' and 'second-menu'. Need more work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/level_3.txt" afterDir="false" />
@@ -22,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Touching" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,7 +40,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Проекты" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="programm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
