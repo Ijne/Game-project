@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Add hero's move-function">
-      <change beforePath="$PROJECT_DIR$/.idea/Game-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Game-project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
@@ -109,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640082029714</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add Inventory_and_weapons">
+      <created>1640377717451</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1640377717451</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,6 +134,7 @@
     <MESSAGE value="Made board, loading level, background and board-rendering" />
     <MESSAGE value="Made hero-object" />
     <MESSAGE value="Add hero's move-function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add hero's move-function" />
+    <MESSAGE value="Add Inventory_and_weapons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Inventory_and_weapons" />
   </component>
 </project>
