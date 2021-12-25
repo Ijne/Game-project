@@ -355,7 +355,7 @@ class Hero:
             elif not board.on_click((self.position[0], self.position[1] - 1)):
                 if choose_level(level, arg):
                     process = True
-                    message_text = ['Нажмите E для перехода',  'или F для отмены']
+                    message_text = ['Нажмите E для перехода', 'или F для отмены']
                     while process:
                         print_text(text_coord, message_text)
                         for event in pygame.event.get():
@@ -392,7 +392,7 @@ class Hero:
             elif not board.on_click((self.position[0], self.position[1] + 1)):
                 if choose_level(level, arg):
                     process = True
-                    message_text = ['Нажмите E для перехода',  'или F для отмены']
+                    message_text = ['Нажмите E для перехода', 'или F для отмены']
                     while process:
                         print_text(text_coord, message_text)
                         for event in pygame.event.get():
@@ -429,7 +429,7 @@ class Hero:
             elif not board.on_click((self.position[0] - 1, self.position[1])):
                 if choose_level(level, arg):
                     process = True
-                    message_text = ['Нажмите E для перехода',  'или F для отмены']
+                    message_text = ['Нажмите E для перехода', 'или F для отмены']
                     while process:
                         print_text(text_coord, message_text)
                         for event in pygame.event.get():
@@ -466,7 +466,7 @@ class Hero:
             elif not board.on_click((self.position[0] + 1, self.position[1])):
                 if choose_level(level, arg):
                     process = True
-                    message_text = ['Нажмите E для перехода',  'или F для отмены']
+                    message_text = ['Нажмите E для перехода', 'или F для отмены']
                     while process:
                         print_text(text_coord, message_text)
                         for event in pygame.event.get():
@@ -577,6 +577,15 @@ if __name__ == '__main__':
     level = 'level_1.txt'
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
+    message_clock = 0
+    passive_text = 'Passive'
+    list_of_messages = [['"Пустота...', '',
+                         '                                    Ваня"'],
+                        ['"Опять грустить...', '',
+                         '                                    Ваня"'],
+                        ['"Ауу...', '',
+                         '                                    Ваня"']
+                        ]
 
     # Создание курсора
     arrow_sprite = pygame.sprite.Group()
@@ -648,10 +657,23 @@ if __name__ == '__main__':
                         hero.rotate(event.key)
                     else:
                         hero.move(event.key)
-                        message_text = []
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
                 arrow.rect.y = event.pos[1]
+                if board.get_click(event.pos):
+                    position = board.get_cell(event.pos)
+                    if type(board.field[position[0]][position[1]]) == Sticks:
+                        message_text = ['Палки:', '', '"Хотя бы что-то...', '',
+                                        '                                    Ваня"']
+                    elif type(board.field[position[0]][position[1]]) == Stones:
+                        message_text = ['Обычный камень:', '', '"Пфф, ничего не обычного...', '',
+                                        '                                    Ваня"']
+                    elif type(board.field[position[0]][position[1]]) == Grass:
+                        message_text = ['Зелёная трава:', '', '"В хозяйстве пригодиться...', '',
+                                        '                                    Ваня"']
+                    elif type(board.field[position[0]][position[1]]) == Hero:
+                        message_text = ['"Я действительно крут...', '',
+                                        '                                    Ваня"']
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if board.get_click(event.pos):
@@ -661,11 +683,27 @@ if __name__ == '__main__':
                                 type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Grass:
                             hero.take(board.get_cell(event.pos), event.pos)
 
+        # Вывод сообщений
+        message_clock += 2
+        if message_clock >= 1000 and message_text == []:
+            random_phrase = random.randrange(-1, 3)
+            message_text = list_of_messages[random_phrase]
+            passive_text = message_text
+        if passive_text == message_text:
+            if message_clock >= 1250:
+                message_text = []
+                message_clock = 0
+        elif message_text:
+            if message_clock >= 750:
+                message_text = []
+                message_clock = 0
+
         # Отрисовка объектов
         all_sticks.draw(screen)
         all_stones.draw(screen)
         all_grass.draw(screen)
         hero_sprite.draw(screen)
+        print_text(text_coord, message_text)
         if pygame.mouse.get_focused():
             pygame.mouse.set_visible(False)
             arrow_sprite.draw(screen)
