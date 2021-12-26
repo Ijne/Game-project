@@ -114,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640377717451</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add Weapons in Inventory">
+      <created>1640468808548</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1640468808548</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,6 +142,7 @@
     <MESSAGE value="Made hero-object" />
     <MESSAGE value="Add hero's move-function" />
     <MESSAGE value="Add Inventory_and_weapons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Inventory_and_weapons" />
+    <MESSAGE value="Add Weapons in Inventory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Weapons in Inventory" />
   </component>
 </project>

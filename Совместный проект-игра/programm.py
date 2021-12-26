@@ -259,12 +259,6 @@ class Weapon:
         self.power = power
         self.damage = damage
 
-    def get_power(self):
-        return self.power
-
-    def get_damage(self):
-        return self.damage
-
 
 # Запуск
 if __name__ == '__main__':
@@ -282,7 +276,7 @@ if __name__ == '__main__':
     all_grass = pygame.sprite.Group()
     hero_sprite = pygame.sprite.Group()
 
-    #Стартовые инструменты
+    # Стартовые инструменты
     inventory = Inventory()
     arm = Weapon(2, 2)
     inventory.add_thing(arm)
