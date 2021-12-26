@@ -48,7 +48,7 @@ def start_screen():
 
 # Загрузка уровня
 def load_level(filename):
-    filename = 'data/levels/' + filename
+    filename = 'data/levels/default/' + filename
     with open(filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
 
@@ -66,87 +66,24 @@ def generate_level(level):
 
 # Функция выбора нового уровня
 def choose_level(level, arg):
-    if level == 'level_1.txt':
-        if arg == pygame.K_w:
-            return 'level_2.txt'
-        elif arg == pygame.K_s:
-            return 'level_3.txt'
-        elif arg == pygame.K_a:
-            return 'level_4.txt'
-        elif arg == pygame.K_d:
-            return 'level_5.txt'
-    elif level == 'level_2.txt':
-        if arg == pygame.K_w:
+    x = level[level.find('(') + 1:level.find(',')].strip()
+    y = level[level.find(',') + 1:level.find(')')].strip()
+    if arg == pygame.K_w:
+        if y == '5':
             return False
-        elif arg == pygame.K_s:
-            return 'level_1.txt'
-        elif arg == pygame.K_a:
-            return 'level_8.txt'
-        elif arg == pygame.K_d:
-            return 'level_9.txt'
-    elif level == 'level_3.txt':
-        if arg == pygame.K_w:
-            return 'level_1.txt'
-        elif arg == pygame.K_s:
+        return f'level({x}, {int(y) + 1}).txt'
+    elif arg == pygame.K_s:
+        if y == '-5':
             return False
-        elif arg == pygame.K_a:
-            return 'level_7.txt'
-        elif arg == pygame.K_d:
-            return 'level_6.txt'
-    elif level == 'level_4.txt':
-        if arg == pygame.K_w:
-            return 'level_8.txt'
-        elif arg == pygame.K_s:
-            return 'level_7.txt'
-        elif arg == pygame.K_a:
+        return f'level({x}, {int(y) - 1}).txt'
+    elif arg == pygame.K_a:
+        if x == '-5':
             return False
-        elif arg == pygame.K_d:
-            return 'level_1.txt'
-    elif level == 'level_5.txt':
-        if arg == pygame.K_w:
-            return 'level_9.txt'
-        elif arg == pygame.K_s:
-            return 'level_6.txt'
-        elif arg == pygame.K_a:
-            return 'level_1.txt'
-        elif arg == pygame.K_d:
+        return f'level({int(x) - 1}, {y}).txt'
+    elif arg == pygame.K_d:
+        if x == '5':
             return False
-    elif level == 'level_6.txt':
-        if arg == pygame.K_w:
-            return 'level_5.txt'
-        elif arg == pygame.K_s:
-            return False
-        elif arg == pygame.K_a:
-            return 'level_3.txt'
-        elif arg == pygame.K_d:
-            return False
-    elif level == 'level_7.txt':
-        if arg == pygame.K_w:
-            return 'level_4.txt'
-        elif arg == pygame.K_s:
-            return False
-        elif arg == pygame.K_a:
-            return False
-        elif arg == pygame.K_d:
-            return 'level_3.txt'
-    elif level == 'level_8.txt':
-        if arg == pygame.K_w:
-            return False
-        elif arg == pygame.K_s:
-            return 'level_4.txt'
-        elif arg == pygame.K_a:
-            return False
-        elif arg == pygame.K_d:
-            return 'level_2.txt'
-    elif level == 'level_9.txt':
-        if arg == pygame.K_w:
-            return False
-        elif arg == pygame.K_s:
-            return 'level_5.txt'
-        elif arg == pygame.K_a:
-            return 'level_2.txt'
-        elif arg == pygame.K_d:
-            return False
+        return f'level({int(x) + 1}, {y}).txt'
 
 
 # Функция загрузки нового уровня
@@ -218,7 +155,7 @@ def update_level(level):
                 s += '1'
         output.append(s + '\n')
 
-    filename = 'data/levels/' + level
+    filename = 'data/levels/default/' + level
     with open(filename, 'w') as mapFile:
         mapFile.writelines(output)
 
@@ -266,7 +203,7 @@ class Sticks:
 
 # Классы камней
 class Stones_image(pygame.sprite.Sprite):
-    image = load_image('stones.png')
+    image = pygame.transform.scale(load_image('stones.png'), (43, 43))
 
     def __init__(self, stone, *group):
         super().__init__(*group)
@@ -674,8 +611,8 @@ if __name__ == '__main__':
 
     # Генерация уровня
     board = Board(20, 20, screen)
-    generate_level(load_level('level_1.txt'))
-    level = 'level_1.txt'
+    generate_level(load_level('level(0, 0).txt'))
+    level = 'level(0, 0).txt'
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
     message_clock = 0
