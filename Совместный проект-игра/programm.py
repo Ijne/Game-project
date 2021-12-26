@@ -603,6 +603,27 @@ class Board:
         cell = self.get_cell(position)
         return self.on_click(cell)
 
+# класс инвенторя
+class Inventory:
+    def __init__(self):
+        self.inventory = []
+
+    def get_inventory(self):
+        return self.inventory
+
+    def add_thing(self, thing):
+        self.inventory.append(thing)
+
+    def delete_thing(self, thing):
+        n = self.inventory.index(thing)
+        del self.inventory[n]
+
+# класс инструментов
+class Weapon:
+    def __init__(self, power, damage):
+        self.power = power
+        self.damage = damage
+
 
 # Запуск
 if __name__ == '__main__':
@@ -644,6 +665,13 @@ if __name__ == '__main__':
 
     font = pygame.font.Font(None, 25)
     text_coord = (910, 670)
+
+    # Стартовые инструменты
+    inventory = Inventory()
+    arm = Weapon(2, 2)
+    inventory.add_thing(arm)
+    stick = Weapon(4, 4)
+    inventory.add_thing(stick)
 
     # Формирование объектов в списке
     for x in range(len(board.field)):
