@@ -122,11 +122,11 @@ def reload_level(new_level):
                     board.field[x][y] = element
                     NPS_1_Image(element, npc_1_sprite)
         flag = False
-        for x in range(len(board.field[:8])):
+        for x in range(len(board.field)):
             if flag:
                 break
             for y in range(len(board.field[x])):
-                if board.field[x][y] == 0:
+                if board.field[x][y] == 0 and x > 4 and y > 4:
                     hero = Hero((x, y))
                     board.field[x][y] = hero
                     Hero_image(hero, hero_sprite)
@@ -603,7 +603,7 @@ class Board:
         cell = self.get_cell(position)
         return self.on_click(cell)
 
-# класс инвенторя
+# Класс инвентаря
 class Inventory:
     def __init__(self):
         self.inventory = []
@@ -618,7 +618,7 @@ class Inventory:
         n = self.inventory.index(thing)
         del self.inventory[n]
 
-# класс инструментов
+# Класс инструментов
 class Weapon:
     def __init__(self, power, damage):
         self.power = power
@@ -695,11 +695,11 @@ if __name__ == '__main__':
                 board.field[x][y] = element
                 NPS_1_Image(element, npc_1_sprite)
     flag = False
-    for x in range(len(board.field[:8])):
+    for x in range(len(board.field)):
         if flag:
             break
         for y in range(len(board.field[x])):
-            if board.field[x][y] == 0:
+            if board.field[x][y] == 0 and x > 4 and y > 4:
                 hero = Hero((x, y))
                 board.field[x][y] = hero
                 Hero_image(hero, hero_sprite)
@@ -709,10 +709,7 @@ if __name__ == '__main__':
     # Непосредственно запуск
     running = True
     while running:
-        if level == 'level_1.txt' or level == 'level_8.txt' or level == 'level_6.txt':
-            background = pygame.transform.scale(load_image('background-field(2).png'), (880, 880))
-        else:
-            background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
+        background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
         screen.blit(background, (0, 0))
         screen.blit(second_menu_background, (880, 640))
         screen.blit(inventory_menu_background, (880, 0))

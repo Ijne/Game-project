@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Add hero's move-function">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Big-map, more levels, change some functions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-field(2).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/grass.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/grass.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/sticks.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/sticks.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/stones.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/stones.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 0).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -10,13 +18,28 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Hero" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -30,10 +53,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Проекты" />
   </component>
-  <component name="RunManager">
-    <configuration name="programm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.programm">
+    <configuration name="level-generation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Game-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -43,6 +66,48 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Совместный проект-игра" />
       <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Совместный проект-игра/level-generation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="polygon" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Game-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Совместный проект-игра" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Совместный проект-игра/polygon.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="programm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Game-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Ваня\AppData\Local\Programs\Python\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Совместный проект-игра" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Совместный проект-игра/programm.py" />
@@ -57,6 +122,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.programm" />
+        <item itemvalue="Python.level-generation" />
+        <item itemvalue="Python.polygon" />
         <item itemvalue="Python.programm" />
         <item itemvalue="Python.programm" />
       </list>
@@ -106,7 +173,42 @@
       <option name="project" value="LOCAL" />
       <updated>1640082029714</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add hero's rotate-function">
+      <created>1640083312053</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1640083312053</updated>
+    </task>
+    <task id="LOCAL-00007" summary="New arrow and touching-animation">
+      <created>1640360529637</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1640360529637</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Micro-fix 1.0">
+      <created>1640422327063</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1640422327064</updated>
+    </task>
+    <task id="LOCAL-00009" summary="New text-output messages">
+      <created>1640426594241</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1640426594241</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Made first NPC with dialog">
+      <created>1640437370270</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1640437370270</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,6 +227,11 @@
     <MESSAGE value="Made board, loading level, background and board-rendering" />
     <MESSAGE value="Made hero-object" />
     <MESSAGE value="Add hero's move-function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add hero's move-function" />
+    <MESSAGE value="Add hero's rotate-function" />
+    <MESSAGE value="New arrow and touching-animation" />
+    <MESSAGE value="Micro-fix 1.0" />
+    <MESSAGE value="New text-output messages" />
+    <MESSAGE value="Made first NPC with dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made first NPC with dialog" />
   </component>
 </project>
