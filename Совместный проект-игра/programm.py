@@ -99,8 +99,8 @@ def reload_level(new_level):
         all_grass.update(False, None)
         all_carrot.update(False, None)
         all_honey.update(False, None)
+        npc_1_sprite.update(False, None)
         hero_sprite.update(False)
-        npc_1_sprite.update(False)
 
         # Формирование объектов в списке
         for x in range(len(board.field)):
@@ -143,6 +143,27 @@ def reload_level(new_level):
                     hero_sprite.update(hero)
                     flag = True
                     break
+
+        camera.update(hero)
+        for sprite in all_sticks:
+            camera.apply(sprite)
+        for sprite in all_stones:
+            camera.apply(sprite)
+        for sprite in all_grass:
+            camera.apply(sprite)
+        for sprite in all_carrot:
+            camera.apply(sprite)
+        for sprite in all_honey:
+            camera.apply(sprite)
+        for sprite in npc_1_sprite:
+            camera.apply(sprite)
+
+        view.field = []
+        for x in range(top[0], bottom[0] + 1):
+            column = []
+            for y in range(top[1], bottom[1] + 1):
+                column.append(board.field[x][y])
+            view.field.append(column)
 
 
 # Функция записи уровня
@@ -436,6 +457,7 @@ class Hero:
                                 board.field[self.position[0]][self.position[1]] = self
                                 update_level(level)
                                 reload_level(choose_level(level, arg))
+                                return False
                             elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                                 process = False
                             elif event.type == pygame.QUIT:
@@ -475,6 +497,7 @@ class Hero:
                                 board.field[self.position[0]][self.position[1]] = self
                                 update_level(level)
                                 reload_level(choose_level(level, arg))
+                                return False
                             elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                                 process = False
                             elif event.type == pygame.QUIT:
@@ -514,6 +537,7 @@ class Hero:
                                 board.field[self.position[0]][self.position[1]] = self
                                 update_level(level)
                                 reload_level(choose_level(level, arg))
+                                return False
                             elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                                 process = False
                             elif event.type == pygame.QUIT:
@@ -553,6 +577,7 @@ class Hero:
                                 board.field[self.position[0]][self.position[1]] = self
                                 update_level(level)
                                 reload_level(choose_level(level, arg))
+                                return False
                             elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                                 process = False
                             elif event.type == pygame.QUIT:
@@ -918,78 +943,76 @@ if __name__ == '__main__':
                     if keys[pygame.K_LSHIFT]:
                         hero.rotate(event.key)
                     else:
-                        hero.move(event.key)
+                        if hero.move(event.key):
+                            # Изменнение видимых объектов
+                            top = (hero.position[0] % 10, hero.position[1] % 10)
+                            if hero.position[0] < 10:
+                                top = (0, top[1])
+                            if hero.position[1] < 10:
+                                top = (top[0], 0)
+                            if hero.position[0] > 19:
+                                top = (10, top[1])
+                            if hero.position[1] > 19:
+                                top =(top[0], 10)
+                            bottom = (top[0] + 19, top[1] + 19)
 
+                            view.field = []
+                            for x in range(top[0], bottom[0] + 1):
+                                column = []
+                                for y in range(top[1], bottom[1] + 1):
+                                    column.append(board.field[x][y])
+                                view.field.append(column)
 
-                        # Изменнение видимых объектов
-                        top = (hero.position[0] % 10, hero.position[1] % 10)
-                        if hero.position[0] < 10:
-                            top = (0, top[1])
-                        if hero.position[1] < 10:
-                            top = (top[0], 0)
-                        if hero.position[0] > 19:
-                            top = (10, top[1])
-                        if hero.position[1] > 19:
-                            top =(top[0], 10)
-                        bottom = (top[0] + 19, top[1] + 19)
+                            hero_sprite.update(hero)
 
-                        view.field = []
-                        for x in range(top[0], bottom[0] + 1):
-                            column = []
-                            for y in range(top[1], bottom[1] + 1):
-                                column.append(board.field[x][y])
-                            view.field.append(column)
+                            all_sticks.update(False, None)
+                            all_stones.update(False, None)
+                            all_grass.update(False, None)
+                            all_carrot.update(False, None)
+                            all_honey.update(False, None)
+                            npc_1_sprite.update(False, None)
 
-                        hero_sprite.update(hero)
+                            for x in range(len(board.field)):
+                                for y in range(len(board.field[x])):
+                                    if type(board.field[x][y]) == Sticks:
+                                        element = Sticks((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Sticks_image(element, all_sticks)
+                                    elif type(board.field[x][y]) == Stones:
+                                        element = Stones((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Stones_image(element, all_stones)
+                                    elif type(board.field[x][y]) == Grass:
+                                        element = Grass((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Grass_image(element, all_grass)
+                                    elif type(board.field[x][y]) == Carrot:
+                                        element = Carrot((x, y))
+                                        board.field[x][y] = element
+                                        Carrot_image(element, all_carrot)
+                                    elif type(board.field[x][y]) == Honey:
+                                        element = Honey((x, y))
+                                        board.field[x][y] = element
+                                        Honey_image(element, all_honey)
+                                    elif type(board.field[x][y]) == NPS_1:
+                                        element = NPS_1((x, y))
+                                        board.field[x][y] = element
+                                        NPS_1_Image(element, npc_1_sprite)
 
-                        all_sticks.update(False, None)
-                        all_stones.update(False, None)
-                        all_grass.update(False, None)
-                        all_carrot.update(False, None)
-                        all_honey.update(False, None)
-                        npc_1_sprite.update(False, None)
-
-                        for x in range(len(board.field)):
-                            for y in range(len(board.field[x])):
-                                if type(board.field[x][y]) == Sticks:
-                                    element = Sticks((x, y), random.randrange(1, 10, 1))
-                                    board.field[x][y] = element
-                                    Sticks_image(element, all_sticks)
-                                elif type(board.field[x][y]) == Stones:
-                                    element = Stones((x, y), random.randrange(1, 10, 1))
-                                    board.field[x][y] = element
-                                    Stones_image(element, all_stones)
-                                elif type(board.field[x][y]) == Grass:
-                                    element = Grass((x, y), random.randrange(1, 10, 1))
-                                    board.field[x][y] = element
-                                    Grass_image(element, all_grass)
-                                elif type(board.field[x][y]) == Carrot:
-                                    element = Carrot((x, y))
-                                    board.field[x][y] = element
-                                    Carrot_image(element, all_carrot)
-                                elif type(board.field[x][y]) == Honey:
-                                    element = Honey((x, y))
-                                    board.field[x][y] = element
-                                    Honey_image(element, all_honey)
-                                elif type(board.field[x][y]) == NPS_1:
-                                    element = NPS_1((x, y))
-                                    board.field[x][y] = element
-                                    NPS_1_Image(element, npc_1_sprite)
-
-                        # Смещение объектов
-                        camera.update(hero)
-                        for sprite in all_sticks:
-                            camera.apply(sprite)
-                        for sprite in all_stones:
-                            camera.apply(sprite)
-                        for sprite in all_grass:
-                            camera.apply(sprite)
-                        for sprite in all_carrot:
-                            camera.apply(sprite)
-                        for sprite in all_honey:
-                            camera.apply(sprite)
-                        for sprite in npc_1_sprite:
-                            camera.apply(sprite)
+                            # Смещение объектов
+                            camera.update(hero)
+                            for sprite in all_sticks:
+                                camera.apply(sprite)
+                            for sprite in all_stones:
+                                camera.apply(sprite)
+                            for sprite in all_grass:
+                                camera.apply(sprite)
+                            for sprite in all_carrot:
+                                camera.apply(sprite)
+                            for sprite in all_honey:
+                                camera.apply(sprite)
+                            for sprite in npc_1_sprite:
+                                camera.apply(sprite)
 
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
