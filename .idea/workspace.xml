@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Update pictures">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New carrot-object">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -1).txt" afterDir="false" />
@@ -126,6 +126,7 @@
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 5).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/level-generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/level-generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/polygon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/polygon.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -199,9 +200,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\Ваня\AppData\Local\Programs\Python\Python39\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Совместный проект-игра" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Совместный проект-игра/polygon.py" />
@@ -330,7 +331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640584919203</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="New carrot-object">
+      <created>1640588310310</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1640588310310</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -355,6 +363,7 @@
     <MESSAGE value="New text-output messages" />
     <MESSAGE value="Made first NPC with dialog" />
     <MESSAGE value="Update pictures" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update pictures" />
+    <MESSAGE value="New carrot-object" />
+    <option name="LAST_COMMIT_MESSAGE" value="New carrot-object" />
   </component>
 </project>

@@ -1,6 +1,9 @@
-name = 'level(0, 0).txt'
-name_2 = 'level(-5, 0).txt'
-name_3 = 'level(0, -5).txt'
-x = name_2[name_2.find('(') + 1:name_2.find(',')].strip()
-y = name_2[name_2.find(',') + 1:name_2.find(')')].strip()
-print(x, y)
+top = (hero.position[0] % 10,  hero.position[1] % 10)
+bottom = (top[0] + 20,  top[1] + 20)
+veiw_field = []
+for x in range(top[x], bottom[x] + 1):
+    column = []
+    for y in range(top[y], bottom[y] + 1):
+        column.append(board.field[x][y])
+    view_field.apppend(column)
+

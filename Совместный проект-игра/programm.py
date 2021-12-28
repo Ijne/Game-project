@@ -98,6 +98,7 @@ def reload_level(new_level):
         all_stones.update(False, None)
         all_grass.update(False, None)
         all_carrot.update(False, None)
+        all_honey.update(False, None)
         hero_sprite.update(False)
         npc_1_sprite.update(False)
 
@@ -122,6 +123,10 @@ def reload_level(new_level):
                     element = Carrot((x, y))
                     board.field[x][y] = element
                     Carrot_image(element, all_carrot)
+                elif board.field[x][y] == 'H':
+                    element = Honey((x, y))
+                    board.field[x][y] = element
+                    Honey_image(element, all_honey)
                 elif board.field[x][y] == '1':
                     element = NPS_1((x, y))
                     board.field[x][y] = element
@@ -131,7 +136,7 @@ def reload_level(new_level):
             if flag:
                 break
             for y in range(len(board.field[x])):
-                if board.field[x][y] == 0 and x > 4 and y > 4:
+                if board.field[x][y] == 0 and x > 9 and y > 9:
                     hero = Hero((x, y))
                     board.field[x][y] = hero
                     Hero_image(hero, hero_sprite)
@@ -156,6 +161,8 @@ def update_level(level):
                 s += 'G'
             elif type(board.field[x][y]) == Carrot:
                 s += 'C'
+            elif type(board.field[x][y]) == Honey:
+                s += 'H'
             elif type(board.field[x][y]) == Hero:
                 s += '0'
             elif type(board.field[x][y]) == NPS_1:
@@ -179,6 +186,28 @@ def print_text(text_coord, message_text):
         screen.blit(string_rendered, message_rect)
 
 
+# Класс камеры
+class Camera:
+    # зададим начальный сдвиг камеры
+    def __init__(self):
+        self.dx = 0
+        self.dy = 0
+
+    # сдвинуть объект obj на смещение камеры
+    def apply(self, obj):
+        if 10 <= hero.position[0]:
+            obj.rect.x += self.dx
+        if 10 <= hero.position[1]:
+            obj.rect.y += self.dy
+
+    # позиционировать камеру на объекте target
+    def update(self, target):
+        if top[0] <= 10 and hero.position[0] <= 20:
+            self.dx = -((target.position[0] - 11) * 40 + 40 + 40 // 2 - 40 // 2)
+        if bottom[1] <= 29 and hero.position[1] <= 20:
+            self.dy = -((target.position[1] - 11) * 40 + 40 + 40 // 2 - 40 // 2)
+
+
 # Классы палок
 class Sticks_image(pygame.sprite.Sprite):
     image = load_image('sticks.png')
@@ -194,6 +223,9 @@ class Sticks_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
+        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+            if self.rect.collidepoint(position):
+                self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
                 message_text = ['"Полезная штука...', '',
@@ -223,6 +255,9 @@ class Stones_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
+        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+            if self.rect.collidepoint(position):
+                self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
                 message_text = ['"Как мне их тоскать...', '',
@@ -252,6 +287,9 @@ class Grass_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
+        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+            if self.rect.collidepoint(position):
+                self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
                 message_text = ['"Травка...', '',
@@ -281,6 +319,9 @@ class Carrot_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
+        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+            if self.rect.collidepoint(position):
+                self.kill()
         if arg and self.rect.collidepoint(position):
             if arg == 'kill':
                 message_text = ['"Отличная морковь...', '',
@@ -291,6 +332,37 @@ class Carrot_image(pygame.sprite.Sprite):
 class Carrot:
     def __init__(self, position):
         self.food = 10
+        self.position = position
+
+
+# Классы ульев
+class Honey_image(pygame.sprite.Sprite):
+    image = load_image('honey.png')
+
+    def __init__(self, honey, *group):
+        super().__init__(*group)
+        self.image = Honey_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = honey.position[0] * board.cell_size + board.left
+        self.rect.y = honey.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+            if self.rect.collidepoint(position):
+                self.kill()
+        if arg and self.rect.collidepoint(position):
+            if arg == 'kill':
+                message_text = ['"Блин, обляпался...', '',
+                                '                                    Ваня"']
+                self.kill()
+
+
+class Honey:
+    def __init__(self, position):
+        self.food = 20
         self.position = position
 
 
@@ -312,8 +384,22 @@ class Hero_image(pygame.sprite.Sprite):
             self.kill()
         else:
             self.image = Hero_image.image_90
-            self.rect.x = hero.position[0] * board.cell_size + board.left
-            self.rect.y = hero.position[1] * board.cell_size + board.top
+            if 10 <= hero.position[0] <= 20:
+                self.rect.x = 10 * board.cell_size + board.left
+                camera.update(hero)
+            else:
+                if hero.position[0] < 10:
+                    self.rect.x = (top[0] + hero.position[0]) * board.cell_size + board.left
+                else:
+                    self.rect.x = (hero.position[0] - top[0]) * board.cell_size + board.left
+            if 10 <= hero.position[1] <= 20:
+                self.rect.y = 10 * board.cell_size + board.top
+                camera.update(hero)
+            else:
+                if hero.position[1] < 10:
+                    self.rect.y = (top[1] + hero.position[1]) * board.cell_size + board.left
+                else:
+                    self.rect.y = (hero.position[1] - top[1]) * board.cell_size + board.left
             if hero.view == 0:
                 self.image = Hero_image.image_0
             elif hero.view == 270:
@@ -338,7 +424,6 @@ class Hero:
                 self.view = 0
                 board.field[hero.position[0]][hero.position[1] + 1] = 0
                 board.field[self.position[0]][self.position[1]] = self
-                hero_sprite.update(self)
             elif not board.on_click((self.position[0], self.position[1] - 1)):
                 if choose_level(level, arg):
                     process = True
@@ -362,6 +447,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         all_carrot.draw(screen)
+                        all_honey.draw(screen)
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -377,7 +463,6 @@ class Hero:
                 self.view = 180
                 board.field[hero.position[0]][hero.position[1] - 1] = 0
                 board.field[self.position[0]][self.position[1]] = self
-                hero_sprite.update(self)
             elif not board.on_click((self.position[0], self.position[1] + 1)):
                 if choose_level(level, arg):
                     process = True
@@ -401,6 +486,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         all_carrot.draw(screen)
+                        all_honey.draw(screen)
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -416,7 +502,6 @@ class Hero:
                 self.view = 270
                 board.field[hero.position[0] + 1][hero.position[1]] = 0
                 board.field[self.position[0]][self.position[1]] = self
-                hero_sprite.update(self)
             elif not board.on_click((self.position[0] - 1, self.position[1])):
                 if choose_level(level, arg):
                     process = True
@@ -440,6 +525,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         all_carrot.draw(screen)
+                        all_honey.draw(screen)
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -455,7 +541,6 @@ class Hero:
                 self.view = 90
                 board.field[hero.position[0] - 1][hero.position[1]] = 0
                 board.field[self.position[0]][self.position[1]] = self
-                hero_sprite.update(self)
             elif not board.on_click((self.position[0] + 1, self.position[1])):
                 if choose_level(level, arg):
                     process = True
@@ -479,6 +564,7 @@ class Hero:
                         all_stones.draw(screen)
                         all_grass.draw(screen)
                         all_carrot.draw(screen)
+                        all_honey.draw(screen)
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -523,10 +609,12 @@ class Hero:
                                         flag = True
                         if flag:
                             board.field[position[0]][position[1]] = 0
+                            view.field[position[0] - top[0]][position[1] - top[1]] = 0
                             all_sticks.update('kill', rect_position)
                             all_stones.update('kill', rect_position)
                             all_grass.update('kill', rect_position)
                             all_carrot.update('kill', rect_position)
+                            all_honey.update('kill', rect_position)
 
 
 # НПС-Оборванец
@@ -540,9 +628,12 @@ class NPS_1_Image(pygame.sprite.Sprite):
         self.rect.x = npc.position[0] * board.cell_size + board.left
         self.rect.y = npc.position[1] * board.cell_size + board.top
 
-    def update(self, arg):
+    def update(self, arg, position):
         if not arg:
             self.kill()
+        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+            if self.rect.collidepoint(position):
+                self.kill()
 
 
 class NPS_1:
@@ -602,6 +693,7 @@ class NPS_1:
             all_stones.draw(screen)
             all_grass.draw(screen)
             all_carrot.draw(screen)
+            all_honey.draw(screen)
             hero_sprite.draw(screen)
             npc_1_sprite.draw(screen)
             print_text(text_coord, message_text)
@@ -624,8 +716,8 @@ class Board:
         self.field = [[0] * height for _ in range(width)]
 
     def render(self):
-        for i in range(self.width):
-            for j in range(self.height):
+        for i in range(0, 20):
+            for j in range(0, 20):
                 pygame.draw.rect(self.screen, pygame.Color('darkslategray'),
                                  (i * self.cell_size + self.left,
                                   j * self.cell_size + self.top,
@@ -666,15 +758,46 @@ class Weapon:
         self.damage = damage
 
 
+# Класс поля зрения
+class View:
+    def __init__(self):
+        self.width = 20
+        self.height = 20
+        self.left = 40
+        self.top = 40
+        self.cell_size = 40
+        self.field = [[0] * self.height for _ in range(self.width)]
+
+    def get_board_cell(self, position):
+        return (position[0] - self.left) // self.cell_size + top[0], \
+               (position[1] - self.top) // self.cell_size + top[1]
+
+    def get_cell(self, position):
+        return (position[0] - self.left) // self.cell_size, \
+               (position[1] - self.top) // self.cell_size
+
+    def on_click(self, cell):
+        if cell[0] > self.width - 1 or cell[0] < 0 or cell[1] > self.height - 1 or cell[1] < 0:
+            return False
+        return True
+
+    def get_click(self, position):
+        cell = self.get_cell(position)
+        return self.on_click(cell)
+
 # Запуск
 if __name__ == '__main__':
     # Заставка
     start_screen()
 
     # Генерация уровня
-    board = Board(20, 20, screen)
+    board = Board(30, 30, screen)
+    view = View()
     generate_level(load_level('level(0, 0).txt'))
     level = 'level(0, 0).txt'
+    camera = Camera()
+    top = (0, 0)
+    bottom = (19, 19)
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
     message_clock = 0
@@ -699,6 +822,7 @@ if __name__ == '__main__':
     all_stones = pygame.sprite.Group()
     all_grass = pygame.sprite.Group()
     all_carrot = pygame.sprite.Group()
+    all_honey = pygame.sprite.Group()
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
 
@@ -715,7 +839,7 @@ if __name__ == '__main__':
     stick = Weapon(4, 4)
     inventory.add_thing(stick)
 
-    # Формирование объектов в списке
+    # Формирование объектов в списке и первоначальная отрисовка
     for x in range(len(board.field)):
         for y in range(len(board.field[x])):
             if board.field[x][y] == '0':
@@ -736,6 +860,10 @@ if __name__ == '__main__':
                 element = Carrot((x, y))
                 board.field[x][y] = element
                 Carrot_image(element, all_carrot)
+            elif board.field[x][y] == 'H':
+                element = Honey((x, y))
+                board.field[x][y] = element
+                Honey_image(element, all_honey)
             elif board.field[x][y] == '1':
                 element = NPS_1((x, y))
                 board.field[x][y] = element
@@ -745,12 +873,33 @@ if __name__ == '__main__':
         if flag:
             break
         for y in range(len(board.field[x])):
-            if board.field[x][y] == 0 and x > 4 and y > 4:
+            if board.field[x][y] == 0 and x > 10 and y > 10:
                 hero = Hero((x, y))
                 board.field[x][y] = hero
                 Hero_image(hero, hero_sprite)
                 flag = True
                 break
+
+    camera.update(hero)
+    for sprite in all_sticks:
+        camera.apply(sprite)
+    for sprite in all_stones:
+        camera.apply(sprite)
+    for sprite in all_grass:
+        camera.apply(sprite)
+    for sprite in all_carrot:
+        camera.apply(sprite)
+    for sprite in all_honey:
+        camera.apply(sprite)
+    for sprite in npc_1_sprite:
+        camera.apply(sprite)
+
+    view.field = []
+    for x in range(top[0], bottom[0] + 1):
+        column = []
+        for y in range(top[1], bottom[1] + 1):
+            column.append(board.field[x][y])
+        view.field.append(column)
 
     # Непосредственно запуск
     running = True
@@ -770,41 +919,117 @@ if __name__ == '__main__':
                         hero.rotate(event.key)
                     else:
                         hero.move(event.key)
+
+
+                        # Изменнение видимых объектов
+                        top = (hero.position[0] % 10, hero.position[1] % 10)
+                        if hero.position[0] < 10:
+                            top = (0, top[1])
+                        if hero.position[1] < 10:
+                            top = (top[0], 0)
+                        if hero.position[0] > 19:
+                            top = (10, top[1])
+                        if hero.position[1] > 19:
+                            top =(top[0], 10)
+                        bottom = (top[0] + 19, top[1] + 19)
+
+                        view.field = []
+                        for x in range(top[0], bottom[0] + 1):
+                            column = []
+                            for y in range(top[1], bottom[1] + 1):
+                                column.append(board.field[x][y])
+                            view.field.append(column)
+
+                        hero_sprite.update(hero)
+
+                        all_sticks.update(False, None)
+                        all_stones.update(False, None)
+                        all_grass.update(False, None)
+                        all_carrot.update(False, None)
+                        all_honey.update(False, None)
+                        npc_1_sprite.update(False, None)
+
+                        for x in range(len(board.field)):
+                            for y in range(len(board.field[x])):
+                                if type(board.field[x][y]) == Sticks:
+                                    element = Sticks((x, y), random.randrange(1, 10, 1))
+                                    board.field[x][y] = element
+                                    Sticks_image(element, all_sticks)
+                                elif type(board.field[x][y]) == Stones:
+                                    element = Stones((x, y), random.randrange(1, 10, 1))
+                                    board.field[x][y] = element
+                                    Stones_image(element, all_stones)
+                                elif type(board.field[x][y]) == Grass:
+                                    element = Grass((x, y), random.randrange(1, 10, 1))
+                                    board.field[x][y] = element
+                                    Grass_image(element, all_grass)
+                                elif type(board.field[x][y]) == Carrot:
+                                    element = Carrot((x, y))
+                                    board.field[x][y] = element
+                                    Carrot_image(element, all_carrot)
+                                elif type(board.field[x][y]) == Honey:
+                                    element = Honey((x, y))
+                                    board.field[x][y] = element
+                                    Honey_image(element, all_honey)
+                                elif type(board.field[x][y]) == NPS_1:
+                                    element = NPS_1((x, y))
+                                    board.field[x][y] = element
+                                    NPS_1_Image(element, npc_1_sprite)
+
+                        # Смещение объектов
+                        camera.update(hero)
+                        for sprite in all_sticks:
+                            camera.apply(sprite)
+                        for sprite in all_stones:
+                            camera.apply(sprite)
+                        for sprite in all_grass:
+                            camera.apply(sprite)
+                        for sprite in all_carrot:
+                            camera.apply(sprite)
+                        for sprite in all_honey:
+                            camera.apply(sprite)
+                        for sprite in npc_1_sprite:
+                            camera.apply(sprite)
+
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
                 arrow.rect.y = event.pos[1]
-                if board.get_click(event.pos):
-                    position = board.get_cell(event.pos)
-                    if type(board.field[position[0]][position[1]]) == Sticks:
+                if view.get_click(event.pos):
+                    position = view.get_cell(event.pos)
+                    if type(view.field[position[0]][position[1]]) == Sticks:
                         message_text = ['Палки:', '', '"Хотя бы что-то...', '',
                                         '                                    Ваня"']
-                    elif type(board.field[position[0]][position[1]]) == Stones:
+                    elif type(view.field[position[0]][position[1]]) == Stones:
                         message_text = ['Обычный камень:', '', '"Пфф, ничего не обычного...', '',
                                         '                                    Ваня"']
-                    elif type(board.field[position[0]][position[1]]) == Grass:
+                    elif type(view.field[position[0]][position[1]]) == Grass:
                         message_text = ['Зелёная трава:', '', '"В хозяйстве пригодиться...', '',
                                         '                                    Ваня"']
-                    elif type(board.field[position[0]][position[1]]) == Carrot:
+                    elif type(view.field[position[0]][position[1]]) == Carrot:
                         message_text = ['Морковь:', '', '"Можно съесть...', '',
                                         '                                    Ваня"']
-                    elif type(board.field[position[0]][position[1]]) == Hero:
+                    elif type(view.field[position[0]][position[1]]) == Honey:
+                        message_text = ['Мёд:', '', '"Ух ты, откуда же...', '',
+                                        '                                    Ваня"']
+                    elif type(view.field[position[0]][position[1]]) == Hero:
                         message_text = ['"Да-да, это я...', '',
                                         '                                    Ваня"']
-                    elif type(board.field[position[0]][position[1]]) == NPS_1:
+                    elif type(view.field[position[0]][position[1]]) == NPS_1:
                         message_text = ['"Какой-то оборванец...', '',
                                         '                                    Ваня"']
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    if board.get_click(event.pos):
-                        if type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Sticks or \
-                                type(board.field[board.get_cell(event.pos)[0]][
-                                         board.get_cell(event.pos)[1]]) == Stones or \
+                    if view.get_click(event.pos):
+                        if type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Sticks or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == Stones or \
                                 type(
-                                    board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Grass or \
-                                type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == Carrot:
-                            hero.take(board.get_cell(event.pos), event.pos)
-                        elif type(board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]]) == NPS_1:
-                            board.field[board.get_cell(event.pos)[0]][board.get_cell(event.pos)[1]].start_dialog()
+                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Grass or \
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Carrot or \
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Honey:
+                            hero.take(view.get_board_cell(event.pos), event.pos)
+                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1:
+                            view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
 
         # Вывод сообщений
         message_clock += 2
@@ -822,13 +1047,29 @@ if __name__ == '__main__':
                 message_clock = 0
 
         # Отрисовка объектов
+        for sprite in all_sticks:
+            all_sticks.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_stones:
+            all_stones.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_grass:
+            all_grass.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_carrot:
+            all_carrot.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_honey:
+            all_honey.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in npc_1_sprite:
+            npc_1_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+        hero_sprite.update(hero)
+
         all_sticks.draw(screen)
         all_stones.draw(screen)
         all_grass.draw(screen)
         all_carrot.draw(screen)
+        all_honey.draw(screen)
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
         print_text(text_coord, message_text)
+
         if pygame.mouse.get_focused():
             pygame.mouse.set_visible(False)
             arrow_sprite.draw(screen)

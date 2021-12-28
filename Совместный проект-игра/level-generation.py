@@ -1,11 +1,11 @@
 import random
 
-x_list = random.sample(range(0, 21), 20)
-y_list = random.sample(range(0, 21), 20)
+x_list = random.sample(range(0, 31), 30)
+y_list = random.sample(range(0, 31), 30)
 coord = []
-for i in range(20):
+for i in range(30):
     s = []
-    for j in range(20):
+    for j in range(30):
         s.append((x_list[i], y_list[j]))
     coord.append(s)
 
@@ -19,8 +19,9 @@ for x in range(-5, 6):
             S = 0
             G = 0
             C = 0
+            H = 0
             for j in range(len(coord[i])):
-                r = random.randrange(0, 15, 1)
+                r = random.randrange(-5, 16, 1)
                 if r <= 10:
                     s += '0'
                 elif r == 11 and S < 2:
@@ -35,6 +36,9 @@ for x in range(-5, 6):
                 elif r == 14 and C < 1 and S > 1:
                     s += 'C'
                     C += 1
+                elif r == 15 and H < 1 and G > 1:
+                    s += 'H'
+                    H += 1
                 else:
                     s += '0'
             output.append(s + '\n')
