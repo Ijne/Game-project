@@ -69,29 +69,38 @@ def choose_level(level, arg):
     x = level[level.find('(') + 1:level.find(',')].strip()
     y = level[level.find(',') + 1:level.find(')')].strip()
     if arg == pygame.K_w:
-        if y == '5':
+        if y == '7':
             return False
         return f'level({x}, {int(y) + 1}).txt'
     elif arg == pygame.K_s:
-        if y == '-5':
+        if y == '-7':
             return False
         return f'level({x}, {int(y) - 1}).txt'
     elif arg == pygame.K_a:
-        if x == '-5':
+        if x == '-7':
             return False
         return f'level({int(x) - 1}, {y}).txt'
     elif arg == pygame.K_d:
-        if x == '5':
+        if x == '7':
             return False
         return f'level({int(x) + 1}, {y}).txt'
 
 
 # Функция загрузки нового уровня
 def reload_level(new_level):
-    global level, hero
+    global level, hero, location
     if new_level:
         generate_level(load_level(new_level))
         level = new_level
+        x = level[level.find('(') + 1:level.find(',')].strip()
+        y = level[level.find(',') + 1:level.find(')')].strip()
+
+        if int(x) < -4 or int(x) > 4 or int(y) < -4 or int(y) > 4:
+            location = 'brown-field'
+        else:
+            location = 'forest'
+
+        print(location)
 
         # Создание спрайтов
         all_sticks.update(False, None)
@@ -127,6 +136,14 @@ def reload_level(new_level):
                     element = Honey((x, y))
                     board.field[x][y] = element
                     Honey_image(element, all_honey)
+                elif board.field[x][y] == 'M':
+                    element = Mushroom((x, y))
+                    board.field[x][y] = element
+                    Mushroom_image(element, all_mushrooms)
+                elif board.field[x][y] == 'B':
+                    element = Berries((x, y))
+                    board.field[x][y] = element
+                    Berries_image(element, all_berries)
                 elif board.field[x][y] == '1':
                     element = NPS_1((x, y))
                     board.field[x][y] = element
@@ -154,6 +171,10 @@ def reload_level(new_level):
         for sprite in all_carrot:
             camera.apply(sprite)
         for sprite in all_honey:
+            camera.apply(sprite)
+        for sprite in all_mushrooms:
+            camera.apply(sprite)
+        for sprite in all_berries:
             camera.apply(sprite)
         for sprite in npc_1_sprite:
             camera.apply(sprite)
@@ -195,6 +216,10 @@ def update_level(level):
                 s += 'C'
             elif type(board.field[x][y]) == Honey:
                 s += 'H'
+            elif type(board.field[x][y]) == Mushroom:
+                s += 'M'
+            elif type(board.field[x][y]) == Berries:
+                s += 'B'
             elif type(board.field[x][y]) == Hero:
                 s += '0'
             elif type(board.field[x][y]) == NPS_1:
@@ -433,6 +458,70 @@ class Honey_image(pygame.sprite.Sprite):
 class Honey:
     def __init__(self, position):
         self.food = 20
+        self.position = position
+
+
+# Классы грибов
+class Mushroom_image(pygame.sprite.Sprite):
+    image = load_image('mushroom.png')
+
+    def __init__(self, mushroom, *group):
+        super().__init__(*group)
+        self.image = Mushroom_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = mushroom.position[0] * board.cell_size + board.left
+        self.rect.y = mushroom.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Надеюсь, это съедобно...', '',
+                                    '                                    Ваня"']
+                    self.kill()
+
+
+class Mushroom:
+    def __init__(self, position):
+        self.food = 20
+        self.position = position
+
+
+# Классы ягод
+class Berries_image(pygame.sprite.Sprite):
+    image = load_image('berries.png')
+
+    def __init__(self, berries, *group):
+        super().__init__(*group)
+        self.image = Berries_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = berries.position[0] * board.cell_size + board.left
+        self.rect.y = berries.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Выглядят вскусно...', '',
+                                    '                                    Ваня"']
+                    self.kill()
+
+
+class Berries:
+    def __init__(self, position):
+        self.food = 30
         self.position = position
 
 
@@ -689,6 +778,8 @@ class Hero:
                             all_grass.update('kill', rect_position)
                             all_carrot.update('kill', rect_position)
                             all_honey.update('kill', rect_position)
+                            all_mushrooms.update('kill', rect_position)
+                            all_berries.update('kill', rect_position)
 
 
 # НПС-Оборванец
@@ -872,6 +963,7 @@ if __name__ == '__main__':
     # Генерация уровня
     board = Board(30, 30, screen)
     view = View()
+    location = 'forest'
 
     generate_level(load_level('level(0, 0).txt'))
     level = 'level(0, 0).txt'
@@ -910,6 +1002,8 @@ if __name__ == '__main__':
     all_grass = pygame.sprite.Group()
     all_carrot = pygame.sprite.Group()
     all_honey = pygame.sprite.Group()
+    all_mushrooms = pygame.sprite.Group()
+    all_berries = pygame.sprite.Group()
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
 
@@ -954,6 +1048,14 @@ if __name__ == '__main__':
                 element = Honey((x, y))
                 board.field[x][y] = element
                 Honey_image(element, all_honey)
+            elif board.field[x][y] == 'M':
+                element = Mushroom((x, y))
+                board.field[x][y] = element
+                Mushroom_image(element, all_mushrooms)
+            elif board.field[x][y] == 'B':
+                element = Berries((x, y))
+                board.field[x][y] = element
+                Berries_image(element, all_berries)
             elif board.field[x][y] == '1':
                 element = NPS_1((x, y))
                 board.field[x][y] = element
@@ -983,6 +1085,10 @@ if __name__ == '__main__':
         camera.apply(sprite)
     for sprite in npc_1_sprite:
         camera.apply(sprite)
+    for sprite in all_mushrooms:
+        camera.apply(sprite)
+    for sprite in all_berries:
+        camera.apply(sprite)
 
     top = (hero.position[0] % 10, hero.position[1] % 10)
     if hero.position[0] < 10:
@@ -1005,7 +1111,12 @@ if __name__ == '__main__':
     # Непосредственно запуск
     running = True
     while running:
-        background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
+        if location == 'forest':
+            background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
+        elif location == 'brown-field':
+            background = pygame.transform.scale(load_image('background-brown.png'), (880, 880))
+        else:
+            background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
         screen.blit(background, (0, 0))
         screen.blit(second_menu_background, (880, 640))
         screen.blit(inventory_menu_background, (880, 0))
@@ -1046,6 +1157,8 @@ if __name__ == '__main__':
                             all_grass.update(False, None)
                             all_carrot.update(False, None)
                             all_honey.update(False, None)
+                            all_mushrooms.update(False, None)
+                            all_berries.update(False, None)
                             npc_1_sprite.update(False, None)
 
                             for x in range(len(board.field)):
@@ -1070,6 +1183,14 @@ if __name__ == '__main__':
                                         element = Honey((x, y))
                                         board.field[x][y] = element
                                         Honey_image(element, all_honey)
+                                    elif type(board.field[x][y]) == Mushroom:
+                                        element = Mushroom((x, y))
+                                        board.field[x][y] = element
+                                        Mushroom_image(element, all_mushrooms)
+                                    elif type(board.field[x][y]) == Berries:
+                                        element = Berries((x, y))
+                                        board.field[x][y] = element
+                                        Berries_image(element, all_berries)
                                     elif type(board.field[x][y]) == NPS_1:
                                         element = NPS_1((x, y))
                                         board.field[x][y] = element
@@ -1086,6 +1207,10 @@ if __name__ == '__main__':
                             for sprite in all_carrot:
                                 camera.apply(sprite)
                             for sprite in all_honey:
+                                camera.apply(sprite)
+                            for sprite in all_mushrooms:
+                                camera.apply(sprite)
+                            for sprite in all_berries:
                                 camera.apply(sprite)
                             for sprite in npc_1_sprite:
                                 camera.apply(sprite)
@@ -1110,6 +1235,12 @@ if __name__ == '__main__':
                     elif type(view.field[position[0]][position[1]]) == Honey:
                         message_text = ['Мёд:', '', '"Ух ты, откуда же...', '',
                                         '                                    Ваня"']
+                    elif type(view.field[position[0]][position[1]]) == Mushroom:
+                        message_text = ['Гриб:', '', '"Выглядит как гриб...', '',
+                                        '                                    Ваня"']
+                    elif type(view.field[position[0]][position[1]]) == Berries:
+                        message_text = ['Ягоды:', '', '"Хочу попробовать...', '',
+                                        '                                    Ваня"']
                     elif type(view.field[position[0]][position[1]]) == Hero:
                         message_text = ['"Да-да, это я...', '',
                                         '                                    Ваня"']
@@ -1124,8 +1255,14 @@ if __name__ == '__main__':
                                          view.get_cell(event.pos)[1]]) == Stones or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Grass or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Carrot or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Honey:
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Carrot or \
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Honey or \
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Mushroom or \
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
                             hero.take(view.get_board_cell(event.pos), event.pos)
                         elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1:
                             view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
@@ -1156,6 +1293,10 @@ if __name__ == '__main__':
             all_carrot.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in all_honey:
             all_honey.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_mushrooms:
+            all_mushrooms.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_berries:
+            all_berries.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in npc_1_sprite:
             npc_1_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         hero_sprite.update(hero)
@@ -1165,6 +1306,8 @@ if __name__ == '__main__':
         all_grass.draw(screen)
         all_carrot.draw(screen)
         all_honey.draw(screen)
+        all_mushrooms.draw(screen)
+        all_berries.draw(screen)
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
         print_text(text_coord, message_text)
