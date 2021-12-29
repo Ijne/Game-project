@@ -1,129 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Update nps_1-dialog">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Add pictures">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-1, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-2, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-3, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-4, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, -7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 0).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, -7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 0).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-7, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(2, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(3, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(4, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, -7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 1).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 2).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 3).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(5, 7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, -7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 0).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(6, 7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, -7).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 0).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 1).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 2).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 3).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 4).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 6).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 7).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(7, 7).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/level-generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/level-generation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
@@ -351,7 +456,21 @@
       <option name="project" value="LOCAL" />
       <updated>1640793083373</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="New berries and MUUUUUSHROOOM">
+      <created>1640799041690</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1640799041690</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add pictures">
+      <created>1640799089891</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1640799089891</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -379,6 +498,19 @@
     <MESSAGE value="New carrot-object" />
     <MESSAGE value="Fix 2.0 reload-level, new butterfly-animation" />
     <MESSAGE value="Update nps_1-dialog" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update nps_1-dialog" />
+    <MESSAGE value="New berries and MUUUUUSHROOOM" />
+    <MESSAGE value="Add pictures" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add pictures" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

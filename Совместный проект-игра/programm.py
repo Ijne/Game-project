@@ -106,8 +106,14 @@ def reload_level(new_level):
         all_sticks.update(False, None)
         all_stones.update(False, None)
         all_grass.update(False, None)
+        all_brown_grass.update(False, None)
+        all_brown_stones.update(False, None)
+
         all_carrot.update(False, None)
         all_honey.update(False, None)
+        all_mushrooms.update(False, None)
+        all_berries.update(False, None)
+
         npc_1_sprite.update(False, None)
         hero_sprite.update(False)
 
@@ -128,6 +134,15 @@ def reload_level(new_level):
                     element = Grass((x, y), random.randrange(1, 10, 1))
                     board.field[x][y] = element
                     Grass_image(element, all_grass)
+                elif board.field[x][y] == 't':
+                    element = Brown_Stones((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Browns_Stones_image(element, all_brown_stones)
+                elif board.field[x][y] == 'g':
+                    element = Brown_Grass((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Borwn_Grass_image(element, all_brown_grass)
+
                 elif board.field[x][y] == 'C':
                     element = Carrot((x, y))
                     board.field[x][y] = element
@@ -144,6 +159,7 @@ def reload_level(new_level):
                     element = Berries((x, y))
                     board.field[x][y] = element
                     Berries_image(element, all_berries)
+
                 elif board.field[x][y] == '1':
                     element = NPS_1((x, y))
                     board.field[x][y] = element
@@ -168,6 +184,11 @@ def reload_level(new_level):
             camera.apply(sprite)
         for sprite in all_grass:
             camera.apply(sprite)
+        for sprite in all_brown_stones:
+            camera.apply(sprite)
+        for sprite in all_brown_grass:
+            camera.apply(sprite)
+
         for sprite in all_carrot:
             camera.apply(sprite)
         for sprite in all_honey:
@@ -176,6 +197,7 @@ def reload_level(new_level):
             camera.apply(sprite)
         for sprite in all_berries:
             camera.apply(sprite)
+
         for sprite in npc_1_sprite:
             camera.apply(sprite)
 
@@ -212,6 +234,11 @@ def update_level(level):
                 s += 'T'
             elif type(board.field[x][y]) == Grass:
                 s += 'G'
+            elif type(board.field[x][y]) == Brown_Stones:
+                s += 't'
+            elif type(board.field[x][y]) == Brown_Grass:
+                s += 'g'
+
             elif type(board.field[x][y]) == Carrot:
                 s += 'C'
             elif type(board.field[x][y]) == Honey:
@@ -222,6 +249,7 @@ def update_level(level):
                 s += 'B'
             elif type(board.field[x][y]) == Hero:
                 s += '0'
+
             elif type(board.field[x][y]) == NPS_1:
                 s += '1'
         output.append(s + '\n')
@@ -391,6 +419,72 @@ class Grass_image(pygame.sprite.Sprite):
 
 
 class Grass:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 0
+
+
+# Классы коричневых камней
+class Browns_Stones_image(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('stones-brown.png'), (43, 43))
+
+    def __init__(self, stone, *group):
+        super().__init__(*group)
+        self.image = Browns_Stones_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = stone.position[0] * board.cell_size + board.left
+        self.rect.y = stone.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"На удивление лёгкие...', '',
+                                    '                                    Ваня"']
+                    self.kill()
+
+
+class Brown_Stones:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 10
+
+
+# Классы коричневой травы
+class Borwn_Grass_image(pygame.sprite.Sprite):
+    image = load_image('grass-brown.png')
+
+    def __init__(self, grass, *group):
+        super().__init__(*group)
+        self.image = Borwn_Grass_image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = grass.position[0] * board.cell_size + board.left
+        self.rect.y = grass.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Пахнет приятно...', '',
+                                    '                                    Ваня"']
+                    self.kill()
+
+
+class Brown_Grass:
     def __init__(self, position, number):
         self.number = number
         self.position = position
@@ -606,8 +700,14 @@ class Hero:
                         all_sticks.draw(screen)
                         all_stones.draw(screen)
                         all_grass.draw(screen)
+                        all_brown_grass.draw(screen)
+                        all_brown_stones.draw(screen)
+
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
+                        all_mushrooms.draw(screen)
+                        all_berries.draw(screen)
+
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -646,8 +746,14 @@ class Hero:
                         all_sticks.draw(screen)
                         all_stones.draw(screen)
                         all_grass.draw(screen)
+                        all_brown_grass.draw(screen)
+                        all_brown_stones.draw(screen)
+
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
+                        all_mushrooms.draw(screen)
+                        all_berries.draw(screen)
+
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -686,8 +792,14 @@ class Hero:
                         all_sticks.draw(screen)
                         all_stones.draw(screen)
                         all_grass.draw(screen)
+                        all_brown_grass.draw(screen)
+                        all_brown_stones.draw(screen)
+
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
+                        all_mushrooms.draw(screen)
+                        all_berries.draw(screen)
+
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -726,8 +838,14 @@ class Hero:
                         all_sticks.draw(screen)
                         all_stones.draw(screen)
                         all_grass.draw(screen)
+                        all_brown_grass.draw(screen)
+                        all_brown_stones.draw(screen)
+
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
+                        all_mushrooms.draw(screen)
+                        all_berries.draw(screen)
+
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
                         if pygame.mouse.get_focused():
@@ -776,6 +894,9 @@ class Hero:
                             all_sticks.update('kill', rect_position)
                             all_stones.update('kill', rect_position)
                             all_grass.update('kill', rect_position)
+                            all_brown_grass.update('kill', rect_position)
+                            all_brown_grass.update('kill', rect_position)
+
                             all_carrot.update('kill', rect_position)
                             all_honey.update('kill', rect_position)
                             all_mushrooms.update('kill', rect_position)
@@ -1000,10 +1121,14 @@ if __name__ == '__main__':
     all_sticks = pygame.sprite.Group()
     all_stones = pygame.sprite.Group()
     all_grass = pygame.sprite.Group()
+    all_brown_grass = pygame.sprite.Group()
+    all_brown_stones = pygame.sprite.Group()
+
     all_carrot = pygame.sprite.Group()
     all_honey = pygame.sprite.Group()
     all_mushrooms = pygame.sprite.Group()
     all_berries = pygame.sprite.Group()
+
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
 
@@ -1040,6 +1165,14 @@ if __name__ == '__main__':
                 element = Grass((x, y), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Grass_image(element, all_grass)
+            elif board.field[x][y] == 't':
+                element = Brown_Stones((x, y), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Browns_Stones_image(element, all_brown_stones)
+            elif board.field[x][y] == 'g':
+                element = Brown_Grass((x, y), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Borwn_Grass_image(element, all_brown_grass)
             elif board.field[x][y] == 'C':
                 element = Carrot((x, y))
                 board.field[x][y] = element
@@ -1079,15 +1212,21 @@ if __name__ == '__main__':
         camera.apply(sprite)
     for sprite in all_grass:
         camera.apply(sprite)
+    for sprite in all_brown_stones:
+        camera.apply(sprite)
+    for sprite in all_brown_grass:
+        camera.apply(sprite)
+
     for sprite in all_carrot:
         camera.apply(sprite)
     for sprite in all_honey:
         camera.apply(sprite)
-    for sprite in npc_1_sprite:
-        camera.apply(sprite)
     for sprite in all_mushrooms:
         camera.apply(sprite)
     for sprite in all_berries:
+        camera.apply(sprite)
+
+    for sprite in npc_1_sprite:
         camera.apply(sprite)
 
     top = (hero.position[0] % 10, hero.position[1] % 10)
@@ -1155,10 +1294,14 @@ if __name__ == '__main__':
                             all_sticks.update(False, None)
                             all_stones.update(False, None)
                             all_grass.update(False, None)
+                            all_brown_stones.update(False, None)
+                            all_brown_grass.update(False, None)
+
                             all_carrot.update(False, None)
                             all_honey.update(False, None)
                             all_mushrooms.update(False, None)
                             all_berries.update(False, None)
+
                             npc_1_sprite.update(False, None)
 
                             for x in range(len(board.field)):
@@ -1175,6 +1318,15 @@ if __name__ == '__main__':
                                         element = Grass((x, y), random.randrange(1, 10, 1))
                                         board.field[x][y] = element
                                         Grass_image(element, all_grass)
+                                    elif type(board.field[x][y]) == Brown_Stones:
+                                        element = Brown_Stones((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Browns_Stones_image(element, all_brown_stones)
+                                    elif type(board.field[x][y]) == Brown_Grass:
+                                        element = Brown_Grass((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Borwn_Grass_image(element, all_brown_grass)
+
                                     elif type(board.field[x][y]) == Carrot:
                                         element = Carrot((x, y))
                                         board.field[x][y] = element
@@ -1191,6 +1343,7 @@ if __name__ == '__main__':
                                         element = Berries((x, y))
                                         board.field[x][y] = element
                                         Berries_image(element, all_berries)
+
                                     elif type(board.field[x][y]) == NPS_1:
                                         element = NPS_1((x, y))
                                         board.field[x][y] = element
@@ -1204,6 +1357,11 @@ if __name__ == '__main__':
                                 camera.apply(sprite)
                             for sprite in all_grass:
                                 camera.apply(sprite)
+                            for sprite in all_brown_stones:
+                                camera.apply(sprite)
+                            for sprite in all_brown_grass:
+                                camera.apply(sprite)
+
                             for sprite in all_carrot:
                                 camera.apply(sprite)
                             for sprite in all_honey:
@@ -1212,6 +1370,7 @@ if __name__ == '__main__':
                                 camera.apply(sprite)
                             for sprite in all_berries:
                                 camera.apply(sprite)
+
                             for sprite in npc_1_sprite:
                                 camera.apply(sprite)
 
@@ -1228,6 +1387,12 @@ if __name__ == '__main__':
                                         '                                    Ваня"']
                     elif type(view.field[position[0]][position[1]]) == Grass:
                         message_text = ['Зелёная трава:', '', '"В хозяйстве пригодиться...', '',
+                                        '                                    Ваня"']
+                    elif type(view.field[position[0]][position[1]]) == Brown_Grass:
+                        message_text = ['Жёлтая трава:', '', '"От неё идёт запах...', '',
+                                        '                                    Ваня"']
+                    elif type(view.field[position[0]][position[1]]) == Brown_Stones:
+                        message_text = ['Малый камень:', '', '"Камень, как и везде...', '',
                                         '                                    Ваня"']
                     elif type(view.field[position[0]][position[1]]) == Carrot:
                         message_text = ['Морковь:', '', '"Можно съесть...', '',
@@ -1255,12 +1420,18 @@ if __name__ == '__main__':
                                          view.get_cell(event.pos)[1]]) == Stones or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Grass or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == Brown_Stones or \
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Brown_Grass or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Carrot or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Honey or \
                                 type(
-                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Mushroom or \
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Mushroom or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
                             hero.take(view.get_board_cell(event.pos), event.pos)
@@ -1289,6 +1460,11 @@ if __name__ == '__main__':
             all_stones.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in all_grass:
             all_grass.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_brown_stones:
+            all_brown_stones.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_brown_grass:
+            all_brown_grass.update(True, (sprite.rect.x, sprite.rect.y))
+
         for sprite in all_carrot:
             all_carrot.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in all_honey:
@@ -1297,6 +1473,7 @@ if __name__ == '__main__':
             all_mushrooms.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in all_berries:
             all_berries.update(True, (sprite.rect.x, sprite.rect.y))
+
         for sprite in npc_1_sprite:
             npc_1_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         hero_sprite.update(hero)
@@ -1304,10 +1481,14 @@ if __name__ == '__main__':
         all_sticks.draw(screen)
         all_stones.draw(screen)
         all_grass.draw(screen)
+        all_brown_grass.draw(screen)
+        all_brown_stones.draw(screen)
+
         all_carrot.draw(screen)
         all_honey.draw(screen)
         all_mushrooms.draw(screen)
         all_berries.draw(screen)
+
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
         print_text(text_coord, message_text)

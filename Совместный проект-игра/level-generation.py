@@ -30,11 +30,19 @@ for x in range(-7, 8):
                     s += 'S'
                     S += 1
                 elif r == 13 and T < 1:
-                    s += 'T'
-                    T += 1
+                    if -5 < x < 5 and -5 < y < 5:
+                        s += 'T'
+                        T += 1
+                    else:
+                        s += 't'
+                        T += 1
                 elif r == 12 and G < 2:
-                    s += 'G'
-                    G += 1
+                    if -5 < x < 5 and -5 < y < 5:
+                        s += 'G'
+                        G += 1
+                    else:
+                        s += 'g'
+                        G += 1
                 elif r == 14 and S > 1:
                     if -5 < x < 5 and -5 < y < 5:
                         s += 'C'
