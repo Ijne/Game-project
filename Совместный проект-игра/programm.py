@@ -158,6 +158,17 @@ def reload_level(new_level):
         for sprite in npc_1_sprite:
             camera.apply(sprite)
 
+        top = (hero.position[0] % 10, hero.position[1] % 10)
+        if hero.position[0] < 10:
+            top = (0, top[1])
+        if hero.position[1] < 10:
+            top = (top[0], 0)
+        if hero.position[0] > 19:
+            top = (10, top[1])
+        if hero.position[1] > 19:
+            top = (top[0], 10)
+        bottom = (top[0] + 19, top[1] + 19)
+
         view.field = []
         for x in range(top[0], bottom[0] + 1):
             column = []
@@ -229,6 +240,39 @@ class Camera:
             self.dy = -((target.position[1] - 11) * 40 + 40 + 40 // 2 - 40 // 2)
 
 
+# Декорация-бабочка
+class D_butterfly(pygame.sprite.Sprite):
+    image = load_image('butterfly.png')
+
+    def __init__(self, position, *group):
+        super().__init__(*group)
+        self.image = D_butterfly.image
+        self.rect = self.image.get_rect()
+        self.rect.x = position[0] * board.cell_size + board.left
+        self.rect.y = position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if arg == 'animation':
+                r = random.randrange(0, 10)
+                first = random.randrange(-10, 10)
+                second = random.randrange(-10, 10)
+                if r == 7:
+                    self.image = pygame.transform.flip(self.image, True, True)
+                elif r == 8:
+                    self.image = pygame.transform.flip(self.image, False, True)
+                if first > second:
+                    self.rect.x += 1
+                else:
+                    self.rect.y += 1
+            elif self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+
+
 # Классы палок
 class Sticks_image(pygame.sprite.Sprite):
     image = load_image('sticks.png')
@@ -244,14 +288,15 @@ class Sticks_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
-        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
-            if self.rect.collidepoint(position):
-                self.kill()
-        if arg and self.rect.collidepoint(position):
-            if arg == 'kill':
-                message_text = ['"Полезная штука...', '',
-                                '                                    Ваня"']
-                self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Полезная штука...', '',
+                                    '                                    Ваня"']
+                    self.kill()
 
 
 class Sticks:
@@ -276,14 +321,15 @@ class Stones_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
-        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
-            if self.rect.collidepoint(position):
-                self.kill()
-        if arg and self.rect.collidepoint(position):
-            if arg == 'kill':
-                message_text = ['"Как мне их тоскать...', '',
-                                '                                    Ваня"']
-                self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Как мне их тоскать...', '',
+                                    '                                    Ваня"']
+                    self.kill()
 
 
 class Stones:
@@ -308,14 +354,15 @@ class Grass_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
-        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
-            if self.rect.collidepoint(position):
-                self.kill()
-        if arg and self.rect.collidepoint(position):
-            if arg == 'kill':
-                message_text = ['"Травка...', '',
-                                '                                    Ваня"']
-                self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Травка...', '',
+                                    '                                    Ваня"']
+                    self.kill()
 
 
 class Grass:
@@ -340,14 +387,15 @@ class Carrot_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
-        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
-            if self.rect.collidepoint(position):
-                self.kill()
-        if arg and self.rect.collidepoint(position):
-            if arg == 'kill':
-                message_text = ['"Отличная морковь...', '',
-                                '                                    Ваня"']
-                self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Отличная морковь...', '',
+                                    '                                    Ваня"']
+                    self.kill()
 
 
 class Carrot:
@@ -371,14 +419,15 @@ class Honey_image(pygame.sprite.Sprite):
         global message_text
         if not arg:
             self.kill()
-        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
-            if self.rect.collidepoint(position):
-                self.kill()
-        if arg and self.rect.collidepoint(position):
-            if arg == 'kill':
-                message_text = ['"Блин, обляпался...', '',
-                                '                                    Ваня"']
-                self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Блин, обляпался...', '',
+                                    '                                    Ваня"']
+                    self.kill()
 
 
 class Honey:
@@ -656,7 +705,7 @@ class NPS_1_Image(pygame.sprite.Sprite):
     def update(self, arg, position):
         if not arg:
             self.kill()
-        if self.rect.x > 800  or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+        if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
             if self.rect.collidepoint(position):
                 self.kill()
 
@@ -761,6 +810,7 @@ class Board:
         cell = self.get_cell(position)
         return self.on_click(cell)
 
+
 # Класс инвентаря
 class Inventory:
     def __init__(self):
@@ -775,6 +825,7 @@ class Inventory:
     def delete_thing(self, thing):
         n = self.inventory.index(thing)
         del self.inventory[n]
+
 
 # Класс инструментов
 class Weapon:
@@ -810,6 +861,7 @@ class View:
         cell = self.get_cell(position)
         return self.on_click(cell)
 
+
 # Запуск
 if __name__ == '__main__':
     # Заставка
@@ -818,13 +870,17 @@ if __name__ == '__main__':
     # Генерация уровня
     board = Board(30, 30, screen)
     view = View()
+
     generate_level(load_level('level(0, 0).txt'))
     level = 'level(0, 0).txt'
+
     camera = Camera()
     top = (0, 0)
     bottom = (19, 19)
+
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
+
     message_clock = 0
     passive_text = 'Passive'
     list_of_messages = [['"Пустота...', '',
@@ -834,6 +890,8 @@ if __name__ == '__main__':
                         ['"Ауу...', '',
                          '                                    Ваня"']
                         ]
+
+    decoration_clock = 0
 
     # Создание курсора
     arrow_sprite = pygame.sprite.Group()
@@ -850,6 +908,9 @@ if __name__ == '__main__':
     all_honey = pygame.sprite.Group()
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
+
+    # Спрайты декораций
+    d_butterfly_sprite = pygame.sprite.Group()
 
     # Текст
     message_text = []
@@ -919,6 +980,17 @@ if __name__ == '__main__':
     for sprite in npc_1_sprite:
         camera.apply(sprite)
 
+    top = (hero.position[0] % 10, hero.position[1] % 10)
+    if hero.position[0] < 10:
+        top = (0, top[1])
+    if hero.position[1] < 10:
+        top = (top[0], 0)
+    if hero.position[0] > 19:
+        top = (10, top[1])
+    if hero.position[1] > 19:
+        top = (top[0], 10)
+    bottom = (top[0] + 19, top[1] + 19)
+
     view.field = []
     for x in range(top[0], bottom[0] + 1):
         column = []
@@ -953,7 +1025,7 @@ if __name__ == '__main__':
                             if hero.position[0] > 19:
                                 top = (10, top[1])
                             if hero.position[1] > 19:
-                                top =(top[0], 10)
+                                top = (top[0], 10)
                             bottom = (top[0] + 19, top[1] + 19)
 
                             view.field = []
@@ -1092,6 +1164,22 @@ if __name__ == '__main__':
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
         print_text(text_coord, message_text)
+
+        # Отрисовка декораций
+        decoration_clock += 1
+        random_decoration = random.randrange(0, 10)
+        x = random.randrange(0, 20)
+        y = random.randrange(0, 20)
+        if random_decoration > 1 and decoration_clock == 500:
+            D_butterfly((x, y), d_butterfly_sprite)
+        if decoration_clock > 500:
+            decoration_clock = 0
+
+        for sprite in d_butterfly_sprite:
+            d_butterfly_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+
+        d_butterfly_sprite.update('animation', None)
+        d_butterfly_sprite.draw(screen)
 
         if pygame.mouse.get_focused():
             pygame.mouse.set_visible(False)
