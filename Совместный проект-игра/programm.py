@@ -714,50 +714,52 @@ class NPS_1:
     def __init__(self, position):
         self.position = position
         self.name = 'Оборванец'
-        self.questions = [('-Кто ты?', '-Кто ты?'), ('-Что ты здесь делаешь?', '-Что ты здесь делаешь?'),
-                          ('-Давно ты тут?', '-Давно ты тут?'), ('-Нам больше не о чем говорить',
-                                                                 '-Я не хочу с тобой говорить')]
-        self.answers = [('Пусто', 'Пусто'), ('-Приятно познакомиться', '-Я и сам не знаю'),
-                        ('-Чтож, я тоже', '-Будь менее грубым'), ('-Пока', '-Иди')]
-        self.hero_answers = [('E - Я Ваня', 'F - Скажи кто ты'), ('E - Я даже не знаю где я', 'F - Не твоё дело'),
-                             ('E - Только очнулся', 'F - Не знаю'), ('E - Пока', 'F - Я ухожу')]
+        self.main_step = nps_1_step
+        self.questions_1 = [('-Кто ты?', '-Кто ты?'), ('-Не мог бы ты мне помочь?', '-Не мог бы ты мне помочь?'),
+                            ('-Ну что согласен?', '-Ну что согласен?'), ('-Найди мою палку и принеси',
+                                                                         '-Я потерял палку, найди её')]
+
+        self.hero_answers_1 = [('E - Я не помню', 'F - Назови себя'), ('E - Что мне за это будет?', 'F - Нет не хочу'),
+                               ('E - Да', 'F - Так уж и быть'), ('E - Постараюсь', 'F - Ладно')]
+
+        self.answers_1 = [('Пусто', 'Пусто'), ('-Так же как и я', '-Я не знаю своего имени'),
+                          ('-Я поделюсь морковью', '-Я могу дать морковь'), ('-Тогда слушай', '-Тогда слушай')]
         self.step = 0
         self.feel = 0
 
+        if self.main_step == 1:
+            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
+
     def start_dialog(self):
+        global message_text, nps_1_step
         process = True
         while process:
             screen.blit(background, (0, 0))
             screen.blit(second_menu_background, (880, 640))
             screen.blit(inventory_menu_background, (880, 0))
-            if 0 < self.step <= len(self.questions) - 1:
-                message_text = ['Оборванец:', '', self.answers[self.step][self.feel], '',
-                                self.questions[self.step][self.feel], '',
-                                self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]]
+            if self.main_step > 1:
+                process = False
+            elif self.step == 0:
+                message_text = ['Оборванец:', '', self.replics[0][self.step][self.feel], '',
+                                self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
+            elif self.step <= len(self.replics[0]) - 1:
+                message_text = ['Оборванец:', '', self.replics[2][self.step][self.feel], '',
+                                self.replics[0][self.step][self.feel], '',
+                                self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
             else:
-                message_text = ['Оборванец:', '', self.questions[self.step][self.feel], '',
-                                self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]]
+                message_text = []
+                if nps_1_step < 2:
+                    nps_1_step += 1
+                process = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_e and self.step <= len(self.answers) - 1:
-                    message_text = ['Оборванец:', '', self.answers[self.step][0], '',
-                                    'Оборванец:', self.questions[self.step][self.feel], '',
-                                    self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]
-                                    ]
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                     self.step += 1
                     self.feel = 0
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_f and self.step <= len(self.answers) - 1:
-                    message_text = ['Оборванец:', self.answers[self.step][1], '',
-                                    'Оборванец:', self.questions[self.step][self.feel], '',
-                                    self.hero_answers[self.step][0], '', self.hero_answers[self.step][1]
-                                    ]
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
                     self.step += 1
                     self.feel = 1
-                elif self.step > len(self.answers) - 1:
-                    self.step = 0
-                    self.feel = 0
-                    process = False
                 if event.type == pygame.MOUSEMOTION:
                     arrow.rect.x = event.pos[0]
                     arrow.rect.y = event.pos[1]
@@ -877,6 +879,8 @@ if __name__ == '__main__':
     camera = Camera()
     top = (0, 0)
     bottom = (19, 19)
+
+    nps_1_step = 1
 
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
