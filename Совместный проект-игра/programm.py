@@ -100,8 +100,6 @@ def reload_level(new_level):
         else:
             location = 'forest'
 
-        print(location)
-
         # Создание спрайтов
         all_sticks.update(False, None)
         all_stones.update(False, None)
@@ -113,6 +111,8 @@ def reload_level(new_level):
         all_honey.update(False, None)
         all_mushrooms.update(False, None)
         all_berries.update(False, None)
+
+        d_butterfly_sprite.update(False, None)
 
         npc_1_sprite.update(False, None)
         hero_sprite.update(False)
@@ -326,6 +326,69 @@ class D_butterfly(pygame.sprite.Sprite):
                     self.kill()
 
 
+# Декорация-дождь
+class D_rain(pygame.sprite.Sprite):
+    image = load_image('rain.png')
+    image_2 = load_image('rain(2).png')
+    image_3 = load_image('rain(3).png')
+    blob = load_image('blob.png')
+
+    def __init__(self, position, *group):
+        super().__init__(*group)
+        r = random.randrange(0, 3)
+        if r == 0:
+            self.image = D_rain.image
+        elif r == 1:
+            self.image = D_rain.image_2
+        else:
+            self.image = D_rain.image_3
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = position[0] * board.cell_size + board.left
+        self.rect.y = position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.image == D_rain.blob:
+                if not pygame.sprite.spritecollideany(self, hero_sprite):
+                    self.kill()
+            for sprite in hero_sprite:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_berries:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_sticks:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_mushrooms:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_brown_grass:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_brown_stones:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            if arg == 'animation':
+                if self.image == D_rain.blob:
+                    self.rect.y -= 2
+                else:
+                    self.rect.y += 8
+            elif self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+
+
 # Классы палок
 class Sticks_image(pygame.sprite.Sprite):
     image = load_image('sticks.png')
@@ -334,6 +397,7 @@ class Sticks_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Sticks_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = stick.position[0] * board.cell_size + board.left
         self.rect.y = stick.position[1] * board.cell_size + board.top
 
@@ -367,6 +431,7 @@ class Stones_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Stones_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = stone.position[0] * board.cell_size + board.left
         self.rect.y = stone.position[1] * board.cell_size + board.top
 
@@ -400,6 +465,7 @@ class Grass_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Grass_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = grass.position[0] * board.cell_size + board.left
         self.rect.y = grass.position[1] * board.cell_size + board.top
 
@@ -433,6 +499,7 @@ class Browns_Stones_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Browns_Stones_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = stone.position[0] * board.cell_size + board.left
         self.rect.y = stone.position[1] * board.cell_size + board.top
 
@@ -466,6 +533,7 @@ class Borwn_Grass_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Borwn_Grass_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = grass.position[0] * board.cell_size + board.left
         self.rect.y = grass.position[1] * board.cell_size + board.top
 
@@ -499,6 +567,7 @@ class Carrot_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Carrot_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = carrot.position[0] * board.cell_size + board.left
         self.rect.y = carrot.position[1] * board.cell_size + board.top
 
@@ -531,6 +600,7 @@ class Honey_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Honey_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = honey.position[0] * board.cell_size + board.left
         self.rect.y = honey.position[1] * board.cell_size + board.top
 
@@ -563,6 +633,7 @@ class Mushroom_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Mushroom_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = mushroom.position[0] * board.cell_size + board.left
         self.rect.y = mushroom.position[1] * board.cell_size + board.top
 
@@ -595,6 +666,7 @@ class Berries_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Berries_image.image
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = berries.position[0] * board.cell_size + board.left
         self.rect.y = berries.position[1] * board.cell_size + board.top
 
@@ -629,6 +701,7 @@ class Hero_image(pygame.sprite.Sprite):
         super().__init__(*group)
         self.image = Hero_image.image_90
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = hero.position[0] * board.cell_size + board.left
         self.rect.y = hero.position[1] * board.cell_size + board.top
 
@@ -895,7 +968,7 @@ class Hero:
                             all_stones.update('kill', rect_position)
                             all_grass.update('kill', rect_position)
                             all_brown_grass.update('kill', rect_position)
-                            all_brown_grass.update('kill', rect_position)
+                            all_brown_stones.update('kill', rect_position)
 
                             all_carrot.update('kill', rect_position)
                             all_honey.update('kill', rect_position)
@@ -1134,6 +1207,7 @@ if __name__ == '__main__':
 
     # Спрайты декораций
     d_butterfly_sprite = pygame.sprite.Group()
+    d_rain_sprite = pygame.sprite.Group()
 
     # Текст
     message_text = []
@@ -1498,16 +1572,27 @@ if __name__ == '__main__':
         random_decoration = random.randrange(0, 10)
         x = random.randrange(0, 20)
         y = random.randrange(0, 20)
-        if random_decoration > 1 and decoration_clock == 500:
-            D_butterfly((x, y), d_butterfly_sprite)
-        if decoration_clock > 500:
-            decoration_clock = 0
+        if location == 'forest':
+            if random_decoration > 1 and decoration_clock == 500:
+                D_butterfly((x, y), d_butterfly_sprite)
+            if decoration_clock > 500:
+                decoration_clock = 0
+        elif location == 'brown-field':
+            if decoration_clock == 2:
+                D_rain((x, 0), d_rain_sprite)
+                D_rain((x + 2, y), d_rain_sprite)
+            if decoration_clock > 2:
+                decoration_clock = 0
 
         for sprite in d_butterfly_sprite:
             d_butterfly_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in d_rain_sprite:
+            d_rain_sprite.update(True, (sprite.rect.x, sprite.rect.y))
 
         d_butterfly_sprite.update('animation', None)
+        d_rain_sprite.update('animation', None)
         d_butterfly_sprite.draw(screen)
+        d_rain_sprite.draw(screen)
 
         if pygame.mouse.get_focused():
             pygame.mouse.set_visible(False)
