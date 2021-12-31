@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="New brown-stones and brown-gras objects">
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Rain-animation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-brown.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/background-brown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/images/stones-brown.png" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/images/stones-brown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, -1).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-5, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(-6, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -1).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, -5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/Documentation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 0).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(0, 5).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/default/level(1, -5).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,7 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640801616064</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Rain-animation">
+      <created>1640874105808</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1640874105808</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -288,7 +292,8 @@
     <MESSAGE value="New berries and MUUUUUSHROOOM" />
     <MESSAGE value="Add pictures" />
     <MESSAGE value="New brown-stones and brown-gras objects" />
-    <option name="LAST_COMMIT_MESSAGE" value="New brown-stones and brown-gras objects" />
+    <MESSAGE value="Rain-animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rain-animation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

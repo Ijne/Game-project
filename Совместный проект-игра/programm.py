@@ -96,7 +96,7 @@ def reload_level(new_level):
         y = level[level.find(',') + 1:level.find(')')].strip()
 
         if int(x) < -4 or int(x) > 4 or int(y) < -4 or int(y) > 4:
-            location = 'brown-field'
+            location = 'rainy-dale'
         else:
             location = 'forest'
 
@@ -115,6 +115,7 @@ def reload_level(new_level):
         d_butterfly_sprite.update(False, None)
 
         npc_1_sprite.update(False, None)
+        npc_2_sprite.update(False, None)
         hero_sprite.update(False)
 
         # Формирование объектов в списке
@@ -164,6 +165,11 @@ def reload_level(new_level):
                     element = NPS_1((x, y))
                     board.field[x][y] = element
                     NPS_1_Image(element, npc_1_sprite)
+                elif board.field[x][y] == '2':
+                    element = NPS_2((x, y))
+                    board.field[x][y] = element
+                    NPS_2_Image(element, npc_2_sprite)
+
         flag = False
         for x in range(len(board.field)):
             if flag:
@@ -199,6 +205,8 @@ def reload_level(new_level):
             camera.apply(sprite)
 
         for sprite in npc_1_sprite:
+            camera.apply(sprite)
+        for sprite in npc_2_sprite:
             camera.apply(sprite)
 
         top = (hero.position[0] % 10, hero.position[1] % 10)
@@ -252,6 +260,8 @@ def update_level(level):
 
             elif type(board.field[x][y]) == NPS_1:
                 s += '1'
+            elif type(board.field[x][y]) == NPS_2:
+                s += '2'
         output.append(s + '\n')
 
     filename = 'data/levels/default/' + level
@@ -380,10 +390,10 @@ class D_rain(pygame.sprite.Sprite):
                     self.image = D_rain.blob
                     self.mask = pygame.mask.from_surface(self.image)
             if arg == 'animation':
-                if self.image == D_rain.blob:
+                if self.image == D_rain.blob and pygame.sprite.spritecollideany(self, hero_sprite):
                     self.rect.y -= 2
                 else:
-                    self.rect.y += 8
+                    self.rect.y += 10
             elif self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
                 if self.rect.collidepoint(position):
                     self.kill()
@@ -990,9 +1000,10 @@ class NPS_1_Image(pygame.sprite.Sprite):
     def update(self, arg, position):
         if not arg:
             self.kill()
-        if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
-            if self.rect.collidepoint(position):
-                self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
 
 
 class NPS_1:
@@ -1058,6 +1069,103 @@ class NPS_1:
             hero_sprite.draw(screen)
             npc_1_sprite.draw(screen)
             print_text(text_coord, message_text)
+            if pygame.mouse.get_focused():
+                pygame.mouse.set_visible(False)
+                arrow_sprite.draw(screen)
+            pygame.display.flip()
+            clock.tick(FPS)
+
+
+# НПС-незнакомка
+class NPS_2_Image(pygame.sprite.Sprite):
+    image = load_image('npc-2.png')
+
+    def __init__(self, npc, *group):
+        super().__init__(*group)
+        self.image = NPS_2_Image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = npc.position[0] * board.cell_size + board.left
+        self.rect.y = npc.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+
+
+class NPS_2:
+    def __init__(self, position):
+        self.position = position
+        self.name = 'Незнакомка'
+        self.main_step = nps_2_step
+        self.questions_1 = [('-Прошу помоги', '-Прошу помоги'), ('-Так что, ты поможешь?', '-Поможешь мне?'),
+                            ('-Я поделюсь запасами', '-У меня есть ягоды'), ('-Принеси мне мой зонт',
+                                                                             '-Прошу, найди мой зонт')]
+
+        self.hero_answers_1 = [('E - Что случилось?', 'F - Кто ты?'), ('E - Как же я могу отказать',
+                                                                       'F - Мне нужна награда'),
+                               ('E - Сойдёт', 'F - Пойдёт'), ('E - Постараюсь', 'F - Ладно')]
+
+        self.answers_1 = [('Пусто', 'Пусто'), ('-Я потеряла зонт', '-Я не знаю своего имени'),
+                          ('-Я так рада', '-Ну раз так'), ('-Тогда слушай', '-Тогда слушай')]
+        self.step = 0
+        self.feel = 0
+
+        if self.main_step == 1:
+            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
+
+    def start_dialog(self):
+        global message_text, nps_2_step
+        process = True
+        while process:
+            screen.blit(background, (0, 0))
+            screen.blit(second_menu_background, (880, 640))
+            screen.blit(inventory_menu_background, (880, 0))
+            if self.main_step > 1:
+                process = False
+            elif self.step == 0:
+                message_text = ['Незнакомка:', '', self.replics[0][self.step][self.feel], '',
+                                self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
+            elif self.step <= len(self.replics[0]) - 1:
+                message_text = ['Незнакомка:', '', self.replics[2][self.step][self.feel], '',
+                                self.replics[0][self.step][self.feel], '',
+                                self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
+            else:
+                message_text = []
+                if nps_2_step < 2:
+                    nps_2_step += 1
+                process = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                    self.step += 1
+                    self.feel = 0
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                    self.step += 1
+                    self.feel = 1
+                if event.type == pygame.MOUSEMOTION:
+                    arrow.rect.x = event.pos[0]
+                    arrow.rect.y = event.pos[1]
+
+            # Отрисовка объектов
+            all_sticks.draw(screen)
+            all_brown_stones.draw(screen)
+            all_brown_grass.draw(screen)
+
+            all_mushrooms.draw(screen)
+            all_berries.draw(screen)
+            hero_sprite.draw(screen)
+
+            npc_2_sprite.draw(screen)
+            print_text(text_coord, message_text)
+
+            d_rain_sprite.update('animation', None)
+            d_rain_sprite.draw(screen)
+
             if pygame.mouse.get_focused():
                 pygame.mouse.set_visible(False)
                 arrow_sprite.draw(screen)
@@ -1167,6 +1275,7 @@ if __name__ == '__main__':
     bottom = (19, 19)
 
     nps_1_step = 1
+    nps_2_step = 1
 
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
@@ -1204,6 +1313,7 @@ if __name__ == '__main__':
 
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
+    npc_2_sprite = pygame.sprite.Group()
 
     # Спрайты декораций
     d_butterfly_sprite = pygame.sprite.Group()
@@ -1247,6 +1357,7 @@ if __name__ == '__main__':
                 element = Brown_Grass((x, y), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Borwn_Grass_image(element, all_brown_grass)
+
             elif board.field[x][y] == 'C':
                 element = Carrot((x, y))
                 board.field[x][y] = element
@@ -1263,10 +1374,16 @@ if __name__ == '__main__':
                 element = Berries((x, y))
                 board.field[x][y] = element
                 Berries_image(element, all_berries)
+
             elif board.field[x][y] == '1':
                 element = NPS_1((x, y))
                 board.field[x][y] = element
                 NPS_1_Image(element, npc_1_sprite)
+            elif board.field[x][y] == '2':
+                element = NPS_2((x, y))
+                board.field[x][y] = element
+                NPS_2_Image(element, npc_2_sprite)
+
     flag = False
     for x in range(len(board.field)):
         if flag:
@@ -1302,6 +1419,8 @@ if __name__ == '__main__':
 
     for sprite in npc_1_sprite:
         camera.apply(sprite)
+    for sprite in npc_2_sprite:
+        camera.apply(sprite)
 
     top = (hero.position[0] % 10, hero.position[1] % 10)
     if hero.position[0] < 10:
@@ -1326,7 +1445,7 @@ if __name__ == '__main__':
     while running:
         if location == 'forest':
             background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
-        elif location == 'brown-field':
+        elif location == 'rainy-dale':
             background = pygame.transform.scale(load_image('background-brown.png'), (880, 880))
         else:
             background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
@@ -1377,6 +1496,7 @@ if __name__ == '__main__':
                             all_berries.update(False, None)
 
                             npc_1_sprite.update(False, None)
+                            npc_2_sprite.update(False, None)
 
                             for x in range(len(board.field)):
                                 for y in range(len(board.field[x])):
@@ -1422,6 +1542,10 @@ if __name__ == '__main__':
                                         element = NPS_1((x, y))
                                         board.field[x][y] = element
                                         NPS_1_Image(element, npc_1_sprite)
+                                    elif type(board.field[x][y]) == NPS_2:
+                                        element = NPS_2((x, y))
+                                        board.field[x][y] = element
+                                        NPS_2_Image(element, npc_2_sprite)
 
                             # Смещение объектов
                             camera.update(hero)
@@ -1446,6 +1570,8 @@ if __name__ == '__main__':
                                 camera.apply(sprite)
 
                             for sprite in npc_1_sprite:
+                                camera.apply(sprite)
+                            for sprite in npc_2_sprite:
                                 camera.apply(sprite)
 
             if event.type == pygame.MOUSEMOTION:
@@ -1486,6 +1612,10 @@ if __name__ == '__main__':
                     elif type(view.field[position[0]][position[1]]) == NPS_1:
                         message_text = ['"Какой-то оборванец...', '',
                                         '                                    Ваня"']
+                    elif type(view.field[position[0]][position[1]]) == NPS_2:
+                        message_text = ['"Красивая незнакомка...', '',
+                                        '                                    Ваня"']
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if view.get_click(event.pos):
@@ -1509,7 +1639,8 @@ if __name__ == '__main__':
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
                             hero.take(view.get_board_cell(event.pos), event.pos)
-                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1:
+                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2:
                             view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
 
         # Вывод сообщений
@@ -1550,6 +1681,8 @@ if __name__ == '__main__':
 
         for sprite in npc_1_sprite:
             npc_1_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in npc_2_sprite:
+            npc_2_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         hero_sprite.update(hero)
 
         all_sticks.draw(screen)
@@ -1565,6 +1698,7 @@ if __name__ == '__main__':
 
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
+        npc_2_sprite.draw(screen)
         print_text(text_coord, message_text)
 
         # Отрисовка декораций
@@ -1577,11 +1711,11 @@ if __name__ == '__main__':
                 D_butterfly((x, y), d_butterfly_sprite)
             if decoration_clock > 500:
                 decoration_clock = 0
-        elif location == 'brown-field':
-            if decoration_clock == 2:
+        elif location == 'rainy-dale':
+            if decoration_clock == 1:
                 D_rain((x, 0), d_rain_sprite)
                 D_rain((x + 2, y), d_rain_sprite)
-            if decoration_clock > 2:
+            if decoration_clock > 1:
                 decoration_clock = 0
 
         for sprite in d_butterfly_sprite:
