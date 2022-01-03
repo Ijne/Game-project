@@ -27,21 +27,109 @@ def load_image(name, colorkey=None):
     return image
 
 
-# Функции загрузочного экрана
+# Функции и классы загрузочного экрана
+class Start_button(pygame.sprite.Sprite):
+    image = load_image('start_1.png')
+    image_2 = load_image('start_2.png')
+    image_3 = load_image('start_3.png')
+    image_4 = load_image('start_4.png')
+    image_5 = load_image('start_5.png')
+    image_0 = load_image('start_0.png')
+
+    def __init__(self, *group):
+        super().__init__(*group)
+        self.image = Start_button.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 500
+        self.rect.y = 650
+        self.flag = 0
+
+    def update(self, arg, pos):
+        if not arg:
+            if self.flag == 0:
+                if self.image == Start_button.image:
+                    self.image = Start_button.image_2
+                elif self.image == Start_button.image_2:
+                    self.image = Start_button.image_3
+                elif self.image == Start_button.image_3:
+                    self.image = Start_button.image_4
+                elif self.image == Start_button.image_4:
+                    self.image = Start_button.image_5
+                else:
+                    self.image = Start_button.image_4
+                    self.flag = 1
+            else:
+                if self.image == Start_button.image:
+                    self.image = Start_button.image_2
+                    self.flag = 0
+                elif self.image == Start_button.image_2:
+                    self.image = Start_button.image
+                elif self.image == Start_button.image_3:
+                    self.image = Start_button.image_2
+                else:
+                    self.image = Start_button.image_3
+        else:
+            if self.rect.collidepoint(pos):
+                self.image = Start_button.image_0
+            else:
+                self.image = Start_button.image
+
 def terminate():
     pygame.quit()
     sys.exit()
 
 
 def start_screen():
+    start_buttons = pygame.sprite.Group()
+    Start_button(start_buttons)
+
+    animation_time = 0
+    screen_x = -20
+    screen_y = -20
+    event_x = -777
+    event_y = -777
+
     while True:
-        screen.fill((255, 255, 255))
+        start_background = load_image('start_screen.png')
+        screen.blit(start_background, (screen_x, screen_y))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for sprite in start_buttons:
+                    if sprite.rect.collidepoint(event.pos):
+                        return
+            if event.type == pygame.MOUSEMOTION:
+                if event.pos[0] < event_x and event.pos[1] <= event_y:
+                    if screen_x < 0:
+                        screen_x += 1
+                    if screen_y < 0:
+                        screen_y += 1
+                elif event.pos[0] <= event_x and event.pos[1] > event_y:
+                    if screen_x < 0:
+                        screen_x += 1
+                    if screen_y > -40:
+                        screen_y += -1
+                elif event.pos[0] > event_x and event.pos[1] <= event_y:
+                    if screen_x > -40:
+                        screen_x += -1
+                    if screen_y < 0:
+                        screen_y += 1
+                elif event.pos[0] > event_x and event.pos[1] > event_y:
+                    if screen_x > -40:
+                        screen_x += -1
+                    if screen_y > -40:
+                        screen_y += -1
+                event_x = event.pos[0]
+                event_y = event.pos[1]
+                start_buttons.update(True, event.pos)
+        animation_time += 1
+        if animation_time == 6:
+            start_buttons.update(False, None)
+            animation_time = 0
+        start_buttons.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
