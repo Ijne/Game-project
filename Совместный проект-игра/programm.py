@@ -2,6 +2,7 @@ import pygame
 import os
 import sys
 import random
+import sqlite3
 
 # Готовим игру к работе
 pygame.init()
@@ -30,11 +31,7 @@ def load_image(name, colorkey=None):
 # Функции и классы загрузочного экрана
 class Start_button(pygame.sprite.Sprite):
     image = load_image('start_1.png')
-    image_2 = load_image('start_2.png')
-    image_3 = load_image('start_3.png')
-    image_4 = load_image('start_4.png')
-    image_5 = load_image('start_5.png')
-    image_0 = load_image('start_0.png')
+    image_2 = load_image('start_0.png')
 
     def __init__(self, *group):
         super().__init__(*group)
@@ -46,34 +43,51 @@ class Start_button(pygame.sprite.Sprite):
         self.flag = 0
 
     def update(self, arg, pos):
-        if not arg:
-            if self.flag == 0:
-                if self.image == Start_button.image:
-                    self.image = Start_button.image_2
-                elif self.image == Start_button.image_2:
-                    self.image = Start_button.image_3
-                elif self.image == Start_button.image_3:
-                    self.image = Start_button.image_4
-                elif self.image == Start_button.image_4:
-                    self.image = Start_button.image_5
-                else:
-                    self.image = Start_button.image_4
-                    self.flag = 1
-            else:
-                if self.image == Start_button.image:
-                    self.image = Start_button.image_2
-                    self.flag = 0
-                elif self.image == Start_button.image_2:
-                    self.image = Start_button.image
-                elif self.image == Start_button.image_3:
-                    self.image = Start_button.image_2
-                else:
-                    self.image = Start_button.image_3
+        if arg and self.rect.collidepoint(pos):
+            self.image = Start_button.image_2
         else:
-            if self.rect.collidepoint(pos):
-                self.image = Start_button.image_0
-            else:
-                self.image = Start_button.image
+            self.image = Start_button.image
+
+
+class Continue_button(pygame.sprite.Sprite):
+    image = load_image('continue_1.png')
+    image_2 = load_image('continue_0.png')
+
+    def __init__(self, *group):
+        super().__init__(*group)
+        self.image = Continue_button.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 440
+        self.rect.y = 550
+        self.flag = 0
+
+    def update(self, arg, pos):
+        if arg and self.rect.collidepoint(pos):
+            self.image = Continue_button.image_2
+        else:
+            self.image = Continue_button.image
+
+
+class New_button(pygame.sprite.Sprite):
+    image = load_image('new_1.png')
+    image_2 = load_image('new_0.png')
+
+    def __init__(self, *group):
+        super().__init__(*group)
+        self.image = New_button.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 440
+        self.rect.y = 640
+        self.flag = 0
+
+    def update(self, arg, pos):
+        if arg and self.rect.collidepoint(pos):
+            self.image = New_button.image_2
+        else:
+            self.image = New_button.image
+
 
 def terminate():
     pygame.quit()
@@ -84,7 +98,6 @@ def start_screen():
     start_buttons = pygame.sprite.Group()
     Start_button(start_buttons)
 
-    animation_time = 0
     screen_x = -20
     screen_y = -20
     event_x = -777
@@ -102,6 +115,7 @@ def start_screen():
                     if sprite.rect.collidepoint(event.pos):
                         return
             if event.type == pygame.MOUSEMOTION:
+                start_buttons.update(True, event.pos)
                 if event.pos[0] < event_x and event.pos[1] <= event_y:
                     if screen_x < 0:
                         screen_x += 1
@@ -124,24 +138,77 @@ def start_screen():
                         screen_y += -1
                 event_x = event.pos[0]
                 event_y = event.pos[1]
-                start_buttons.update(True, event.pos)
-        animation_time += 1
-        if animation_time == 6:
-            start_buttons.update(False, None)
-            animation_time = 0
         start_buttons.draw(screen)
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+def registration_screen():
+    global directory
+
+    continue_buttons = pygame.sprite.Group()
+    Continue_button(continue_buttons)
+    new_buttons = pygame.sprite.Group()
+    New_button(new_buttons)
+
+    screen_x = -20
+    screen_y = -20
+    event_x = -777
+    event_y = -777
+
+    while True:
+        start_background = load_image('start_screen.png')
+        screen.blit(start_background, (screen_x, screen_y))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for sprite in continue_buttons:
+                    if sprite.rect.collidepoint(event.pos):
+                        return
+                for sprite in new_buttons:
+                    if sprite.rect.collidepoint(event.pos):
+                        update_level_save()
+                        return
+            if event.type == pygame.MOUSEMOTION:
+                continue_buttons.update(True, event.pos)
+                new_buttons.update(True, event.pos)
+                if event.pos[0] < event_x and event.pos[1] <= event_y:
+                    if screen_x < 0:
+                        screen_x += 1
+                    if screen_y < 0:
+                        screen_y += 1
+                elif event.pos[0] <= event_x and event.pos[1] > event_y:
+                    if screen_x < 0:
+                        screen_x += 1
+                    if screen_y > -40:
+                        screen_y += -1
+                elif event.pos[0] > event_x and event.pos[1] <= event_y:
+                    if screen_x > -40:
+                        screen_x += -1
+                    if screen_y < 0:
+                        screen_y += 1
+                elif event.pos[0] > event_x and event.pos[1] > event_y:
+                    if screen_x > -40:
+                        screen_x += -1
+                    if screen_y > -40:
+                        screen_y += -1
+                event_x = event.pos[0]
+                event_y = event.pos[1]
+        continue_buttons.draw(screen)
+        new_buttons.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
 
 # Загрузка уровня
 def load_level(filename):
-    filename = 'data/levels/default/' + filename
+    filename = f'data/levels/save/' + filename
     with open(filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
 
     max_width = max(map(len, level_map))
-
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
@@ -352,9 +419,26 @@ def update_level(level):
                 s += '2'
         output.append(s + '\n')
 
-    filename = 'data/levels/default/' + level
+    filename = 'data/levels/save/' + level
     with open(filename, 'w') as mapFile:
         mapFile.writelines(output)
+
+
+def update_level_save():
+    con = sqlite3.connect('data/database.db')
+    cur = con.cursor()
+    for x in range(-7, 8):
+        for y in range(-7, 8):
+            file_in = open('data/levels/default/' + f'level({x}, {y}).txt', 'r')
+            file_out = open('data/levels/save/' + f'level({x}, {y}).txt', 'w')
+            file_out.write(file_in.read())
+    cur.execute(f"""UPDATE npc SET step = 1
+    WHERE name LIKE 'npc_1'""")
+    cur.execute(f"""UPDATE npc SET step = 1
+    WHERE name LIKE 'npc_2'""")
+    cur.execute(f"""UPDATE level SET level = 'level(0, 0).txt'""")
+    con.commit()
+    con.close()
 
 
 # Вывод текста во второе меню
@@ -865,7 +949,7 @@ class Hero:
                                 process = False
                             elif event.type == pygame.QUIT:
                                 update_level(level)
-                                pygame.quit()
+                                terminate()
 
                         # Отрисовка объектов
                         all_sticks.draw(screen)
@@ -911,7 +995,7 @@ class Hero:
                                 process = False
                             elif event.type == pygame.QUIT:
                                 update_level(level)
-                                pygame.quit()
+                                terminate()
 
                         # Отрисовка объектов
                         all_sticks.draw(screen)
@@ -957,7 +1041,7 @@ class Hero:
                                 process = False
                             elif event.type == pygame.QUIT:
                                 update_level(level)
-                                pygame.quit()
+                                terminate()
 
                         # Отрисовка объектов
                         all_sticks.draw(screen)
@@ -1003,7 +1087,7 @@ class Hero:
                                 process = False
                             elif event.type == pygame.QUIT:
                                 update_level(level)
-                                pygame.quit()
+                                terminate()
 
                         # Отрисовка объектов
                         all_sticks.draw(screen)
@@ -1116,6 +1200,8 @@ class NPS_1:
 
     def start_dialog(self):
         global message_text, nps_1_step
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
         process = True
         while process:
             screen.blit(background, (0, 0))
@@ -1134,10 +1220,15 @@ class NPS_1:
                 message_text = []
                 if nps_1_step < 2:
                     nps_1_step += 1
+                    cur.execute(f"""UPDATE npc SET step = {nps_1_step}
+                    WHERE name LIKE 'npc_1'""")
+                    con.commit()
+                    con.close()
                 process = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
+                    update_level(level)
+                    terminate()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                     self.step += 1
                     self.feel = 0
@@ -1207,6 +1298,8 @@ class NPS_2:
 
     def start_dialog(self):
         global message_text, nps_2_step
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
         process = True
         while process:
             screen.blit(background, (0, 0))
@@ -1225,10 +1318,15 @@ class NPS_2:
                 message_text = []
                 if nps_2_step < 2:
                     nps_2_step += 1
+                    cur.execute(f"""UPDATE npc SET step = {nps_2_step}
+                    WHERE name LIKE 'npc_2'""")
+                    con.commit()
+                    con.close()
                 process = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
+                    update_level(level)
+                    terminate()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                     self.step += 1
                     self.feel = 0
@@ -1347,23 +1445,32 @@ class View:
 
 # Запуск
 if __name__ == '__main__':
+    con = sqlite3.connect('data/database.db')
+    cur = con.cursor()
+
     # Заставка
     start_screen()
+
+    # Регистрация
+    registration_screen()
 
     # Генерация уровня
     board = Board(30, 30, screen)
     view = View()
     location = 'forest'
 
-    generate_level(load_level('level(0, 0).txt'))
-    level = 'level(0, 0).txt'
+    gen_level = load_level(cur.execute("""SELECT level FROM level""").fetchone()[0])
+    generate_level(gen_level)
+    level = cur.execute("""SELECT level FROM level""").fetchone()[0]
 
     camera = Camera()
     top = (0, 0)
     bottom = (19, 19)
 
-    nps_1_step = 1
-    nps_2_step = 1
+    nps_1_step = cur.execute("""SELECT step FROM npc
+        WHERE name LIKE 'npc_1'""").fetchone()[0]
+    nps_2_step = cur.execute("""SELECT step FROM npc
+        WHERE name LIKE 'npc_2'""").fetchone()[0]
 
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
@@ -1823,4 +1930,7 @@ if __name__ == '__main__':
         clock.tick(FPS)
 
     update_level(level)
+    cur.execute(f"""UPDATE level SET level = '{level}'""")
+    con.commit()
+    con.close()
     pygame.quit()
