@@ -957,6 +957,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1003,6 +1004,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1049,6 +1051,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1095,6 +1098,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1247,6 +1251,7 @@ class NPS_1:
             all_honey.draw(screen)
             hero_sprite.draw(screen)
             npc_1_sprite.draw(screen)
+            inventory_group.draw(screen)
             print_text(text_coord, message_text)
             if pygame.mouse.get_focused():
                 pygame.mouse.set_visible(False)
@@ -1345,6 +1350,7 @@ class NPS_2:
             all_mushrooms.draw(screen)
             all_berries.draw(screen)
             hero_sprite.draw(screen)
+            inventory_group.draw(screen)
 
             npc_2_sprite.draw(screen)
             print_text(text_coord, message_text)
@@ -1407,6 +1413,38 @@ class Inventory:
         n = self.inventory.index(thing)
         del self.inventory[n]
 
+    def draw(self):
+        global inventory_group
+        for i in range(len(self.inventory)):
+            if i > 90:
+                break
+            if self.inventory[i] == 'stick':
+                image = pygame.sprite.Sprite
+                image.image = load_image('stick.png')
+                image.image.set_colorkey((255, 255, 255))
+                image.rect = image.image.get_rect()
+                image.rect.x = 915 + 39 * ((i - 1) % 6)
+                image.rect.y = 35 + 39 * ((i - 1) // 6)
+            elif self.inventory[i] == 'stone':
+                image = pygame.sprite.Sprite
+                image.image = load_image('stone.png')
+                image.rect = image.image.get_rect()
+                image.rect.x = 915 + 39 * ((i - 1) % 6)
+                image.rect.y = 35 + 39 * ((i - 1) // 6)
+            elif self.inventory[i] == 'carrot':
+                image = pygame.sprite.Sprite
+                image.image = load_image('carrot_food.png')
+                image.rect = image.image.get_rect()
+                image.rect.x = 915 + 39 * ((i - 1) % 6)
+                image.rect.y = 35 + 39 * ((i - 1) // 6)
+            elif self.inventory[i] == 'honey':
+                image = pygame.sprite.Sprite
+                image.image = load_image('honey_food.png')
+                image.image.set_colorkey((255, 255, 255))
+                image.rect = image.image.get_rect()
+                image.rect.x = 915 + 39 * ((i - 1) % 6)
+                image.rect.y = 35 + 39 * ((i - 1) // 6)
+
 
 # Класс инструментов
 class Weapon:
@@ -1450,6 +1488,13 @@ if __name__ == '__main__':
 
     # Заставка
     start_screen()
+
+    inventory_group = pygame.sprite.Group()
+
+    # Стартовые инструменты
+    inventory = Inventory()
+    arm = Weapon(2, 2)
+    inventory.add_thing(arm)
 
     # Регистрация
     registration_screen()
@@ -1885,6 +1930,7 @@ if __name__ == '__main__':
         all_grass.draw(screen)
         all_brown_grass.draw(screen)
         all_brown_stones.draw(screen)
+        inventory_group.draw(screen)
 
         all_carrot.draw(screen)
         all_honey.draw(screen)
