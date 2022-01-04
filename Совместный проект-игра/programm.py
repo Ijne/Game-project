@@ -244,6 +244,10 @@ def choose_level(level, arg):
 # Функция загрузки нового уровня
 def reload_level(new_level):
     global level, hero, location
+
+    con = sqlite3.connect('data/database.db')
+    cur = con.cursor()
+
     if new_level:
         generate_level(load_level(new_level))
         level = new_level
@@ -252,8 +256,14 @@ def reload_level(new_level):
 
         if int(x) < -4 or int(x) > 4 or int(y) < -4 or int(y) > 4:
             location = 'rainy-dale'
+            cur.execute(f"""UPDATE location SET location = 'rainy-dale'""")
+            con.commit()
+            con.close()
         else:
             location = 'forest'
+            cur.execute(f"""UPDATE location SET location = 'forest'""")
+            con.commit()
+            con.close()
 
         # Создание спрайтов
         all_sticks.update(False, None)
@@ -437,6 +447,7 @@ def update_level_save():
     cur.execute(f"""UPDATE npc SET step = 1
     WHERE name LIKE 'npc_2'""")
     cur.execute(f"""UPDATE level SET level = 'level(0, 0).txt'""")
+    cur.execute(f"""UPDATE location SET location = 'forest'""")
     con.commit()
     con.close()
 
@@ -1457,7 +1468,7 @@ if __name__ == '__main__':
     # Генерация уровня
     board = Board(30, 30, screen)
     view = View()
-    location = 'forest'
+    location = cur.execute("""SELECT location FROM location""").fetchone()[0]
 
     gen_level = load_level(cur.execute("""SELECT level FROM level""").fetchone()[0])
     generate_level(gen_level)
