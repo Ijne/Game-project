@@ -11,8 +11,13 @@ clock = pygame.time.Clock()
 FPS = 60
 
 fon_0 = pygame.mixer.Sound('data/audio/fon_0.mp3')
+fon_0.set_volume(0.5)
 fon_1 = pygame.mixer.Sound('data/audio/fon_1.mp3')
 fon_2 = pygame.mixer.Sound('data/audio/fon_2.mp3')
+birds_audio = pygame.mixer.Sound('data/audio/birds.wav')
+birds_audio.set_volume(0.1)
+rain_audio = pygame.mixer.Sound('data/audio/rain.wav')
+rain_audio.set_volume(0.3)
 
 
 def play_music(music):
@@ -130,6 +135,8 @@ def start_screen():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for sprite in start_buttons:
                     if sprite.rect.collidepoint(event.pos):
+                        pygame.mixer.music.load('data/audio/click_effect.wav')
+                        pygame.mixer.music.play()
                         return
             if event.type == pygame.MOUSEMOTION:
                 start_buttons.update(True, event.pos)
@@ -183,10 +190,14 @@ def registration_screen():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for sprite in continue_buttons:
                     if sprite.rect.collidepoint(event.pos):
+                        pygame.mixer.music.load('data/audio/click_effect.wav')
+                        pygame.mixer.music.play()
                         fon_0.stop()
                         return
                 for sprite in new_buttons:
                     if sprite.rect.collidepoint(event.pos):
+                        pygame.mixer.music.load('data/audio/click_effect.wav')
+                        pygame.mixer.music.play()
                         update_level_save()
                         fon_0.stop()
                         return
@@ -262,7 +273,7 @@ def choose_level(level, arg):
 
 # Функция загрузки нового уровня
 def reload_level(new_level):
-    global level, hero, location
+    global level, hero, location, fon_time
 
     con = sqlite3.connect('data/database.db')
     cur = con.cursor()
@@ -274,11 +285,13 @@ def reload_level(new_level):
         y = level[level.find(',') + 1:level.find(')')].strip()
 
         if int(x) < -4 or int(x) > 4 or int(y) < -4 or int(y) > 4:
+            fon_time = 0
             location = 'rainy-dale'
             cur.execute(f"""UPDATE location SET location = 'rainy-dale'""")
             con.commit()
             con.close()
         else:
+            fon_time = 0
             location = 'forest'
             cur.execute(f"""UPDATE location SET location = 'forest'""")
             con.commit()
@@ -1189,6 +1202,17 @@ class Hero:
                                     type(board.field[position[0]][position[1]]) == Brown_Stones:
                                 pygame.mixer.music.load('data/audio/stone.wav')
                                 pygame.mixer.music.play()
+                                pygame.mixer.music.play()
+                            elif type(board.field[position[0]][position[1]]) == Grass or \
+                                    type(board.field[position[0]][position[1]]) == Brown_Grass:
+                                pygame.mixer.music.load('data/audio/grass_0.wav')
+                                pygame.mixer.music.play()
+                            elif type(board.field[position[0]][position[1]]) == Carrot or \
+                                    type(board.field[position[0]][position[1]]) == Mushroom or \
+                                    type(board.field[position[0]][position[1]]) == Berries or \
+                                    type(board.field[position[0]][position[1]]) == Honey:
+                                pygame.mixer.music.load('data/audio/carrot.wav')
+                                pygame.mixer.music.play()
                             board.field[position[0]][position[1]] = 0
                             view.field[position[0] - top[0]][position[1] - top[1]] = 0
                             all_sticks.update('kill', rect_position)
@@ -1532,6 +1556,7 @@ if __name__ == '__main__':
 
     decoration_clock = 0
     music_time = 0
+    fon_time = 0
     volume = 0
     mus = fon_1
 
@@ -1903,13 +1928,23 @@ if __name__ == '__main__':
 
         # Запуск музыки
         music_time += 1
+        fon_time += 1
+        if fon_time == 1:
+            if location == 'forest':
+                stop_music(rain_audio)
+                play_music(birds_audio)
+            else:
+                stop_music(birds_audio)
+                play_music(rain_audio)
+        if fon_time == 1000:
+            fon_time = 0
         if music_time == 5000:
             play_music(mus)
         if 1000 < music_time < 2000:
             if volume < 1:
                 volume += 0.001
                 volume_music(mus, volume)
-        if music_time >= 10000:
+        if music_time >= 8000:
             volume -= 0.001
             print(volume)
             volume_music(mus, volume)
