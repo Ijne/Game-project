@@ -10,6 +10,27 @@ screen = pygame.display.set_mode((1180, 880))
 clock = pygame.time.Clock()
 FPS = 60
 
+fon_0 = pygame.mixer.Sound('data/audio/fon_0.mp3')
+fon_0.set_volume(0.5)
+fon_1 = pygame.mixer.Sound('data/audio/fon_1.mp3')
+fon_2 = pygame.mixer.Sound('data/audio/fon_2.mp3')
+birds_audio = pygame.mixer.Sound('data/audio/birds.wav')
+birds_audio.set_volume(0.1)
+rain_audio = pygame.mixer.Sound('data/audio/rain.wav')
+rain_audio.set_volume(0.3)
+
+
+def play_music(music):
+    music.play()
+
+
+def stop_music(music):
+    music.stop()
+
+
+def volume_music(music, volume):
+    music.set_volume(volume)
+
 
 # Функция загрузки изображений
 def load_image(name, colorkey=None):
@@ -95,6 +116,7 @@ def terminate():
 
 
 def start_screen():
+    fon_0.play()
     start_buttons = pygame.sprite.Group()
     Start_button(start_buttons)
 
@@ -113,6 +135,8 @@ def start_screen():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for sprite in start_buttons:
                     if sprite.rect.collidepoint(event.pos):
+                        pygame.mixer.music.load('data/audio/click_effect.wav')
+                        pygame.mixer.music.play()
                         return
             if event.type == pygame.MOUSEMOTION:
                 start_buttons.update(True, event.pos)
@@ -166,10 +190,16 @@ def registration_screen():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for sprite in continue_buttons:
                     if sprite.rect.collidepoint(event.pos):
+                        pygame.mixer.music.load('data/audio/click_effect.wav')
+                        pygame.mixer.music.play()
+                        fon_0.stop()
                         return
                 for sprite in new_buttons:
                     if sprite.rect.collidepoint(event.pos):
+                        pygame.mixer.music.load('data/audio/click_effect.wav')
+                        pygame.mixer.music.play()
                         update_level_save()
+                        fon_0.stop()
                         return
             if event.type == pygame.MOUSEMOTION:
                 continue_buttons.update(True, event.pos)
@@ -243,7 +273,11 @@ def choose_level(level, arg):
 
 # Функция загрузки нового уровня
 def reload_level(new_level):
-    global level, hero, location
+    global level, hero, location, fon_time
+
+    con = sqlite3.connect('data/database.db')
+    cur = con.cursor()
+
     if new_level:
         generate_level(load_level(new_level))
         level = new_level
@@ -251,9 +285,17 @@ def reload_level(new_level):
         y = level[level.find(',') + 1:level.find(')')].strip()
 
         if int(x) < -4 or int(x) > 4 or int(y) < -4 or int(y) > 4:
+            fon_time = 0
             location = 'rainy-dale'
+            cur.execute(f"""UPDATE location SET location = 'rainy-dale'""")
+            con.commit()
+            con.close()
         else:
+            fon_time = 0
             location = 'forest'
+            cur.execute(f"""UPDATE location SET location = 'forest'""")
+            con.commit()
+            con.close()
 
         # Создание спрайтов
         all_sticks.update(False, None)
@@ -437,6 +479,7 @@ def update_level_save():
     cur.execute(f"""UPDATE npc SET step = 1
     WHERE name LIKE 'npc_2'""")
     cur.execute(f"""UPDATE level SET level = 'level(0, 0).txt'""")
+    cur.execute(f"""UPDATE location SET location = 'forest'""")
     con.commit()
     con.close()
 
@@ -949,6 +992,8 @@ class Hero:
                 self.view = 0
                 board.field[hero.position[0]][hero.position[1] + 1] = 0
                 board.field[self.position[0]][self.position[1]] = self
+                pygame.mixer.music.load('data/audio/grass.wav')
+                pygame.mixer.music.play()
             elif not board.on_click((self.position[0], self.position[1] - 1)):
                 if choose_level(level, arg):
                     process = True
@@ -996,6 +1041,8 @@ class Hero:
                 self.view = 180
                 board.field[hero.position[0]][hero.position[1] - 1] = 0
                 board.field[self.position[0]][self.position[1]] = self
+                pygame.mixer.music.load('data/audio/grass.wav')
+                pygame.mixer.music.play()
             elif not board.on_click((self.position[0], self.position[1] + 1)):
                 if choose_level(level, arg):
                     process = True
@@ -1043,6 +1090,8 @@ class Hero:
                 self.view = 270
                 board.field[hero.position[0] + 1][hero.position[1]] = 0
                 board.field[self.position[0]][self.position[1]] = self
+                pygame.mixer.music.load('data/audio/grass.wav')
+                pygame.mixer.music.play()
             elif not board.on_click((self.position[0] - 1, self.position[1])):
                 if choose_level(level, arg):
                     process = True
@@ -1090,6 +1139,8 @@ class Hero:
                 self.view = 90
                 board.field[hero.position[0] - 1][hero.position[1]] = 0
                 board.field[self.position[0]][self.position[1]] = self
+                pygame.mixer.music.load('data/audio/grass.wav')
+                pygame.mixer.music.play()
             elif not board.on_click((self.position[0] + 1, self.position[1])):
                 if choose_level(level, arg):
                     process = True
@@ -1165,6 +1216,24 @@ class Hero:
                                     if hero.view == 270:
                                         flag = True
                         if flag:
+                            if type(board.field[position[0]][position[1]]) == Sticks:
+                                pygame.mixer.music.load('data/audio/tree.wav')
+                                pygame.mixer.music.play()
+                            elif type(board.field[position[0]][position[1]]) == Stones or \
+                                    type(board.field[position[0]][position[1]]) == Brown_Stones:
+                                pygame.mixer.music.load('data/audio/stone.wav')
+                                pygame.mixer.music.play()
+                                pygame.mixer.music.play()
+                            elif type(board.field[position[0]][position[1]]) == Grass or \
+                                    type(board.field[position[0]][position[1]]) == Brown_Grass:
+                                pygame.mixer.music.load('data/audio/grass_0.wav')
+                                pygame.mixer.music.play()
+                            elif type(board.field[position[0]][position[1]]) == Carrot or \
+                                    type(board.field[position[0]][position[1]]) == Mushroom or \
+                                    type(board.field[position[0]][position[1]]) == Berries or \
+                                    type(board.field[position[0]][position[1]]) == Honey:
+                                pygame.mixer.music.load('data/audio/carrot.wav')
+                                pygame.mixer.music.play()
                             board.field[position[0]][position[1]] = 0
                             view.field[position[0] - top[0]][position[1] - top[1]] = 0
                             all_sticks.update('kill', rect_position)
@@ -1820,7 +1889,7 @@ if __name__ == '__main__':
     # Генерация уровня
     board = Board(30, 30, screen)
     view = View()
-    location = 'forest'
+    location = cur.execute("""SELECT location FROM location""").fetchone()[0]
 
     gen_level = load_level(cur.execute("""SELECT level FROM level""").fetchone()[0])
     generate_level(gen_level)
@@ -1849,6 +1918,10 @@ if __name__ == '__main__':
                         ]
 
     decoration_clock = 0
+    music_time = 0
+    fon_time = 0
+    volume = 0
+    mus = fon_1
 
     # Создание курсора
     arrow_sprite = pygame.sprite.Group()
@@ -2221,6 +2294,37 @@ if __name__ == '__main__':
             if message_clock >= 750:
                 message_text = []
                 message_clock = 0
+
+        # Запуск музыки
+        music_time += 1
+        fon_time += 1
+        if fon_time == 1:
+            if location == 'forest':
+                stop_music(rain_audio)
+                play_music(birds_audio)
+            else:
+                stop_music(birds_audio)
+                play_music(rain_audio)
+        if fon_time == 1000:
+            fon_time = 0
+        if music_time == 5000:
+            play_music(mus)
+        if 1000 < music_time < 2000:
+            if volume < 1:
+                volume += 0.001
+                volume_music(mus, volume)
+        if music_time >= 8000:
+            volume -= 0.001
+            print(volume)
+            volume_music(mus, volume)
+            if volume <= 0:
+                stop_music(mus)
+                music_time = 0
+                volume = 0
+                if mus == fon_1:
+                    mus = fon_2
+                else:
+                    mus = fon_1
 
         # Отрисовка объектов
         for sprite in all_sticks:
