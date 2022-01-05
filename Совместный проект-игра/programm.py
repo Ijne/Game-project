@@ -15,7 +15,7 @@ fon_0.set_volume(0.5)
 fon_1 = pygame.mixer.Sound('data/audio/fon_1.mp3')
 fon_2 = pygame.mixer.Sound('data/audio/fon_2.mp3')
 birds_audio = pygame.mixer.Sound('data/audio/birds.wav')
-birds_audio.set_volume(0.05)
+birds_audio.set_volume(0.1)
 rain_audio = pygame.mixer.Sound('data/audio/rain.wav')
 rain_audio.set_volume(0.3)
 
@@ -849,6 +849,8 @@ class Sticks_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"Полезная штука...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('stick')
+                    inventory.draw()
                     self.kill()
 
 
@@ -883,6 +885,8 @@ class Stones_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"Как мне их тоскать...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('stone')
+                    inventory.draw()
                     self.kill()
 
 
@@ -951,6 +955,8 @@ class Browns_Stones_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"На удивление лёгкие...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('stone')
+                    inventory.draw()
                     self.kill()
 
 
@@ -1009,6 +1015,7 @@ class Carrot_image(pygame.sprite.Sprite):
 
     def update(self, arg, position):
         global message_text
+        global inventory
         if not arg:
             self.kill()
         else:
@@ -1019,6 +1026,8 @@ class Carrot_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"Отличная морковь...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('carrot')
+                    inventory.draw()
                     self.kill()
 
 
@@ -1052,6 +1061,8 @@ class Honey_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"Блин, обляпался...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('honey')
+                    inventory.draw()
                     self.kill()
 
 
@@ -1085,6 +1096,8 @@ class Mushroom_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"Надеюсь, это съедобно...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('mushroom')
+                    inventory.draw()
                     self.kill()
 
 
@@ -1118,6 +1131,8 @@ class Berries_image(pygame.sprite.Sprite):
                 if arg == 'kill':
                     message_text = ['"Выглядят вскусно...', '',
                                     '                                    Ваня"']
+                    inventory.add_thing('berries')
+                    inventory.draw()
                     self.kill()
 
 
@@ -1177,6 +1192,8 @@ class Hero:
         self.hp = 100
         self.position = position
         self.view = 90
+        self.weapon = 'arm'
+        self.power = 2
 
     def move(self, arg):
         if arg == pygame.K_w:
@@ -1214,6 +1231,7 @@ class Hero:
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
                         all_dark_grass.draw(screen)
+                        inventory_group.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1262,6 +1280,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
                         all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
@@ -1311,6 +1330,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
                         all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
@@ -1360,6 +1380,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        inventory_group.draw(screen)
                         all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
@@ -1532,6 +1553,7 @@ class NPS_1:
             all_honey.draw(screen)
             hero_sprite.draw(screen)
             npc_1_sprite.draw(screen)
+            inventory_group.draw(screen)
             print_text(text_coord, message_text)
             if pygame.mouse.get_focused():
                 pygame.mouse.set_visible(False)
@@ -1630,6 +1652,7 @@ class NPS_2:
             all_mushrooms.draw(screen)
             all_berries.draw(screen)
             hero_sprite.draw(screen)
+            inventory_group.draw(screen)
 
             npc_2_sprite.draw(screen)
             print_text(text_coord, message_text)
@@ -1677,10 +1700,143 @@ class Board:
         return self.on_click(cell)
 
 
+class Sticks_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('stick.png'), (36, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Sticks_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914 + 39 * ((i - 1) % 6)
+        self.rect.y = 37 + 38 * ((i - 1) // 6)
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
+class Stone_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('stone.png'), (36, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Stone_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914 + 39 * ((i - 1) % 6)
+        self.rect.y = 37 + 38 * ((i - 1) // 6)
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
+class Carrot_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('carrot_food.png'), (35, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Carrot_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914 + 39 * ((i - 1) % 6)
+        self.rect.y = 37 + 38 * ((i - 1) // 6)
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
+class Honey_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('honey_food.png'), (36, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Honey_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914 + 39 * ((i - 1) % 6)
+        self.rect.y = 37 + 38 * ((i - 1) // 6)
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
+class Mushroom_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('mushroom_food.png'), (36, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Mushroom_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914 + 39 * ((i - 1) % 6)
+        self.rect.y = 37 + 38 * ((i - 1) // 6)
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
+class Berries_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('berries_food.png'), (36, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Berries_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914 + 39 * ((i - 1) % 6)
+        self.rect.y = 37 + 38 * ((i - 1) // 6)
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
+class Arm_Weapon(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('arm.png'), (35, 34))
+    image.set_colorkey((255, 255, 255))
+
+    def __init__(self, i, *group):
+        super().__init__(*group)
+        self.image = Arm_Weapon.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 914
+        self.rect.y = 37
+
+    def update(self, arg, index):
+        global inventory
+        if arg == 'kill':
+            self.kill()
+            inventory.delete_thing(index)
+            inventory.draw()
+
+
 # Класс инвентаря
 class Inventory:
     def __init__(self):
-        self.inventory = []
+        self.inventory = ['arm']
 
     def get_inventory(self):
         return self.inventory
@@ -1688,9 +1844,210 @@ class Inventory:
     def add_thing(self, thing):
         self.inventory.append(thing)
 
-    def delete_thing(self, thing):
-        n = self.inventory.index(thing)
-        del self.inventory[n]
+    def delete_thing(self, index):
+        del self.inventory[index]
+
+    def draw(self):
+        global inventory_group
+        for i in range(len(self.inventory)):
+            if i > 89:
+                break
+            if self.inventory[i] == 'arm':
+                arm = Arm_Weapon(i, inventory_group)
+            elif self.inventory[i] == 'stick':
+                stick = Sticks_Weapon(i + 1, inventory_group)
+            elif self.inventory[i] == 'stone':
+                stone = Stone_Weapon(i + 1, inventory_group)
+            elif self.inventory[i] == 'carrot':
+                carrot = Carrot_Weapon(i + 1, inventory_group)
+            elif self.inventory[i] == 'honey':
+                honey = Honey_Weapon(i + 1, inventory_group)
+            elif self.inventory[i] == 'mushroom':
+                mushroom = Mushroom_Weapon(i + 1, inventory_group)
+            elif self.inventory[i] == 'berries':
+                berries = Berries_Weapon(i + 1, inventory_group)
+
+    def get_cell(self, pos):
+        if pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 38 and pos[1] <= 72:
+            return 0
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 38 and pos[1] <= 72:
+            return 1
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 38 and pos[1] <= 72:
+            return 2
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 38 and pos[1] <= 72:
+            return 3
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 38 and pos[1] <= 72:
+            return 4
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 38 and pos[1] <= 72:
+            return 5
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 76 and pos[1] <= 110:
+            return 6
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 76 and pos[1] <= 110:
+            return 7
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 76 and pos[1] <= 110:
+            return 8
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 76 and pos[1] <= 110:
+            return 9
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 76 and pos[1] <= 110:
+            return 10
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 76 and pos[1] <= 110:
+            return 11
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 114 and pos[1] <= 148:
+            return 12
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 114 and pos[1] <= 148:
+            return 13
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 114 and pos[1] <= 148:
+            return 14
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 114 and pos[1] <= 148:
+            return 15
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 114 and pos[1] <= 148:
+            return 16
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 114 and pos[1] <= 148:
+            return 17
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 152 and pos[1] <= 186:
+            return 18
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 152 and pos[1] <= 186:
+            return 19
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 152 and pos[1] <= 186:
+            return 20
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 152 and pos[1] <= 186:
+            return 21
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 152 and pos[1] <= 186:
+            return 22
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 152 and pos[1] <= 186:
+            return 23
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 190 and pos[1] <= 224:
+            return 24
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 190 and pos[1] <= 224:
+            return 25
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 190 and pos[1] <= 224:
+            return 26
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 190 and pos[1] <= 224:
+            return 27
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 190 and pos[1] <= 224:
+            return 28
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 190 and pos[1] <= 224:
+            return 29
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 228 and pos[1] <= 262:
+            return 30
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 228 and pos[1] <= 262:
+            return 31
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 228 and pos[1] <= 262:
+            return 32
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 228 and pos[1] <= 262:
+            return 33
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 228 and pos[1] <= 262:
+            return 34
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 228 and pos[1] <= 262:
+            return 35
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 266 and pos[1] <= 300:
+            return 36
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 266 and pos[1] <= 300:
+            return 37
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 266 and pos[1] <= 300:
+            return 38
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 266 and pos[1] <= 300:
+            return 39
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 266 and pos[1] <= 300:
+            return 40
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 266 and pos[1] <= 300:
+            return 41
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 304 and pos[1] <= 338:
+            return 42
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 304 and pos[1] <= 338:
+            return 43
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 304 and pos[1] <= 338:
+            return 44
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 304 and pos[1] <= 338:
+            return 45
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 304 and pos[1] <= 338:
+            return 46
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 304 and pos[1] <= 338:
+            return 47
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 342 and pos[1] <= 376:
+            return 48
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 342 and pos[1] <= 376:
+            return 49
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 342 and pos[1] <= 376:
+            return 50
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 342 and pos[1] <= 376:
+            return 51
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 342 and pos[1] <= 376:
+            return 52
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 342 and pos[1] <= 376:
+            return 53
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 380 and pos[1] <= 414:
+            return 54
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 380 and pos[1] <= 414:
+            return 55
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 380 and pos[1] <= 414:
+            return 56
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 380 and pos[1] <= 414:
+            return 57
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 380 and pos[1] <= 414:
+            return 58
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 380 and pos[1] <= 414:
+            return 59
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 418 and pos[1] <= 452:
+            return 60
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 418 and pos[1] <= 452:
+            return 61
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 418 and pos[1] <= 452:
+            return 62
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 418 and pos[1] <= 452:
+            return 63
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 418 and pos[1] <= 452:
+            return 64
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 418 and pos[1] <= 452:
+            return 65
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 456 and pos[1] <= 490:
+            return 66
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 456 and pos[1] <= 490:
+            return 67
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 456 and pos[1] <= 490:
+            return 68
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 456 and pos[1] <= 490:
+            return 69
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 456 and pos[1] <= 490:
+            return 70
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 456 and pos[1] <= 490:
+            return 71
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 494 and pos[1] <= 528:
+            return 72
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 494 and pos[1] <= 528:
+            return 73
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 494 and pos[1] <= 528:
+            return 74
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 494 and pos[1] <= 528:
+            return 75
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 494 and pos[1] <= 528:
+            return 76
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 494 and pos[1] <= 528:
+            return 77
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 532 and pos[1] <= 566:
+            return 78
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 532 and pos[1] <= 566:
+            return 79
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 532 and pos[1] <= 566:
+            return 80
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 532 and pos[1] <= 566:
+            return 81
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 532 and pos[1] <= 566:
+            return 82
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 532 and pos[1] <= 566:
+            return 83
+        elif pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 570 and pos[1] <= 604:
+            return 84
+        elif pos[0] >= 956 and pos[0] <= 992 and pos[1] >= 570 and pos[1] <= 604:
+            return 85
+        elif pos[0] >= 996 and pos[0] <= 1032 and pos[1] >= 570 and pos[1] <= 604:
+            return 86
+        elif pos[0] >= 1036 and pos[0] <= 1072 and pos[1] >= 570 and pos[1] <= 604:
+            return 87
+        elif pos[0] >= 1076 and pos[0] <= 1112 and pos[1] >= 570 and pos[1] <= 604:
+            return 88
+        elif pos[0] >= 1116 and pos[0] <= 1152 and pos[1] >= 570 and pos[1] <= 604:
+            return 89
 
 
 # Класс инструментов
@@ -1735,6 +2092,12 @@ if __name__ == '__main__':
 
     # Заставка
     start_screen()
+
+    inventory_group = pygame.sprite.Group()
+
+    # Стартовые инструменты
+    inventory = Inventory()
+    inventory.draw()
 
     # Регистрация
     registration_screen()
@@ -1813,13 +2176,6 @@ if __name__ == '__main__':
 
     font = pygame.font.Font(None, 25)
     text_coord = (910, 670)
-
-    # Стартовые инструменты
-    inventory = Inventory()
-    arm = Weapon(2, 2)
-    inventory.add_thing(arm)
-    stick = Weapon(4, 4)
-    inventory.add_thing(stick)
 
     # Формирование объектов в списке и первоначальная отрисовка
     for x in range(len(board.field)):
@@ -2156,20 +2512,24 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if view.get_click(event.pos):
-                        if type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Sticks or \
+                        if type(view.field[view.get_cell(event.pos)[0]][
+                                    view.get_cell(event.pos)[1]]) == Sticks or \
                                 type(view.field[view.get_cell(event.pos)[0]][
                                          view.get_cell(event.pos)[1]]) == Stones or \
                                 type(
-                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Grass or \
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Grass or \
                                 type(view.field[view.get_cell(event.pos)[0]][
                                          view.get_cell(event.pos)[1]]) == Brown_Stones or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][
                                         view.get_cell(event.pos)[1]]) == Brown_Grass or \
                                 type(
-                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Carrot or \
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Carrot or \
                                 type(
-                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Honey or \
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Honey or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][
                                         view.get_cell(event.pos)[1]]) == Mushroom or \
@@ -2180,6 +2540,20 @@ if __name__ == '__main__':
                                 type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
                                 type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
                             view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Berries:
+                            if len(inventory.get_inventory()) < 90:
+                                hero.take(view.get_board_cell(event.pos), event.pos)
+                        elif type(view.field[view.get_cell(event.pos)[0]][
+                                      view.get_cell(event.pos)[1]]) == NPS_1 or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == NPS_2:
+                            view.field[view.get_cell(event.pos)[0]][
+                                view.get_cell(event.pos)[1]].start_dialog()
+                    elif event.pos[0] > 880 and event.pos[1] <= 640:
+                        print(1)
+                elif event.button == 3:
+                    print(event.pos)
 
         # Вывод сообщений
         message_clock += 2
@@ -2267,6 +2641,7 @@ if __name__ == '__main__':
         all_grass.draw(screen)
         all_brown_grass.draw(screen)
         all_brown_stones.draw(screen)
+        inventory_group.draw(screen)
         all_dark_grass.draw(screen)
         all_blue_fire.draw(screen)
 
