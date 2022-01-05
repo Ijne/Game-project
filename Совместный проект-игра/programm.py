@@ -15,7 +15,7 @@ fon_0.set_volume(0.5)
 fon_1 = pygame.mixer.Sound('data/audio/fon_1.mp3')
 fon_2 = pygame.mixer.Sound('data/audio/fon_2.mp3')
 birds_audio = pygame.mixer.Sound('data/audio/birds.wav')
-birds_audio.set_volume(0.1)
+birds_audio.set_volume(0.05)
 rain_audio = pygame.mixer.Sound('data/audio/rain.wav')
 rain_audio.set_volume(0.3)
 
@@ -297,12 +297,23 @@ def reload_level(new_level):
             con.commit()
             con.close()
 
+        if int(x) == 7 and int(y) == -7:
+            con = sqlite3.connect('data/database.db')
+            cur = con.cursor()
+            fon_time = 0
+            location = 'dark-forest'
+            cur.execute(f"""UPDATE location SET location = 'dark-forest'""")
+            con.commit()
+            con.close()
+
         # Создание спрайтов
         all_sticks.update(False, None)
         all_stones.update(False, None)
         all_grass.update(False, None)
         all_brown_grass.update(False, None)
         all_brown_stones.update(False, None)
+        all_dark_grass.update(False, None)
+        all_blue_fire.update(False, None)
 
         all_carrot.update(False, None)
         all_honey.update(False, None)
@@ -313,6 +324,7 @@ def reload_level(new_level):
 
         npc_1_sprite.update(False, None)
         npc_2_sprite.update(False, None)
+        creator_sprite.update(False, None)
         hero_sprite.update(False)
 
         # Формирование объектов в списке
@@ -340,6 +352,14 @@ def reload_level(new_level):
                     element = Brown_Grass((x, y), random.randrange(1, 10, 1))
                     board.field[x][y] = element
                     Borwn_Grass_image(element, all_brown_grass)
+                elif board.field[x][y] == 'U':
+                    element = Dark_grass((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Dark_grass_image(element, all_dark_grass)
+                elif board.field[x][y] == 'F':
+                    element = Blue_fire((x, y), random.randrange(1, 10, 1))
+                    board.field[x][y] = element
+                    Blue_fire_image(element, all_blue_fire)
 
                 elif board.field[x][y] == 'C':
                     element = Carrot((x, y))
@@ -366,6 +386,10 @@ def reload_level(new_level):
                     element = NPS_2((x, y))
                     board.field[x][y] = element
                     NPS_2_Image(element, npc_2_sprite)
+                elif board.field[x][y] == '3':
+                    element = Creator((x, y))
+                    board.field[x][y] = element
+                    Creator_Image(element, creator_sprite)
 
         flag = False
         for x in range(len(board.field)):
@@ -391,6 +415,10 @@ def reload_level(new_level):
             camera.apply(sprite)
         for sprite in all_brown_grass:
             camera.apply(sprite)
+        for sprite in all_dark_grass:
+            camera.apply(sprite)
+        for sprite in all_blue_fire:
+            camera.apply(sprite)
 
         for sprite in all_carrot:
             camera.apply(sprite)
@@ -404,6 +432,8 @@ def reload_level(new_level):
         for sprite in npc_1_sprite:
             camera.apply(sprite)
         for sprite in npc_2_sprite:
+            camera.apply(sprite)
+        for sprite in creator_sprite:
             camera.apply(sprite)
 
         top = (hero.position[0] % 10, hero.position[1] % 10)
@@ -443,6 +473,10 @@ def update_level(level):
                 s += 't'
             elif type(board.field[x][y]) == Brown_Grass:
                 s += 'g'
+            elif type(board.field[x][y]) == Dark_grass:
+                s += 'U'
+            elif type(board.field[x][y]) == Blue_fire:
+                s += 'F'
 
             elif type(board.field[x][y]) == Carrot:
                 s += 'C'
@@ -459,6 +493,8 @@ def update_level(level):
                 s += '1'
             elif type(board.field[x][y]) == NPS_2:
                 s += '2'
+            elif type(board.field[x][y]) == Creator:
+                s += '3'
         output.append(s + '\n')
 
     filename = 'data/levels/save/' + level
@@ -478,6 +514,8 @@ def update_level_save():
     WHERE name LIKE 'npc_1'""")
     cur.execute(f"""UPDATE npc SET step = 1
     WHERE name LIKE 'npc_2'""")
+    cur.execute(f"""UPDATE npc SET step = 1
+    WHERE name LIKE 'creator'""")
     cur.execute(f"""UPDATE level SET level = 'level(0, 0).txt'""")
     cur.execute(f"""UPDATE location SET location = 'forest'""")
     con.commit()
@@ -494,6 +532,179 @@ def print_text(text_coord, message_text):
         message_rect.y = text_coord[1] + top
         top += 15
         screen.blit(string_rendered, message_rect)
+
+
+# Локация разработчика
+class Dark_grass_image(pygame.sprite.Sprite):
+    image = load_image('grass-dark.png')
+    image_2 = load_image('grass-dark(2).png')
+
+    def __init__(self, grass, *group):
+        super().__init__(*group)
+        self.image = Dark_grass_image.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = grass.position[0] * board.cell_size + board.left
+        self.rect.y = grass.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            elif arg == 'animation' and self.rect.collidepoint(position):
+                if self.image == Dark_grass_image.image:
+                    self.image = Dark_grass_image.image_2
+                else:
+                    self.image = Dark_grass_image.image
+
+
+class Dark_grass:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 0
+
+
+class Blue_fire_image(pygame.sprite.Sprite):
+    image = load_image('fire.png')
+    image_2 = load_image('fire(2).png')
+    image_3 = load_image('fire(3).png')
+
+    def __init__(self, fire, *group):
+        super().__init__(*group)
+        self.image = Blue_fire_image.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = fire.position[0] * board.cell_size + board.left
+        self.rect.y = fire.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            elif arg == 'animation' and self.rect.collidepoint(position):
+                if self.image == Blue_fire_image.image:
+                    self.image = Blue_fire_image.image_2
+                elif self.image == Blue_fire_image.image_2:
+                    self.image = Blue_fire_image.image_3
+                else:
+                    self.image = Blue_fire_image.image
+
+
+class Blue_fire:
+    def __init__(self, position, number):
+        self.number = number
+        self.position = position
+        self.power = 0
+
+
+# Создатель
+class Creator_Image(pygame.sprite.Sprite):
+    image = pygame.transform.scale(load_image('creator.png'), (160, 160))
+
+    def __init__(self, npc, *group):
+        super().__init__(*group)
+        self.image = Creator_Image.image
+        self.rect = self.image.get_rect()
+        self.rect.x = npc.position[0] * board.cell_size + board.left
+        self.rect.y = npc.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+
+
+class Creator:
+    def __init__(self, position):
+        self.position = position
+        self.name = 'Создатель'
+        self.main_step = nps_2_step
+        self.questions_1 = [('-Наконец-то ты меня нашёл', '-Наконец-то ты меня нашёл'),
+                            ('-Молодец, что дошёл', '-Ты прошёл длинный путь'),
+                            ('-Что ты хочешь узнать?', '-У тебя есть вопросы?'), ('-Уходи',
+                                                                                  '-Уходи')]
+
+        self.hero_answers_1 = [('E -Это ты Создатель?', 'F -Приклоняюсь пред тобой'),
+                               ('E - Да, это было трудно', 'F - Кланяюююсь'),
+                               ('E - Твоё имя', 'F - Сколько тебе лет'), ('E - Повинуюсь', 'F - Прошу прощения')]
+
+        self.answers_1 = [('Пусто', 'Пусто'), ('-Да, герой', '-Все так делают'),
+                          ('-Легко не бывает', '-Да прекрати уже'),
+                          ('-Никто не должен знать', '-Никто не должен знать')]
+        self.step = 0
+        self.feel = 0
+
+        if self.main_step == 1:
+            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
+
+    def start_dialog(self):
+        global message_text, creator_step
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
+        process = True
+        while process:
+            screen.blit(background, (0, 0))
+            screen.blit(second_menu_background, (880, 640))
+            screen.blit(inventory_menu_background, (880, 0))
+            if self.main_step > 1:
+                process = False
+            elif self.step == 0:
+                message_text = ['Создатель:', '', self.replics[0][self.step][self.feel], '',
+                                self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
+            elif self.step <= len(self.replics[0]) - 1:
+                message_text = ['Создатель:', '', self.replics[2][self.step][self.feel], '',
+                                self.replics[0][self.step][self.feel], '',
+                                self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
+            else:
+                message_text = []
+                if creator_step < 2:
+                    creator_step += 1
+                    cur.execute(f"""UPDATE npc SET step = {creator_step}
+                    WHERE name LIKE 'creator'""")
+                    con.commit()
+                    con.close()
+                process = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    update_level(level)
+                    terminate()
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                    self.step += 1
+                    self.feel = 0
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+                    self.step += 1
+                    self.feel = 1
+                if event.type == pygame.MOUSEMOTION:
+                    arrow.rect.x = event.pos[0]
+                    arrow.rect.y = event.pos[1]
+
+            # Отрисовка объектов
+            all_dark_grass.draw(screen)
+            all_blue_fire.draw(screen)
+
+            hero_sprite.draw(screen)
+
+            creator_sprite.draw(screen)
+            print_text(text_coord, message_text)
+
+            d_rain_sprite.update('animation', None)
+
+            if pygame.mouse.get_focused():
+                pygame.mouse.set_visible(False)
+                arrow_sprite.draw(screen)
+            pygame.display.flip()
+            clock.tick(FPS)
 
 
 # Класс камеры
@@ -1002,6 +1213,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1050,6 +1262,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1098,6 +1311,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1146,6 +1360,7 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
+                        all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1220,6 +1435,7 @@ class Hero:
                             all_grass.update('kill', rect_position)
                             all_brown_grass.update('kill', rect_position)
                             all_brown_stones.update('kill', rect_position)
+                            all_dark_grass.update('kill', rect_position)
 
                             all_carrot.update('kill', rect_position)
                             all_honey.update('kill', rect_position)
@@ -1540,6 +1756,8 @@ if __name__ == '__main__':
         WHERE name LIKE 'npc_1'""").fetchone()[0]
     nps_2_step = cur.execute("""SELECT step FROM npc
         WHERE name LIKE 'npc_2'""").fetchone()[0]
+    creator_step = cur.execute("""SELECT step FROM npc
+        WHERE name LIKE 'creator'""").fetchone()[0]
 
     second_menu_background = load_image('second-menu.png')
     inventory_menu_background = load_image('inventory-menu.png')
@@ -1573,6 +1791,8 @@ if __name__ == '__main__':
     all_grass = pygame.sprite.Group()
     all_brown_grass = pygame.sprite.Group()
     all_brown_stones = pygame.sprite.Group()
+    all_dark_grass = pygame.sprite.Group()
+    all_blue_fire = pygame.sprite.Group()
 
     all_carrot = pygame.sprite.Group()
     all_honey = pygame.sprite.Group()
@@ -1582,6 +1802,7 @@ if __name__ == '__main__':
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
     npc_2_sprite = pygame.sprite.Group()
+    creator_sprite = pygame.sprite.Group()
 
     # Спрайты декораций
     d_butterfly_sprite = pygame.sprite.Group()
@@ -1625,6 +1846,14 @@ if __name__ == '__main__':
                 element = Brown_Grass((x, y), random.randrange(1, 10, 1))
                 board.field[x][y] = element
                 Borwn_Grass_image(element, all_brown_grass)
+            elif board.field[x][y] == 'U':
+                element = Dark_grass((x, y), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Dark_grass_image(element, all_dark_grass)
+            elif board.field[x][y] == 'F':
+                element = Blue_fire((x, y), random.randrange(1, 10, 1))
+                board.field[x][y] = element
+                Blue_fire_image(element, all_blue_fire)
 
             elif board.field[x][y] == 'C':
                 element = Carrot((x, y))
@@ -1651,6 +1880,10 @@ if __name__ == '__main__':
                 element = NPS_2((x, y))
                 board.field[x][y] = element
                 NPS_2_Image(element, npc_2_sprite)
+            elif board.field[x][y] == '3':
+                element = Creator((x, y))
+                board.field[x][y] = element
+                Creator_Image(element, creator_sprite)
 
     flag = False
     for x in range(len(board.field)):
@@ -1675,6 +1908,10 @@ if __name__ == '__main__':
         camera.apply(sprite)
     for sprite in all_brown_grass:
         camera.apply(sprite)
+    for sprite in all_dark_grass:
+        camera.apply(sprite)
+    for sprite in all_blue_fire:
+        camera.apply(sprite)
 
     for sprite in all_carrot:
         camera.apply(sprite)
@@ -1688,6 +1925,8 @@ if __name__ == '__main__':
     for sprite in npc_1_sprite:
         camera.apply(sprite)
     for sprite in npc_2_sprite:
+        camera.apply(sprite)
+    for sprite in creator_sprite:
         camera.apply(sprite)
 
     top = (hero.position[0] % 10, hero.position[1] % 10)
@@ -1716,7 +1955,7 @@ if __name__ == '__main__':
         elif location == 'rainy-dale':
             background = pygame.transform.scale(load_image('background-brown.png'), (880, 880))
         else:
-            background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
+            background = pygame.transform.scale(load_image('background-dark.png'), (880, 880))
         screen.blit(background, (0, 0))
         screen.blit(second_menu_background, (880, 640))
         screen.blit(inventory_menu_background, (880, 0))
@@ -1757,6 +1996,8 @@ if __name__ == '__main__':
                             all_grass.update(False, None)
                             all_brown_stones.update(False, None)
                             all_brown_grass.update(False, None)
+                            all_dark_grass.update(False, None)
+                            all_blue_fire.update(False, None)
 
                             all_carrot.update(False, None)
                             all_honey.update(False, None)
@@ -1765,6 +2006,7 @@ if __name__ == '__main__':
 
                             npc_1_sprite.update(False, None)
                             npc_2_sprite.update(False, None)
+                            creator_sprite.update(False, None)
 
                             for x in range(len(board.field)):
                                 for y in range(len(board.field[x])):
@@ -1788,6 +2030,14 @@ if __name__ == '__main__':
                                         element = Brown_Grass((x, y), random.randrange(1, 10, 1))
                                         board.field[x][y] = element
                                         Borwn_Grass_image(element, all_brown_grass)
+                                    elif type(board.field[x][y]) == Dark_grass:
+                                        element = Dark_grass((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Dark_grass_image(element, all_dark_grass)
+                                    elif type(board.field[x][y]) == Blue_fire:
+                                        element = Blue_fire((x, y), random.randrange(1, 10, 1))
+                                        board.field[x][y] = element
+                                        Blue_fire_image(element, all_blue_fire)
 
                                     elif type(board.field[x][y]) == Carrot:
                                         element = Carrot((x, y))
@@ -1814,6 +2064,10 @@ if __name__ == '__main__':
                                         element = NPS_2((x, y))
                                         board.field[x][y] = element
                                         NPS_2_Image(element, npc_2_sprite)
+                                    elif type(board.field[x][y]) == Creator:
+                                        element = Creator((x, y))
+                                        board.field[x][y] = element
+                                        Creator_Image(element, creator_sprite)
 
                             # Смещение объектов
                             camera.update(hero)
@@ -1826,6 +2080,10 @@ if __name__ == '__main__':
                             for sprite in all_brown_stones:
                                 camera.apply(sprite)
                             for sprite in all_brown_grass:
+                                camera.apply(sprite)
+                            for sprite in all_dark_grass:
+                                camera.apply(sprite)
+                            for sprite in all_blue_fire:
                                 camera.apply(sprite)
 
                             for sprite in all_carrot:
@@ -1841,6 +2099,8 @@ if __name__ == '__main__':
                                 camera.apply(sprite)
                             for sprite in npc_2_sprite:
                                 camera.apply(sprite)
+                            for sprite in creator_sprite:
+                                camera.apply(sprite)
 
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
@@ -1849,40 +2109,49 @@ if __name__ == '__main__':
                     position = view.get_cell(event.pos)
                     if type(view.field[position[0]][position[1]]) == Sticks:
                         message_text = ['Палки:', '', '"Хотя бы что-то...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Stones:
                         message_text = ['Обычный камень:', '', '"Пфф, ничего не обычного...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Grass:
                         message_text = ['Зелёная трава:', '', '"В хозяйстве пригодиться...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Brown_Grass:
                         message_text = ['Жёлтая трава:', '', '"От неё идёт запах...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
+                    elif type(view.field[position[0]][position[1]]) == Dark_grass:
+                        message_text = ['Синяя трава:', '', '"Веет холодом...', '',
+                                        '                                    Вы"']
+                    elif type(view.field[position[0]][position[1]]) == Blue_fire:
+                        message_text = ['Мёртвый огонь:', '', '"Это, что газ?...', '',
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Brown_Stones:
                         message_text = ['Малый камень:', '', '"Камень, как и везде...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Carrot:
                         message_text = ['Морковь:', '', '"Можно съесть...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Honey:
                         message_text = ['Мёд:', '', '"Ух ты, откуда же...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Mushroom:
                         message_text = ['Гриб:', '', '"Выглядит как гриб...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Berries:
                         message_text = ['Ягоды:', '', '"Хочу попробовать...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == Hero:
                         message_text = ['"Да-да, это я...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == NPS_1:
                         message_text = ['"Какой-то оборванец...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
                     elif type(view.field[position[0]][position[1]]) == NPS_2:
                         message_text = ['"Красивая незнакомка...', '',
-                                        '                                    Ваня"']
+                                        '                                    Вы"']
+                    elif type(view.field[position[0]][position[1]]) == Creator:
+                        message_text = ['"Он прекрасен...', '',
+                                        '                                    Вы"']
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -1908,7 +2177,8 @@ if __name__ == '__main__':
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
                             hero.take(view.get_board_cell(event.pos), event.pos)
                         elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2:
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
                             view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
 
         # Вывод сообщений
@@ -1933,9 +2203,11 @@ if __name__ == '__main__':
             if location == 'forest':
                 stop_music(rain_audio)
                 play_music(birds_audio)
-            else:
+            elif location == 'rainy-dale':
                 stop_music(birds_audio)
                 play_music(rain_audio)
+            elif location == 'dark-forest':
+                stop_music(rain_audio)
         if fon_time == 1000:
             fon_time = 0
         if music_time == 5000:
@@ -1968,6 +2240,10 @@ if __name__ == '__main__':
             all_brown_stones.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in all_brown_grass:
             all_brown_grass.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_dark_grass:
+            all_dark_grass.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_blue_fire:
+            all_blue_fire.update(True, (sprite.rect.x, sprite.rect.y))
 
         for sprite in all_carrot:
             all_carrot.update(True, (sprite.rect.x, sprite.rect.y))
@@ -1982,6 +2258,8 @@ if __name__ == '__main__':
             npc_1_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in npc_2_sprite:
             npc_2_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in creator_sprite:
+            creator_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         hero_sprite.update(hero)
 
         all_sticks.draw(screen)
@@ -1989,6 +2267,8 @@ if __name__ == '__main__':
         all_grass.draw(screen)
         all_brown_grass.draw(screen)
         all_brown_stones.draw(screen)
+        all_dark_grass.draw(screen)
+        all_blue_fire.draw(screen)
 
         all_carrot.draw(screen)
         all_honey.draw(screen)
@@ -1998,6 +2278,7 @@ if __name__ == '__main__':
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
         npc_2_sprite.draw(screen)
+        creator_sprite.draw(screen)
         print_text(text_coord, message_text)
 
         # Отрисовка декораций
@@ -2016,6 +2297,16 @@ if __name__ == '__main__':
                 D_rain((x + 2, y), d_rain_sprite)
             if decoration_clock > 1:
                 decoration_clock = 0
+        elif location == 'dark-forest':
+            if decoration_clock % 30 == 0:
+                for sprite in all_dark_grass:
+                    flag = random.randint(0, 1)
+                    if flag:
+                        all_dark_grass.update('animation', (sprite.rect.x, sprite.rect.y))
+                for sprite in all_blue_fire:
+                    flag = random.randint(0, 1)
+                    if flag:
+                        all_blue_fire.update('animation', (sprite.rect.x, sprite.rect.y))
 
         for sprite in d_butterfly_sprite:
             d_butterfly_sprite.update(True, (sprite.rect.x, sprite.rect.y))

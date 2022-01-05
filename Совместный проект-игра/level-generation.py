@@ -27,12 +27,18 @@ for x in range(-7, 8):
                 if r <= 10:
                     s += '0'
                 elif r == 11 and S < 2:
-                    s += 'S'
-                    S += 1
+                    if x == 7 and y == -7:
+                        s += '0'
+                    else:
+                        s += 'S'
+                        S += 1
                 elif r == 13 and T < 1:
                     if -5 < x < 5 and -5 < y < 5:
                         s += 'T'
                         T += 1
+                    elif x == 7 and y == -7:
+                        s += 'F'
+                        G += 1
                     else:
                         s += 't'
                         T += 1
@@ -40,23 +46,32 @@ for x in range(-7, 8):
                     if -5 < x < 5 and -5 < y < 5:
                         s += 'G'
                         G += 1
+                    elif x == 7 and y == -7:
+                        s += 'U'
+                        G += 1
                     else:
                         s += 'g'
                         G += 1
                 elif r == 14 and S > 1:
-                    if -5 < x < 5 and -5 < y < 5:
-                        s += 'C'
-                        C += 1
+                    if x == 7 and y == -7:
+                        s += '0'
                     else:
-                        s += 'M'
-                        M += 1
+                        if -5 < x < 5 and -5 < y < 5:
+                            s += 'C'
+                            C += 1
+                        else:
+                            s += 'M'
+                            M += 1
                 elif r == 15 and G > 1:
-                    if -5 < x < 5 and -5 < y < 5:
-                        s += 'H'
-                        H += 1
+                    if x == 7 and y == -7:
+                        s += '0'
                     else:
-                        s += 'B'
-                        B += 1
+                        if -5 < x < 5 and -5 < y < 5:
+                            s += 'H'
+                            H += 1
+                        else:
+                            s += 'B'
+                            B += 1
                 else:
                     s += '0'
             output.append(s + '\n')
