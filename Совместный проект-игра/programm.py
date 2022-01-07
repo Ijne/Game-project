@@ -639,7 +639,7 @@ class Sticks_image(pygame.sprite.Sprite):
                     message_text = ['"Полезная штука...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('stick')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -675,7 +675,7 @@ class Stones_image(pygame.sprite.Sprite):
                     message_text = ['"Как мне их тоскать...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('stone')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -745,7 +745,7 @@ class Browns_Stones_image(pygame.sprite.Sprite):
                     message_text = ['"На удивление лёгкие...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('stone')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -816,7 +816,7 @@ class Carrot_image(pygame.sprite.Sprite):
                     message_text = ['"Отличная морковь...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('carrot')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -851,7 +851,7 @@ class Honey_image(pygame.sprite.Sprite):
                     message_text = ['"Блин, обляпался...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('honey')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -886,7 +886,7 @@ class Mushroom_image(pygame.sprite.Sprite):
                     message_text = ['"Надеюсь, это съедобно...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('mushroom')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -921,7 +921,7 @@ class Berries_image(pygame.sprite.Sprite):
                     message_text = ['"Выглядят вскусно...', '',
                                     '                                    Ваня"']
                     inventory.add_thing('berries')
-                    inventory.draw()
+                    inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
 
 
@@ -983,6 +983,15 @@ class Hero:
         self.view = 90
         self.weapon = 'arm'
         self.power = 2
+        self.weapon_index = 0
+
+    def set_weapon(self, weapon, power, index):
+        self.weapon = weapon
+        self.power = power
+        self.weapon_index = index
+
+    def get_weapon(self):
+        return [self.weapon, self.power, self.weapon_index]
 
     def move(self, arg):
         if arg == pygame.K_w:
@@ -1019,7 +1028,13 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
-                        inventory_group.draw(screen)
+                        inventory_arm.draw(screen)
+                        inventory_sticks.draw(screen)
+                        inventory_stones.draw(screen)
+                        inventory_carrots.draw(screen)
+                        inventory_honey.draw(screen)
+                        inventory_mushroom.draw(screen)
+                        inventory_berries.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1068,7 +1083,13 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
-                        inventory_group.draw(screen)
+                        inventory_arm.draw(screen)
+                        inventory_sticks.draw(screen)
+                        inventory_stones.draw(screen)
+                        inventory_carrots.draw(screen)
+                        inventory_honey.draw(screen)
+                        inventory_mushroom.draw(screen)
+                        inventory_berries.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1117,7 +1138,13 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
-                        inventory_group.draw(screen)
+                        inventory_arm.draw(screen)
+                        inventory_sticks.draw(screen)
+                        inventory_stones.draw(screen)
+                        inventory_carrots.draw(screen)
+                        inventory_honey.draw(screen)
+                        inventory_mushroom.draw(screen)
+                        inventory_berries.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1166,7 +1193,13 @@ class Hero:
                         all_grass.draw(screen)
                         all_brown_grass.draw(screen)
                         all_brown_stones.draw(screen)
-                        inventory_group.draw(screen)
+                        inventory_arm.draw(screen)
+                        inventory_sticks.draw(screen)
+                        inventory_stones.draw(screen)
+                        inventory_carrots.draw(screen)
+                        inventory_honey.draw(screen)
+                        inventory_mushroom.draw(screen)
+                        inventory_berries.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1337,7 +1370,13 @@ class NPS_1:
             all_honey.draw(screen)
             hero_sprite.draw(screen)
             npc_1_sprite.draw(screen)
-            inventory_group.draw(screen)
+            inventory_arm.draw(screen)
+            inventory_sticks.draw(screen)
+            inventory_stones.draw(screen)
+            inventory_carrots.draw(screen)
+            inventory_honey.draw(screen)
+            inventory_mushroom.draw(screen)
+            inventory_berries.draw(screen)
             print_text(text_coord, message_text)
             if pygame.mouse.get_focused():
                 pygame.mouse.set_visible(False)
@@ -1436,7 +1475,13 @@ class NPS_2:
             all_mushrooms.draw(screen)
             all_berries.draw(screen)
             hero_sprite.draw(screen)
-            inventory_group.draw(screen)
+            inventory_arm.draw(screen)
+            inventory_sticks.draw(screen)
+            inventory_stones.draw(screen)
+            inventory_carrots.draw(screen)
+            inventory_honey.draw(screen)
+            inventory_mushroom.draw(screen)
+            inventory_berries.draw(screen)
 
             npc_2_sprite.draw(screen)
             print_text(text_coord, message_text)
@@ -1495,12 +1540,9 @@ class Sticks_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914 + 39 * ((i - 1) % 6)
         self.rect.y = 37 + 38 * ((i - 1) // 6)
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Stone_Weapon(pygame.sprite.Sprite):
@@ -1514,12 +1556,9 @@ class Stone_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914 + 39 * ((i - 1) % 6)
         self.rect.y = 37 + 38 * ((i - 1) // 6)
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Carrot_Weapon(pygame.sprite.Sprite):
@@ -1533,12 +1572,9 @@ class Carrot_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914 + 39 * ((i - 1) % 6)
         self.rect.y = 37 + 38 * ((i - 1) // 6)
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Honey_Weapon(pygame.sprite.Sprite):
@@ -1552,12 +1588,9 @@ class Honey_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914 + 39 * ((i - 1) % 6)
         self.rect.y = 37 + 38 * ((i - 1) // 6)
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Mushroom_Weapon(pygame.sprite.Sprite):
@@ -1571,12 +1604,9 @@ class Mushroom_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914 + 39 * ((i - 1) % 6)
         self.rect.y = 37 + 38 * ((i - 1) // 6)
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Berries_Weapon(pygame.sprite.Sprite):
@@ -1590,12 +1620,9 @@ class Berries_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914 + 39 * ((i - 1) % 6)
         self.rect.y = 37 + 38 * ((i - 1) // 6)
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Arm_Weapon(pygame.sprite.Sprite):
@@ -1609,12 +1636,9 @@ class Arm_Weapon(pygame.sprite.Sprite):
         self.rect.x = 914
         self.rect.y = 37
 
-    def update(self, arg, index):
-        global inventory
+    def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 # Класс инвентаря
@@ -1631,25 +1655,31 @@ class Inventory:
     def delete_thing(self, index):
         del self.inventory[index]
 
-    def draw(self):
-        global inventory_group
-        for i in range(len(self.inventory)):
+    def draw(self, index):
+        global inventory_arm
+        global inventory_sticks
+        global inventory_stones
+        global inventory_carrots
+        global inventory_honey
+        global inventory_mushroom
+        global inventory_berries
+        for i in range(index, len(self.inventory)):
             if i > 89:
                 break
             if self.inventory[i] == 'arm':
-                arm = Arm_Weapon(i, inventory_group)
+                arm = Arm_Weapon(i, inventory_arm)
             elif self.inventory[i] == 'stick':
-                stick = Sticks_Weapon(i + 1, inventory_group)
+                stick = Sticks_Weapon(i + 1, inventory_sticks)
             elif self.inventory[i] == 'stone':
-                stone = Stone_Weapon(i + 1, inventory_group)
+                stone = Stone_Weapon(i + 1, inventory_stones)
             elif self.inventory[i] == 'carrot':
-                carrot = Carrot_Weapon(i + 1, inventory_group)
+                carrot = Carrot_Weapon(i + 1, inventory_carrots)
             elif self.inventory[i] == 'honey':
-                honey = Honey_Weapon(i + 1, inventory_group)
+                honey = Honey_Weapon(i + 1, inventory_honey)
             elif self.inventory[i] == 'mushroom':
-                mushroom = Mushroom_Weapon(i + 1, inventory_group)
+                mushroom = Mushroom_Weapon(i + 1, inventory_mushroom)
             elif self.inventory[i] == 'berries':
-                berries = Berries_Weapon(i + 1, inventory_group)
+                berries = Berries_Weapon(i + 1, inventory_berries)
 
     def get_cell(self, pos):
         if pos[0] >= 916 and pos[0] <= 952 and pos[1] >= 38 and pos[1] <= 72:
@@ -1877,12 +1907,6 @@ if __name__ == '__main__':
     # Заставка
     start_screen()
 
-    inventory_group = pygame.sprite.Group()
-
-    # Стартовые инструменты
-    inventory = Inventory()
-    inventory.draw()
-
     # Регистрация
     registration_screen()
 
@@ -1945,6 +1969,13 @@ if __name__ == '__main__':
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
     npc_2_sprite = pygame.sprite.Group()
+    inventory_arm = pygame.sprite.Group()
+    inventory_sticks = pygame.sprite.Group()
+    inventory_stones = pygame.sprite.Group()
+    inventory_carrots = pygame.sprite.Group()
+    inventory_honey = pygame.sprite.Group()
+    inventory_mushroom = pygame.sprite.Group()
+    inventory_berries = pygame.sprite.Group()
 
     # Спрайты декораций
     d_butterfly_sprite = pygame.sprite.Group()
@@ -1955,6 +1986,10 @@ if __name__ == '__main__':
 
     font = pygame.font.Font(None, 25)
     text_coord = (910, 670)
+
+    # Стартовые инструменты
+    inventory = Inventory()
+    inventory.draw(0)
 
     # Формирование объектов в списке и первоначальная отрисовка
     for x in range(len(board.field)):
@@ -2276,9 +2311,68 @@ if __name__ == '__main__':
                             view.field[view.get_cell(event.pos)[0]][
                                 view.get_cell(event.pos)[1]].start_dialog()
                     elif event.pos[0] > 880 and event.pos[1] <= 640:
-                        print(1)
+                        try:
+                            index = inventory.get_cell((event.pos[0] + 12, event.pos[1] + 6))
+                            item = inventory.get_inventory()[index]
+                        except Exception:
+                            pass
+                        if item == 'stick':
+                            hero.set_weapon('stick', 3, index)
+                        elif item == 'stone':
+                            hero.set_weapon('stone', 4, index)
+                        elif item == 'carrot':
+                            hero.set_weapon('carrot', 0, index)
+                        elif item == 'honey':
+                            hero.set_weapon('honey', 0, index)
+                        elif item == 'mushroom':
+                            hero.set_weapon('mushroom', 0, index)
+                        elif item == 'berries':
+                            hero.set_weapon('berries', 0, index)
                 elif event.button == 3:
-                    print(event.pos)
+                    if event.pos[0] > 880 and event.pos[1] <= 640:
+                        index = inventory.get_cell((event.pos[0] + 12, event.pos[1] + 6))
+                        item = inventory.get_inventory()[index]
+                        if hero.get_weapon()[0] == item and hero.get_weapon()[2] == index:
+                            if item == 'stick':
+                                pass
+                            elif item == 'stone':
+                                pass
+                            elif item == 'carrot':
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
+                            elif item == 'honey':
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
+                            elif item == 'mushroom':
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
+                            elif item == 'berries':
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
 
         # Вывод сообщений
         message_clock += 2
@@ -2358,7 +2452,13 @@ if __name__ == '__main__':
         all_grass.draw(screen)
         all_brown_grass.draw(screen)
         all_brown_stones.draw(screen)
-        inventory_group.draw(screen)
+        inventory_arm.draw(screen)
+        inventory_sticks.draw(screen)
+        inventory_stones.draw(screen)
+        inventory_carrots.draw(screen)
+        inventory_honey.draw(screen)
+        inventory_mushroom.draw(screen)
+        inventory_berries.draw(screen)
 
         all_carrot.draw(screen)
         all_honey.draw(screen)
