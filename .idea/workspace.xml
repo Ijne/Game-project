@@ -4,12 +4,6 @@
     <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 1).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 2).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 3).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 4).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(1, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(1, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(2, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(2, 0).txt" afterDir="false" />
@@ -332,16 +326,5 @@
     <MESSAGE value="Modify_inventary" />
     <MESSAGE value="Add_pictures" />
     <option name="LAST_COMMIT_MESSAGE" value="Add_pictures" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Совместный проект-игра/programm.py</url>
-          <line>2305</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

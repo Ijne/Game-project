@@ -3,6 +3,7 @@ import os
 import sys
 import random
 import sqlite3
+import datetime
 
 # Готовим игру к работе
 pygame.init()
@@ -14,6 +15,8 @@ fon_0 = pygame.mixer.Sound('data/audio/fon_0.mp3')
 fon_0.set_volume(0.5)
 fon_1 = pygame.mixer.Sound('data/audio/fon_1.mp3')
 fon_2 = pygame.mixer.Sound('data/audio/fon_2.mp3')
+fon_end = pygame.mixer.Sound('data/audio/fon_end.mp3')
+fon_end.set_volume(0.5)
 birds_audio = pygame.mixer.Sound('data/audio/birds.wav')
 birds_audio.set_volume(0.1)
 rain_audio = pygame.mixer.Sound('data/audio/rain.wav')
@@ -228,6 +231,25 @@ def registration_screen():
                 event_y = event.pos[1]
         continue_buttons.draw(screen)
         new_buttons.draw(screen)
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+def end_screen():
+    screen_x = 0
+    screen_y = 0
+    speed = 50
+    FPS = 60
+
+    while True:
+        end_background = pygame.transform.scale(load_image('end_screen.jpg'), (1180, 880))
+        screen.blit(end_background, (screen_x, screen_y))
+        if screen_x < 0:
+            screen_x += speed
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -480,6 +502,10 @@ def update_level_save():
     WHERE name LIKE 'npc_2'""")
     cur.execute(f"""UPDATE level SET level = 'level(0, 0).txt'""")
     cur.execute(f"""UPDATE location SET location = 'forest'""")
+    cur.execute(f"""UPDATE hp SET hp = 100""")
+    cur.execute(f"""UPDATE hunger SET hunger = 100""")
+    cur.execute(f"""DELETE FROM inventory WHERE thing = 'stick' or thing = 'stone' or 
+    thing = 'carrot' or thing = 'honey' or thing = 'mushroom' or thing = 'berries'""")
     con.commit()
     con.close()
 
@@ -984,6 +1010,7 @@ class Hero:
         self.weapon = 'arm'
         self.power = 2
         self.weapon_index = 0
+        self.hunger = 100
 
     def set_weapon(self, weapon, power, index):
         self.weapon = weapon
@@ -992,6 +1019,18 @@ class Hero:
 
     def get_weapon(self):
         return [self.weapon, self.power, self.weapon_index]
+
+    def set_hunger(self, hunger):
+        self.hunger = hunger
+
+    def get_hunger(self):
+        return self.hunger
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
     def move(self, arg):
         if arg == pygame.K_w:
@@ -1530,7 +1569,7 @@ class Board:
 
 
 class Sticks_Weapon(pygame.sprite.Sprite):
-    image = pygame.transform.scale(load_image('stick.png'), (36, 34))
+    image = pygame.transform.scale(load_image('stick.png'), (35, 34))
     image.set_colorkey((255, 255, 255))
 
     def __init__(self, i, *group):
@@ -1546,7 +1585,7 @@ class Sticks_Weapon(pygame.sprite.Sprite):
 
 
 class Stone_Weapon(pygame.sprite.Sprite):
-    image = pygame.transform.scale(load_image('stone.png'), (36, 34))
+    image = pygame.transform.scale(load_image('stone.png'), (35, 34))
     image.set_colorkey((255, 255, 255))
 
     def __init__(self, i, *group):
@@ -1578,7 +1617,7 @@ class Carrot_Weapon(pygame.sprite.Sprite):
 
 
 class Honey_Weapon(pygame.sprite.Sprite):
-    image = pygame.transform.scale(load_image('honey_food.png'), (36, 34))
+    image = pygame.transform.scale(load_image('honey_food.png'), (35, 34))
     image.set_colorkey((255, 255, 255))
 
     def __init__(self, i, *group):
@@ -1594,7 +1633,7 @@ class Honey_Weapon(pygame.sprite.Sprite):
 
 
 class Mushroom_Weapon(pygame.sprite.Sprite):
-    image = pygame.transform.scale(load_image('mushroom_food.png'), (36, 34))
+    image = pygame.transform.scale(load_image('mushroom_food.png'), (35, 34))
     image.set_colorkey((255, 255, 255))
 
     def __init__(self, i, *group):
@@ -1610,7 +1649,7 @@ class Mushroom_Weapon(pygame.sprite.Sprite):
 
 
 class Berries_Weapon(pygame.sprite.Sprite):
-    image = pygame.transform.scale(load_image('berries_food.png'), (36, 34))
+    image = pygame.transform.scale(load_image('berries_food.png'), (35, 34))
     image.set_colorkey((255, 255, 255))
 
     def __init__(self, i, *group):
@@ -1644,7 +1683,7 @@ class Arm_Weapon(pygame.sprite.Sprite):
 # Класс инвентаря
 class Inventory:
     def __init__(self):
-        self.inventory = ['arm']
+        self.inventory = []
 
     def get_inventory(self):
         return self.inventory
@@ -1871,6 +1910,11 @@ class Weapon:
         self.damage = damage
 
 
+class Building:
+    def __init__(self):
+        pass
+
+
 # Класс поля зрения
 class View:
     def __init__(self):
@@ -1989,6 +2033,9 @@ if __name__ == '__main__':
 
     # Стартовые инструменты
     inventory = Inventory()
+    arr = cur.execute("""SELECT * FROM inventory""").fetchall()
+    for i in range(len(arr)):
+        inventory.add_thing(arr[i][0])
     inventory.draw(0)
 
     # Формирование объектов в списке и первоначальная отрисовка
@@ -2099,9 +2146,86 @@ if __name__ == '__main__':
             column.append(board.field[x][y])
         view.field.append(column)
 
+    start_time = datetime.datetime.now().time()
+
+    font_object = pygame.font.Font(None, 25)
+    font_object2 = pygame.font.Font(None, 25)
+
+    text_hp = font_object.render(f'Здоровье: {hero.get_hp()}', True, ((162, 32, 32)))
+    text_hp_rect = text_hp.get_rect()
+    text_hp_rect.x = 20
+    text_hp_rect.y = 2
+
+    text_hunger = font_object2.render(f'Голод: {hero.get_hunger()}', True, pygame.Color('orange'))
+    text_hunger_rect = text_hunger.get_rect()
+    text_hunger_rect.x = 200
+    text_hunger_rect.y = 2
+
+    hp_db = cur.execute(f"""SELECT hp FROM hp""").fetchone()
+    hero.set_hp(hp_db[0])
+    hunger_db = cur.execute(f"""SELECT hunger FROM hunger""").fetchone()
+    hero.set_hunger(hunger_db[0])
+
+    if hero.get_hp() == 0:
+        end_screen()
+
     # Непосредственно запуск
     running = True
     while running:
+        if hero.get_hp() == 0:
+            stop_music(rain_audio)
+            stop_music(birds_audio)
+            play_music(fon_end)
+            end_screen()
+            running = False
+        now_time = datetime.datetime.now().time()
+        if start_time.hour == now_time.hour:
+            if start_time.minute + 1 == now_time.minute:
+                if hero.get_hunger() > 0:
+                    hero.set_hunger(hero.get_hunger() - 10)
+                    if start_time.minute + 1 < 59:
+                        start_time = start_time.replace(start_time.hour, start_time.minute + 1,
+                                                        start_time.second)
+                    else:
+                        if start_time.hour + 1 < 24:
+                            start_time.replace(start_time.hour + 1, 0, start_time.second)
+                        else:
+                            start_time.replace(0, 0, start_time.second)
+        else:
+            if start_time.hour + 1 < 24:
+                start_time = start_time.replace(start_time.hour + 1, 0, 0)
+            else:
+                start_time.replace(0, start_time.minute, start_time.second)
+
+        text_hp = font_object.render(f'Здоровье: {hero.get_hp()}', True, (162, 32, 32))
+        text_hp_rect = text_hp.get_rect()
+        text_hp_rect.x = 20
+        text_hp_rect.y = 2
+
+        text_hunger = font_object2.render(f'Голод: {hero.get_hunger()}', True, pygame.Color('orange'))
+        text_hunger_rect = text_hunger.get_rect()
+        text_hunger_rect.x = 200
+        text_hunger_rect.y = 2
+
+        if hero.get_hunger() == 0:
+            if start_time.second + 30 == now_time.second or \
+                    start_time.second - 30 == now_time.second:
+                if hero.get_hp() > 0:
+                    hero.set_hp(hero.get_hp() - 10)
+                    if start_time.second + 30 < 60:
+                        start_time = start_time.replace(start_time.hour, start_time.minute,
+                                                        start_time.second + 30)
+                    else:
+                        if start_time.minute + 1 < 60:
+                            start_time = start_time.replace(start_time.hour, start_time.minute + 1,
+                                                            start_time.second - 30)
+                        else:
+                            if start_time.hour + 1 < 24:
+                                start_time = start_time.replace(start_time.hour + 1, 0,
+                                                                start_time.second - 30)
+                            else:
+                                start_time = start_time.replace(0, 0, start_time.second - 30)
+
         if location == 'forest':
             background = pygame.transform.scale(load_image('background-field.png'), (880, 880))
         elif location == 'rainy-dale':
@@ -2111,6 +2235,8 @@ if __name__ == '__main__':
         screen.blit(background, (0, 0))
         screen.blit(second_menu_background, (880, 640))
         screen.blit(inventory_menu_background, (880, 0))
+        hp = hero.get_hp()
+        hunger = hero.get_hunger()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -2232,6 +2358,8 @@ if __name__ == '__main__':
                                 camera.apply(sprite)
                             for sprite in npc_2_sprite:
                                 camera.apply(sprite)
+                        hero.set_hp(hp)
+                        hero.set_hunger(hunger)
 
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
@@ -2345,6 +2473,8 @@ if __name__ == '__main__':
                                 inventory_carrots.update('kill')
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
+                                if hero.get_hunger() < 100:
+                                    hero.set_hunger(hero.get_hunger() + 10)
                                 inventory.draw(0)
                             elif item == 'honey':
                                 inventory.delete_thing(index)
@@ -2354,6 +2484,8 @@ if __name__ == '__main__':
                                 inventory_carrots.update('kill')
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
+                                if hero.get_hunger() < 100:
+                                    hero.set_hunger(hero.get_hunger() + 15)
                                 inventory.draw(0)
                             elif item == 'mushroom':
                                 inventory.delete_thing(index)
@@ -2363,6 +2495,8 @@ if __name__ == '__main__':
                                 inventory_carrots.update('kill')
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
+                                if hero.get_hunger() < 100:
+                                    hero.set_hunger(hero.get_hunger() + 10)
                                 inventory.draw(0)
                             elif item == 'berries':
                                 inventory.delete_thing(index)
@@ -2372,6 +2506,8 @@ if __name__ == '__main__':
                                 inventory_carrots.update('kill')
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
+                                if hero.get_hunger() < 100:
+                                    hero.set_hunger(hero.get_hunger() + 5)
                                 inventory.draw(0)
 
         # Вывод сообщений
@@ -2500,11 +2636,21 @@ if __name__ == '__main__':
         if pygame.mouse.get_focused():
             pygame.mouse.set_visible(False)
             arrow_sprite.draw(screen)
+        screen.blit(text_hunger, text_hunger_rect)
+        screen.blit(text_hp, text_hp_rect)
         pygame.display.flip()
         clock.tick(FPS)
 
     update_level(level)
     cur.execute(f"""UPDATE level SET level = '{level}'""")
+    cur.execute(f"""UPDATE hp SET hp = '{hero.get_hp()}'""")
+    cur.execute(f"""UPDATE hunger SET hunger = '{hero.get_hunger()}'""")
+    cur.execute(f"""DELETE FROM inventory WHERE thing = 'stick' or thing = 'stone' or 
+    thing = 'carrot' or thing = 'honey' or thing = 'mushroom' or thing = 'berries'""")
+    for i in range(len(inventory.get_inventory())):
+        if i != 0:
+            cur.execute(f"""INSERT INTO inventory(thing) 
+            VALUES ('{inventory.get_inventory()[i]}')""")
     con.commit()
     con.close()
     pygame.quit()
