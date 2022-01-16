@@ -715,7 +715,7 @@ class Stones_image(pygame.sprite.Sprite):
 
 
 class Stones:
-    hp = 6
+    hp = 8
 
     def __init__(self, position, number):
         self.number = number
