@@ -670,10 +670,19 @@ class Sticks_image(pygame.sprite.Sprite):
 
 
 class Sticks:
+    hp = 4
+
     def __init__(self, position, number):
         self.number = number
         self.position = position
         self.power = 0
+        self.hp = 4
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы камней
@@ -706,10 +715,18 @@ class Stones_image(pygame.sprite.Sprite):
 
 
 class Stones:
+    hp = 6
+
     def __init__(self, position, number):
         self.number = number
         self.position = position
         self.power = 10
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы травы
@@ -740,10 +757,19 @@ class Grass_image(pygame.sprite.Sprite):
 
 
 class Grass:
+    hp = 1
+
     def __init__(self, position, number):
         self.number = number
         self.position = position
         self.power = 0
+        self.hp = 1
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы коричневых камней
@@ -776,10 +802,19 @@ class Browns_Stones_image(pygame.sprite.Sprite):
 
 
 class Brown_Stones:
+    hp = 6
+
     def __init__(self, position, number):
         self.number = number
         self.position = position
         self.power = 10
+        self.hp = 6
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы коричневой травы
@@ -810,10 +845,19 @@ class Borwn_Grass_image(pygame.sprite.Sprite):
 
 
 class Brown_Grass:
+    hp = 1
+
     def __init__(self, position, number):
         self.number = number
         self.position = position
         self.power = 0
+        self.hp = 1
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы морковки
@@ -847,9 +891,18 @@ class Carrot_image(pygame.sprite.Sprite):
 
 
 class Carrot:
+    hp = 4
+
     def __init__(self, position):
         self.food = 10
+        self.hp = 4
         self.position = position
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы ульев
@@ -882,9 +935,18 @@ class Honey_image(pygame.sprite.Sprite):
 
 
 class Honey:
+    hp = 4
+
     def __init__(self, position):
         self.food = 20
+        self.hp = 4
         self.position = position
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы грибов
@@ -917,9 +979,18 @@ class Mushroom_image(pygame.sprite.Sprite):
 
 
 class Mushroom:
+    hp = 2
+
     def __init__(self, position):
         self.food = 20
+        self.hp = 2
         self.position = position
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы ягод
@@ -952,9 +1023,18 @@ class Berries_image(pygame.sprite.Sprite):
 
 
 class Berries:
+    hp = 2
+
     def __init__(self, position):
         self.food = 30
+        self.hp = 2
         self.position = position
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
 
 
 # Классы героя
@@ -1943,6 +2023,14 @@ class View:
         return self.on_click(cell)
 
 
+class Building:
+    def __init__(self):
+        pass
+
+    def build(self):
+        pass
+
+
 # Запуск
 if __name__ == '__main__':
     con = sqlite3.connect('data/database.db')
@@ -2009,6 +2097,8 @@ if __name__ == '__main__':
     all_honey = pygame.sprite.Group()
     all_mushrooms = pygame.sprite.Group()
     all_berries = pygame.sprite.Group()
+    all_stick_walls = pygame.sprite.Group()
+    all_stone_walls = pygame.sprite.Group()
 
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
@@ -2168,6 +2258,14 @@ if __name__ == '__main__':
 
     if hero.get_hp() == 0:
         end_screen()
+
+    sticks_hp = 4
+    stones_hp = 6
+    grass_hp = 1
+    carrots_hp = 4
+    honey_hp = 4
+    mushroom_hp = 2
+    berries_hp = 2
 
     # Непосредственно запуск
     running = True
@@ -2431,7 +2529,33 @@ if __name__ == '__main__':
                                     view.field[view.get_cell(event.pos)[0]][
                                         view.get_cell(event.pos)[1]]) == Berries:
                             if len(inventory.get_inventory()) < 90:
-                                hero.take(view.get_board_cell(event.pos), event.pos)
+                                object = type(
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]])
+                                object_hp = object.get_hp(object)
+                                weapon_power = hero.get_weapon()[1]
+                                if object_hp > hero.get_weapon()[1]:
+                                    object.set_hp(object, object_hp - weapon_power)
+                                else:
+                                    hero.take(view.get_board_cell(event.pos), event.pos)
+                                    if object == Sticks:
+                                        object.set_hp(object, sticks_hp)
+                                    elif object == Stones:
+                                        object.set_hp(object, stones_hp)
+                                    elif object == Brown_Stones:
+                                        object.set_hp(object, stones_hp)
+                                    elif object == Grass:
+                                        object.set_hp(object, grass_hp)
+                                    elif object == Brown_Grass:
+                                        object.set_hp(object, grass_hp)
+                                    elif object == Carrot:
+                                        object.set_hp(object, carrots_hp)
+                                    elif object == Honey:
+                                        object.set_hp(object, honey_hp)
+                                    elif object == Mushroom:
+                                        object.set_hp(object, mushroom_hp)
+                                    elif object == Berries:
+                                        object.set_hp(object, berries_hp)
                         elif type(view.field[view.get_cell(event.pos)[0]][
                                       view.get_cell(event.pos)[1]]) == NPS_1 or \
                                 type(view.field[view.get_cell(event.pos)[0]][
