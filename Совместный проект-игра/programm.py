@@ -1366,7 +1366,6 @@ class Hero:
                         inventory_mushroom.draw(screen)
                         inventory_berries.draw(screen)
                         all_dark_grass.draw(screen)
-                        inventory_group.draw(screen)
 
                         all_carrot.draw(screen)
                         all_honey.draw(screen)
@@ -1422,7 +1421,6 @@ class Hero:
                         inventory_honey.draw(screen)
                         inventory_mushroom.draw(screen)
                         inventory_berries.draw(screen)
-                        inventory_group.draw(screen)
                         all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
@@ -1479,7 +1477,6 @@ class Hero:
                         inventory_honey.draw(screen)
                         inventory_mushroom.draw(screen)
                         inventory_berries.draw(screen)
-                        inventory_group.draw(screen)
                         all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
@@ -1536,7 +1533,6 @@ class Hero:
                         inventory_honey.draw(screen)
                         inventory_mushroom.draw(screen)
                         inventory_berries.draw(screen)
-                        inventory_group.draw(screen)
                         all_dark_grass.draw(screen)
 
                         all_carrot.draw(screen)
@@ -2516,17 +2512,23 @@ if __name__ == '__main__':
             running = False
         now_time = datetime.datetime.now().time()
         if start_time.hour == now_time.hour:
-            if start_time.minute + 1 == now_time.minute:
+            if start_time.second + 30 == now_time.second or\
+                    start_time.second - 30 == now_time.second:
                 if hero.get_hunger() > 0:
                     hero.set_hunger(hero.get_hunger() - 10)
-                    if start_time.minute + 1 < 59:
-                        start_time = start_time.replace(start_time.hour, start_time.minute + 1,
-                                                        start_time.second)
+                    if start_time.second + 30 < 60:
+                        start_time = start_time.replace(start_time.hour, start_time.minute,
+                                                        start_time.second + 30)
                     else:
-                        if start_time.hour + 1 < 24:
-                            start_time.replace(start_time.hour + 1, 0, start_time.second)
+                        if start_time.minute + 1 < 60:
+                            start_time = start_time.replace(start_time.hour, start_time.minute + 1,
+                                                            start_time.second - 30)
                         else:
-                            start_time.replace(0, 0, start_time.second)
+                            if start_time.hour + 1 < 24:
+                                start_time = start_time.replace(start_time.hour + 1, 0,
+                                                                start_time.second - 30)
+                            else:
+                                start_time = start_time.replace(0, 0, start_time.second - 30)
         else:
             if start_time.hour + 1 < 24:
                 start_time = start_time.replace(start_time.hour + 1, 0, 0)
@@ -2544,23 +2546,22 @@ if __name__ == '__main__':
         text_hunger_rect.y = 2
 
         if hero.get_hunger() == 0:
-            if start_time.second + 30 == now_time.second or \
-                    start_time.second - 30 == now_time.second:
+            if start_time.second + 7 == now_time.second:
                 if hero.get_hp() > 0:
                     hero.set_hp(hero.get_hp() - 10)
-                    if start_time.second + 30 < 60:
+                    if start_time.second + 7 < 60:
                         start_time = start_time.replace(start_time.hour, start_time.minute,
-                                                        start_time.second + 30)
+                                                        start_time.second + 7)
                     else:
                         if start_time.minute + 1 < 60:
                             start_time = start_time.replace(start_time.hour, start_time.minute + 1,
-                                                            start_time.second - 30)
+                                                            start_time.second - 53)
                         else:
                             if start_time.hour + 1 < 24:
                                 start_time = start_time.replace(start_time.hour + 1, 0,
-                                                                start_time.second - 30)
+                                                                start_time.second - 53)
                             else:
-                                start_time = start_time.replace(0, 0, start_time.second - 30)
+                                start_time = start_time.replace(0, 0, start_time.second - 53)
 
         if location == 'forest':
             background = pygame.transform.scale(load_image('background-field.png'), (880, 880))

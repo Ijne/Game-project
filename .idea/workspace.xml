@@ -4,21 +4,6 @@
     <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Modify_inventary">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, -4).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, -6).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-1, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-2, -6).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-2, -6).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-3, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-3, -4).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 1).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 2).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 3).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(-5, 4).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -1).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -1).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -2).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -2).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -3).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -3).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -4).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -4).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -5).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, -5).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, 0).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
