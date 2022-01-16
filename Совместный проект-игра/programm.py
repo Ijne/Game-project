@@ -1882,8 +1882,6 @@ class Sticks_Weapon(pygame.sprite.Sprite):
     def update(self, arg):
         if arg == 'kill':
             self.kill()
-            inventory.delete_thing(index)
-            inventory.draw()
 
 
 class Stone_Weapon(pygame.sprite.Sprite):
@@ -2717,8 +2715,8 @@ if __name__ == '__main__':
                                 camera.apply(sprite)
                         hero.set_hp(hp)
                         hero.set_hunger(hunger)
-                            for sprite in creator_sprite:
-                                camera.apply(sprite)
+                        for sprite in creator_sprite:
+                            camera.apply(sprite)
 
             if event.type == pygame.MOUSEMOTION:
                 arrow.rect.x = event.pos[0]
@@ -2797,13 +2795,6 @@ if __name__ == '__main__':
                                         view.get_cell(event.pos)[1]]) == Mushroom or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
-                            hero.take(view.get_board_cell(event.pos), event.pos)
-                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
-                            view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
-                                    view.field[view.get_cell(event.pos)[0]][
-                                        view.get_cell(event.pos)[1]]) == Berries:
                             if len(inventory.get_inventory()) < 90:
                                 object = type(
                                     view.field[view.get_cell(event.pos)[0]][
@@ -2832,6 +2823,10 @@ if __name__ == '__main__':
                                         object.set_hp(object, mushroom_hp)
                                     elif object == Berries:
                                         object.set_hp(object, berries_hp)
+                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
+                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
+                            type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]).start_dialog()
                         elif type(view.field[view.get_cell(event.pos)[0]][
                                       view.get_cell(event.pos)[1]]) == NPS_1 or \
                                 type(view.field[view.get_cell(event.pos)[0]][
@@ -2844,7 +2839,9 @@ if __name__ == '__main__':
                             item = inventory.get_inventory()[index]
                         except Exception:
                             pass
-                        if item == 'stick':
+                        if item == 'arm':
+                            hero.set_weapon('arm', 2, index)
+                        elif item == 'stick':
                             hero.set_weapon('stick', 3, index)
                         elif item == 'stone':
                             hero.set_weapon('stone', 4, index)
@@ -2874,7 +2871,10 @@ if __name__ == '__main__':
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
                                 if hero.get_hunger() < 100:
-                                    hero.set_hunger(hero.get_hunger() + 10)
+                                    if hero.get_hunger() + 10 < 100:
+                                        hero.set_hunger(hero.get_hunger() + 10)
+                                    else:
+                                        hero.set_hunger(100)
                                 inventory.draw(0)
                             elif item == 'honey':
                                 inventory.delete_thing(index)
@@ -2885,7 +2885,10 @@ if __name__ == '__main__':
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
                                 if hero.get_hunger() < 100:
-                                    hero.set_hunger(hero.get_hunger() + 15)
+                                    if hero.get_hunger() + 15 < 100:
+                                        hero.set_hunger(hero.get_hunger() + 15)
+                                    else:
+                                        hero.set_hunger(100)
                                 inventory.draw(0)
                             elif item == 'mushroom':
                                 inventory.delete_thing(index)
@@ -2896,7 +2899,10 @@ if __name__ == '__main__':
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
                                 if hero.get_hunger() < 100:
-                                    hero.set_hunger(hero.get_hunger() + 10)
+                                    if hero.get_hunger() + 10 < 100:
+                                        hero.set_hunger(hero.get_hunger() + 10)
+                                    else:
+                                        hero.set_hunger(100)
                                 inventory.draw(0)
                             elif item == 'berries':
                                 inventory.delete_thing(index)
@@ -2907,7 +2913,10 @@ if __name__ == '__main__':
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
                                 if hero.get_hunger() < 100:
-                                    hero.set_hunger(hero.get_hunger() + 5)
+                                    if hero.get_hunger() + 5 < 100:
+                                        hero.set_hunger(hero.get_hunger() + 5)
+                                    else:
+                                        hero.set_hunger(100)
                                 inventory.draw(0)
 
         # Вывод сообщений
@@ -2996,7 +3005,6 @@ if __name__ == '__main__':
         all_grass.draw(screen)
         all_brown_grass.draw(screen)
         all_brown_stones.draw(screen)
-        inventory_group.draw(screen)
         all_dark_grass.draw(screen)
         all_blue_fire.draw(screen)
         inventory_arm.draw(screen)
