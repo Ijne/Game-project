@@ -663,7 +663,8 @@ class Creator:
 
         self.hero_answers_1 = [('E -Это ты Создатель?', 'F -Приклоняюсь пред тобой'),
                                ('E - Да, это было трудно', 'F - Кланяюююсь'),
-                               ('E - Твоё имя', 'F - Сколько тебе лет'), ('E - Повинуюсь', 'F - Прошу прощения')]
+                               ('E - Твоё имя', 'F - Сколько тебе лет'), ('E - Повинуюсь',
+                                                                          'F - Прошу прощения')]
 
         self.answers_1 = [('Пусто', 'Пусто'), ('-Да, герой', '-Все так делают'),
                           ('-Легко не бывает', '-Да прекрати уже'),
@@ -1641,15 +1642,18 @@ class NPS_1:
         self.position = position
         self.name = 'Оборванец'
         self.main_step = nps_1_step
-        self.questions_1 = [('-Кто ты?', '-Кто ты?'), ('-Не мог бы ты мне помочь?', '-Не мог бы ты мне помочь?'),
-                            ('-Ну что согласен?', '-Ну что согласен?'), ('-Найди мою палку и принеси',
-                                                                         '-Я потерял палку, найди её')]
+        self.questions_1 = [('-Кто ты?', '-Кто ты?'), ('-Не мог бы ты мне помочь?',
+                                                       '-Не мог бы ты мне помочь?'),
+                            ('-Ну что согласен?', '-Ну что согласен?'),
+                            ('-Найди мою палку и принеси', '-Я потерял палку, найди её')]
 
-        self.hero_answers_1 = [('E - Я не помню', 'F - Назови себя'), ('E - Что мне за это будет?', 'F - Нет не хочу'),
+        self.hero_answers_1 = [('E - Я не помню', 'F - Назови себя'), ('E - Что мне за это будет?',
+                                                                       'F - Нет не хочу'),
                                ('E - Да', 'F - Так уж и быть'), ('E - Постараюсь', 'F - Ладно')]
 
         self.answers_1 = [('Пусто', 'Пусто'), ('-Так же как и я', '-Я не знаю своего имени'),
-                          ('-Я поделюсь морковью', '-Я могу дать морковь'), ('-Тогда слушай', '-Тогда слушай')]
+                          ('-Я поделюсь морковью', '-Я могу дать морковь'), ('-Тогда слушай',
+                                                                             '-Тогда слушай')]
         self.step = 0
         self.feel = 0
 
@@ -1745,9 +1749,10 @@ class NPS_2:
         self.position = position
         self.name = 'Незнакомка'
         self.main_step = nps_2_step
-        self.questions_1 = [('-Прошу помоги', '-Прошу помоги'), ('-Так что, ты поможешь?', '-Поможешь мне?'),
-                            ('-Я поделюсь запасами', '-У меня есть ягоды'), ('-Принеси мне мой зонт',
-                                                                             '-Прошу, найди мой зонт')]
+        self.questions_1 = [('-Прошу помоги', '-Прошу помоги'), ('-Так что, ты поможешь?',
+                                                                 '-Поможешь мне?'),
+                            ('-Я поделюсь запасами', '-У меня есть ягоды'),
+                            ('-Принеси мне мой зонт', '-Прошу, найди мой зонт')]
 
         self.hero_answers_1 = [('E - Что случилось?', 'F - Кто ты?'), ('E - Как же я могу отказать',
                                                                        'F - Мне нужна награда'),
@@ -2515,7 +2520,10 @@ if __name__ == '__main__':
             if start_time.second + 30 == now_time.second or\
                     start_time.second - 30 == now_time.second:
                 if hero.get_hunger() > 0:
-                    hero.set_hunger(hero.get_hunger() - 10)
+                    if hero.get_hunger() - 10 >= 0:
+                        hero.set_hunger(hero.get_hunger() - 10)
+                    else:
+                        hero.set_hunger(0)
                     if start_time.second + 30 < 60:
                         start_time = start_time.replace(start_time.hour, start_time.minute,
                                                         start_time.second + 30)
@@ -2540,13 +2548,15 @@ if __name__ == '__main__':
         text_hp_rect.x = 20
         text_hp_rect.y = 2
 
-        text_hunger = font_object2.render(f'Голод: {hero.get_hunger()}', True, pygame.Color('orange'))
+        text_hunger = font_object2.render(f'Голод: {hero.get_hunger()}', True,
+                                          pygame.Color('orange'))
         text_hunger_rect = text_hunger.get_rect()
         text_hunger_rect.x = 200
         text_hunger_rect.y = 2
 
         if hero.get_hunger() == 0:
-            if start_time.second + 7 == now_time.second:
+            if start_time.second + 7 == now_time.second or \
+                    start_time.second - 53 == now_time.second:
                 if hero.get_hp() > 0:
                     hero.set_hp(hero.get_hp() - 10)
                     if start_time.second + 7 < 60:
@@ -2795,7 +2805,8 @@ if __name__ == '__main__':
                                     view.field[view.get_cell(event.pos)[0]][
                                         view.get_cell(event.pos)[1]]) == Mushroom or \
                                 type(
-                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Berries:
                             if len(inventory.get_inventory()) < 90:
                                 object = type(
                                     view.field[view.get_cell(event.pos)[0]][
@@ -2824,10 +2835,14 @@ if __name__ == '__main__':
                                         object.set_hp(object, mushroom_hp)
                                     elif object == Berries:
                                         object.set_hp(object, berries_hp)
-                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
-                            type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]).start_dialog()
+                        elif type(view.field[view.get_cell(event.pos)[0]][
+                                      view.get_cell(event.pos)[1]]) == NPS_1 or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == NPS_2 or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == Creator:
+                            view.field[view.get_cell(event.pos)[0]][
+                                view.get_cell(event.pos)[1]].start_dialog()
                         elif type(view.field[view.get_cell(event.pos)[0]][
                                       view.get_cell(event.pos)[1]]) == NPS_1 or \
                                 type(view.field[view.get_cell(event.pos)[0]][
@@ -2860,9 +2875,23 @@ if __name__ == '__main__':
                         item = inventory.get_inventory()[index]
                         if hero.get_weapon()[0] == item and hero.get_weapon()[2] == index:
                             if item == 'stick':
-                                pass
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
                             elif item == 'stone':
-                                pass
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
                             elif item == 'carrot':
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
