@@ -347,6 +347,10 @@ def reload_level(new_level):
         npc_1_sprite.update(False, None)
         npc_2_sprite.update(False, None)
         creator_sprite.update(False, None)
+
+        npc_stick_sprite.update(False, None)
+        umbrella_sprite.update(False, None)
+
         hero_sprite.update(False)
 
         # Формирование объектов в списке
@@ -413,6 +417,15 @@ def reload_level(new_level):
                     board.field[x][y] = element
                     Creator_Image(element, creator_sprite)
 
+                elif board.field[x][y] == '/':
+                    element = npc_stick((x, y))
+                    board.field[x][y] = element
+                    npc_stick_image(element, npc_stick_sprite)
+                elif board.field[x][y] == '@':
+                    element = umbrella((x, y))
+                    board.field[x][y] = element
+                    umbrella_image(element, umbrella_sprite)
+
         flag = False
         for x in range(len(board.field)):
             if flag:
@@ -456,6 +469,11 @@ def reload_level(new_level):
         for sprite in npc_2_sprite:
             camera.apply(sprite)
         for sprite in creator_sprite:
+            camera.apply(sprite)
+
+        for sprite in npc_stick_sprite:
+            camera.apply(sprite)
+        for sprite in umbrella_sprite:
             camera.apply(sprite)
 
         top = (hero.position[0] % 10, hero.position[1] % 10)
@@ -517,6 +535,11 @@ def update_level(level):
                 s += '2'
             elif type(board.field[x][y]) == Creator:
                 s += '3'
+
+            elif type(board.field[x][y]) == npc_stick:
+                s += '/'
+            elif type(board.field[x][y]) == umbrella:
+                s += '@'
         output.append(s + '\n')
 
     filename = 'data/levels/save/' + level
@@ -654,14 +677,14 @@ class Creator_Image(pygame.sprite.Sprite):
 class Creator:
     def __init__(self, position):
         self.position = position
-        self.name = 'Создатель'
-        self.main_step = nps_2_step
+        self.name = 'Крутой чувак'
+        self.main_step = creator_step
         self.questions_1 = [('-Наконец-то ты меня нашёл', '-Наконец-то ты меня нашёл'),
                             ('-Молодец, что дошёл', '-Ты прошёл длинный путь'),
                             ('-Что ты хочешь узнать?', '-У тебя есть вопросы?'), ('-Уходи',
                                                                                   '-Уходи')]
 
-        self.hero_answers_1 = [('E -Это ты Создатель?', 'F -Приклоняюсь пред тобой'),
+        self.hero_answers_1 = [('E -Ты же здесь самый крутой', 'F -Приклоняюсь пред тобой'),
                                ('E - Да, это было трудно', 'F - Кланяюююсь'),
                                ('E - Твоё имя', 'F - Сколько тебе лет'), ('E - Повинуюсь', 'F - Прошу прощения')]
 
@@ -686,10 +709,10 @@ class Creator:
             if self.main_step > 1:
                 process = False
             elif self.step == 0:
-                message_text = ['Создатель:', '', self.replics[0][self.step][self.feel], '',
+                message_text = ['Крутой чувак:', '', self.replics[0][self.step][self.feel], '',
                                 self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
             elif self.step <= len(self.replics[0]) - 1:
-                message_text = ['Создатель:', '', self.replics[2][self.step][self.feel], '',
+                message_text = ['Крутой чувак:', '', self.replics[2][self.step][self.feel], '',
                                 self.replics[0][self.step][self.feel], '',
                                 self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
             else:
@@ -874,7 +897,7 @@ class Sticks_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Полезная штука...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('stick')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -919,7 +942,7 @@ class Stones_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Как мне их тоскать...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('stone')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -963,7 +986,7 @@ class Grass_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Травка...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     self.kill()
 
 
@@ -1006,7 +1029,7 @@ class Browns_Stones_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"На удивление лёгкие...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('stone')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -1051,7 +1074,7 @@ class Borwn_Grass_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Пахнет приятно...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     self.kill()
 
 
@@ -1095,7 +1118,7 @@ class Carrot_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Отличная морковь...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('carrot')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -1139,7 +1162,7 @@ class Honey_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Блин, обляпался...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('honey')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -1183,7 +1206,7 @@ class Mushroom_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Надеюсь, это съедобно...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('mushroom')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -1227,7 +1250,7 @@ class Berries_image(pygame.sprite.Sprite):
             if arg and self.rect.collidepoint(position):
                 if arg == 'kill':
                     message_text = ['"Выглядят вскусно...', '',
-                                    '                                    Ваня"']
+                                    '                                    Вы"']
                     inventory.add_thing('berries')
                     inventory.draw(len(inventory.get_inventory()) - 1)
                     self.kill()
@@ -1615,8 +1638,50 @@ class Hero:
                             all_mushrooms.update('kill', rect_position)
                             all_berries.update('kill', rect_position)
 
+                            npc_stick_sprite.update('kill', rect_position)
+                            umbrella_sprite.update('kill', rect_position)
+
 
 # НПС-Оборванец
+class npc_stick_image(pygame.sprite.Sprite):
+    image = load_image('npc-stick.png')
+
+    def __init__(self, stick, *group):
+        super().__init__(*group)
+        self.image = npc_stick_image.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = stick.position[0] * board.cell_size + board.left
+        self.rect.y = stick.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text, nps_1_step
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Надо отдать её...', '',
+                                    '                                    Вы"']
+                    nps_1_step = 2
+                    cur.execute(f"""UPDATE npc SET step = {nps_1_step}
+                    WHERE name LIKE 'npc_1'""")
+                    con.commit()
+                    con.close()
+                    self.kill()
+
+
+class npc_stick:
+    def __init__(self, position):
+        self.position = position
+        self.power = 0
+
+
 class NPS_1_Image(pygame.sprite.Sprite):
     image = load_image('npc-1.png')
 
@@ -1640,32 +1705,57 @@ class NPS_1:
     def __init__(self, position):
         self.position = position
         self.name = 'Оборванец'
-        self.main_step = nps_1_step
-        self.questions_1 = [('-Кто ты?', '-Кто ты?'), ('-Не мог бы ты мне помочь?', '-Не мог бы ты мне помочь?'),
-                            ('-Ну что согласен?', '-Ну что согласен?'), ('-Найди мою палку и принеси',
-                                                                         '-Я потерял палку, найди её')]
+        self.questions_1 = [('-Кто ты?', '-Кто ты?'),
+                            ('-Не мог бы ты мне помочь?', '-Не мог бы ты мне помочь?'),
+                            ('-Ну что согласен?', '-Ну что согласен?'),
+                            ('-Найди мою палку и принеси', '-Я потерял палку, найди её')]
 
-        self.hero_answers_1 = [('E - Я не помню', 'F - Назови себя'), ('E - Что мне за это будет?', 'F - Нет не хочу'),
-                               ('E - Да', 'F - Так уж и быть'), ('E - Постараюсь', 'F - Ладно')]
+        self.hero_answers_1 = [('E - Я не помню', 'F - Назови себя'),
+                               ('E - Что мне за это будет?', 'F - Нет не хочу'),
+                               ('E - Да', 'F - Так уж и быть'),
+                               ('E - Постараюсь', 'F - Ладно')]
 
-        self.answers_1 = [('Пусто', 'Пусто'), ('-Так же как и я', '-Я не знаю своего имени'),
-                          ('-Я поделюсь морковью', '-Я могу дать морковь'), ('-Тогда слушай', '-Тогда слушай')]
+        self.answers_1 = [('Пусто', 'Пусто'),
+                          ('-Так же как и я', '-Я не знаю своего имени'),
+                          ('-Я поделюсь морковью', '-Я могу дать морковь'),
+                          ('-Тогда слушай', '-Тогда слушай')]
+
+        # Ещё реплики
+        self.questions_2 = [('-Ну, что принёс?', '-Ну, что принёс?'),
+                            ('-Давай сюда', '-Отдай её мне'),
+                            ('-Я не смогу ходить без неё', '-Я не могу ходить без неё'),
+                            ('-Прости меня', '-Я прошу прощения')]
+
+        self.hero_answers_2 = [('E - Да вот твоя палка', 'F - Да, вот она'),
+                               ('E - Где морковь?', 'F - Тащи морковь'),
+                               ('E - Так ты обманул меня', 'F - Ты врун!'),
+                               ('E - Так уж и быть', 'F - Ладно, прощаю')]
+
+        self.answers_2 = [('Пусто', 'Пусто'),
+                          ('-Спасибо, ты постарался', '-Отлично, она нужна мне'),
+                          ('-Извини, я обманул тебя', '-Я обманул тебя'),
+                          ('-Извини', '-Прости')]
+
         self.step = 0
         self.feel = 0
 
-        if self.main_step == 1:
-            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
-
     def start_dialog(self):
         global message_text, nps_1_step
-        con = sqlite3.connect('data/database.db')
-        cur = con.cursor()
+
+        self.main_step = nps_1_step
+
+        if self.main_step == 1:
+            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
+        elif self.main_step == 2:
+            self.replics = [self.questions_2, self.hero_answers_2, self.answers_2]
+
         process = True
         while process:
             screen.blit(background, (0, 0))
             screen.blit(second_menu_background, (880, 640))
             screen.blit(inventory_menu_background, (880, 0))
-            if self.main_step > 1:
+            if self.main_step == 0:
+                message_text = ['Оборванец:', '', 'Хмм?']
                 process = False
             elif self.step == 0:
                 message_text = ['Оборванец:', '', self.replics[0][self.step][self.feel], '',
@@ -1675,16 +1765,13 @@ class NPS_1:
                                 self.replics[0][self.step][self.feel], '',
                                 self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
             else:
-                message_text = []
-                if nps_1_step < 2:
-                    nps_1_step += 1
-                    cur.execute(f"""UPDATE npc SET step = {nps_1_step}
-                    WHERE name LIKE 'npc_1'""")
-                    con.commit()
-                    con.close()
+                message_text = ['Оборванец:', '', 'Хмм?']
+                nps_1_step = 0
                 process = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    message_text = ['Оборванец:', '', 'Хмм?']
+                    nps_1_step = 0
                     update_level(level)
                     terminate()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
@@ -1718,9 +1805,54 @@ class NPS_1:
                 arrow_sprite.draw(screen)
             pygame.display.flip()
             clock.tick(FPS)
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
+        cur.execute(f"""UPDATE npc SET step = {nps_1_step}
+        WHERE name LIKE 'npc_1'""")
+        con.commit()
+        con.close()
 
 
 # НПС-незнакомка
+class umbrella_image(pygame.sprite.Sprite):
+    image = load_image('umbrella.png')
+
+    def __init__(self, stick, *group):
+        super().__init__(*group)
+        self.image = umbrella_image.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = stick.position[0] * board.cell_size + board.left
+        self.rect.y = stick.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text, nps_2_step
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Пора вернуть зонт...', '',
+                                    '                                    Вы"']
+                    nps_2_step = 2
+                    cur.execute(f"""UPDATE npc SET step = {nps_2_step}
+                    WHERE name LIKE 'npc_2'""")
+                    con.commit()
+                    con.close()
+                    self.kill()
+
+
+class umbrella:
+    def __init__(self, position):
+        self.position = position
+        self.power = 0
+
+
 class NPS_2_Image(pygame.sprite.Sprite):
     image = load_image('npc-2.png')
 
@@ -1744,7 +1876,6 @@ class NPS_2:
     def __init__(self, position):
         self.position = position
         self.name = 'Незнакомка'
-        self.main_step = nps_2_step
         self.questions_1 = [('-Прошу помоги', '-Прошу помоги'), ('-Так что, ты поможешь?', '-Поможешь мне?'),
                             ('-Я поделюсь запасами', '-У меня есть ягоды'), ('-Принеси мне мой зонт',
                                                                              '-Прошу, найди мой зонт')]
@@ -1755,22 +1886,42 @@ class NPS_2:
 
         self.answers_1 = [('Пусто', 'Пусто'), ('-Я потеряла зонт', '-Я не знаю своего имени'),
                           ('-Я так рада', '-Ну раз так'), ('-Тогда слушай', '-Тогда слушай')]
+
+        # Ещё реплики
+        self.questions_2 = [('-Ну, что принёс?', '-Ну, что принёс?'),
+                            ('-Давай его скорей', '-Давай его быстрей'),
+                            ('-Но мне нужен зонт', '-Но я не могу без зонта'),
+                            ('-Прости меня', '-Я прошу прощения')]
+
+        self.hero_answers_2 = [('E - Да, вот твой зонт', 'F - Да, я нашёл его'),
+                               ('E - Но где же твои запасы?', 'F - Как насчёт награды?'),
+                               ('E - Вот оно как', 'F - Ты наврала'),
+                               ('E - Так уж и быть', 'F - Ладно, прощаю')]
+
+        self.answers_2 = [('Пусто', 'Пусто'),
+                          ('-Спасибо, я благодарна', '-Отлично, теперь я смогу укрыться'),
+                          ('-Извини, но я обманула тебя', '-Хмм, у меня нет запасов'),
+                          ('-Мне пришлось', '-Я была вынуждена')]
+
         self.step = 0
         self.feel = 0
 
-        if self.main_step == 1:
-            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
-
     def start_dialog(self):
         global message_text, nps_2_step
-        con = sqlite3.connect('data/database.db')
-        cur = con.cursor()
+
+        self.main_step = nps_2_step
+        if self.main_step == 1:
+            self.replics = [self.questions_1, self.hero_answers_1, self.answers_1]
+        elif self.main_step == 2:
+            self.replics = [self.questions_2, self.hero_answers_2, self.answers_2]
+
         process = True
         while process:
             screen.blit(background, (0, 0))
             screen.blit(second_menu_background, (880, 640))
             screen.blit(inventory_menu_background, (880, 0))
-            if self.main_step > 1:
+            if self.main_step == 0:
+                message_text = ['Незнакомка:', '', 'Хмм?']
                 process = False
             elif self.step == 0:
                 message_text = ['Незнакомка:', '', self.replics[0][self.step][self.feel], '',
@@ -1780,16 +1931,13 @@ class NPS_2:
                                 self.replics[0][self.step][self.feel], '',
                                 self.replics[1][self.step][0], '', self.replics[1][self.step][1]]
             else:
-                message_text = []
-                if nps_2_step < 2:
-                    nps_2_step += 1
-                    cur.execute(f"""UPDATE npc SET step = {nps_2_step}
-                    WHERE name LIKE 'npc_2'""")
-                    con.commit()
-                    con.close()
+                message_text = ['Незнакомка:', '', 'Хмм?']
+                nps_2_step = 0
                 process = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    message_text = ['Незнакомка:', '', 'Хмм?']
+                    nps_2_step = 0
                     update_level(level)
                     terminate()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
@@ -1829,6 +1977,12 @@ class NPS_2:
                 arrow_sprite.draw(screen)
             pygame.display.flip()
             clock.tick(FPS)
+        con = sqlite3.connect('data/database.db')
+        cur = con.cursor()
+        cur.execute(f"""UPDATE npc SET step = {nps_2_step}
+        WHERE name LIKE 'npc_2'""")
+        con.commit()
+        con.close()
 
 
 # Класс поля
@@ -2315,6 +2469,9 @@ if __name__ == '__main__':
     all_stick_walls = pygame.sprite.Group()
     all_stone_walls = pygame.sprite.Group()
 
+    npc_stick_sprite = pygame.sprite.Group()
+    umbrella_sprite = pygame.sprite.Group()
+
     hero_sprite = pygame.sprite.Group()
     npc_1_sprite = pygame.sprite.Group()
     npc_2_sprite = pygame.sprite.Group()
@@ -2408,6 +2565,15 @@ if __name__ == '__main__':
                 board.field[x][y] = element
                 Creator_Image(element, creator_sprite)
 
+            elif board.field[x][y] == '/':
+                element = npc_stick((x, y))
+                board.field[x][y] = element
+                npc_stick_image(element, npc_stick_sprite)
+            elif board.field[x][y] == '@':
+                element = umbrella((x, y))
+                board.field[x][y] = element
+                umbrella_image(element, umbrella_sprite)
+
     flag = False
     for x in range(len(board.field)):
         if flag:
@@ -2452,6 +2618,11 @@ if __name__ == '__main__':
     for sprite in creator_sprite:
         camera.apply(sprite)
 
+    for sprite in npc_stick_sprite:
+        camera.apply(sprite)
+    for sprite in umbrella_sprite:
+        camera.apply(sprite)
+
     top = (hero.position[0] % 10, hero.position[1] % 10)
     if hero.position[0] < 10:
         top = (0, top[1])
@@ -2475,12 +2646,12 @@ if __name__ == '__main__':
     font_object = pygame.font.Font(None, 25)
     font_object2 = pygame.font.Font(None, 25)
 
-    text_hp = font_object.render(f'Здоровье: {hero.get_hp()}', True, ((162, 32, 32)))
+    text_hp = font_object.render(f'{hero.get_hp()}', True, ((162, 32, 32)))
     text_hp_rect = text_hp.get_rect()
     text_hp_rect.x = 20
     text_hp_rect.y = 2
 
-    text_hunger = font_object2.render(f'Голод: {hero.get_hunger()}', True, pygame.Color('orange'))
+    text_hunger = font_object2.render(f'{hero.get_hunger()}', True, pygame.Color('orange'))
     text_hunger_rect = text_hunger.get_rect()
     text_hunger_rect.x = 200
     text_hunger_rect.y = 2
@@ -2535,18 +2706,32 @@ if __name__ == '__main__':
             else:
                 start_time.replace(0, start_time.minute, start_time.second)
 
-        text_hp = font_object.render(f'Здоровье: {hero.get_hp()}', True, (162, 32, 32))
+        text_hp = font_object.render(f'{hero.get_hp()}', True, (162, 32, 32))
         text_hp_rect = text_hp.get_rect()
         text_hp_rect.x = 20
-        text_hp_rect.y = 2
+        text_hp_rect.y = 15
 
-        text_hunger = font_object2.render(f'Голод: {hero.get_hunger()}', True, pygame.Color('orange'))
+        text_hunger = font_object2.render(f'{hero.get_hunger()}', True, pygame.Color('orange'))
         text_hunger_rect = text_hunger.get_rect()
-        text_hunger_rect.x = 200
-        text_hunger_rect.y = 2
+        text_hunger_rect.x = 100
+        text_hunger_rect.y = 15
+
+        text_weapon = font_object2.render(f'{hero.get_weapon()[0].upper()}', True, (0, 0, 0))
+        text_weapon_rect = text_weapon.get_rect()
+        text_weapon_rect.x = 720
+        text_weapon_rect.y = 13
+
+        x = level[level.find('(') + 1:level.find(',')].strip()
+        y = level[level.find(',') + 1:level.find(')')].strip()
+
+        text_coords = font_object2.render(f'{hero.position[0] + int(x) * 30} : {hero.position[1] + int(y) * 30}',
+                                          True, (0, 0, 0))
+        text_coords_rect = text_coords.get_rect()
+        text_coords_rect.x = 800
+        text_coords_rect.y = 13
 
         if hero.get_hunger() == 0:
-            if start_time.second + 7 == now_time.second:
+            if start_time.second + 7 == now_time.second or start_time.second - 53 == now_time.second:
                 if hero.get_hp() > 0:
                     hero.set_hp(hero.get_hp() - 10)
                     if start_time.second + 7 < 60:
@@ -2623,6 +2808,9 @@ if __name__ == '__main__':
                             npc_2_sprite.update(False, None)
                             creator_sprite.update(False, None)
 
+                            npc_stick_sprite.update(False, None)
+                            umbrella_sprite.update(False, None)
+
                             for x in range(len(board.field)):
                                 for y in range(len(board.field[x])):
                                     if type(board.field[x][y]) == Sticks:
@@ -2684,6 +2872,15 @@ if __name__ == '__main__':
                                         board.field[x][y] = element
                                         Creator_Image(element, creator_sprite)
 
+                                    elif type(board.field[x][y]) == npc_stick:
+                                        element = npc_stick((x, y))
+                                        board.field[x][y] = element
+                                        npc_stick_image(element, npc_stick_sprite)
+                                    elif type(board.field[x][y]) == umbrella:
+                                        element = umbrella((x, y))
+                                        board.field[x][y] = element
+                                        umbrella_image(element, umbrella_sprite)
+
                             # Смещение объектов
                             camera.update(hero)
                             for sprite in all_sticks:
@@ -2717,6 +2914,11 @@ if __name__ == '__main__':
                         hero.set_hp(hp)
                         hero.set_hunger(hunger)
                         for sprite in creator_sprite:
+                            camera.apply(sprite)
+
+                        for sprite in npc_stick_sprite:
+                            camera.apply(sprite)
+                        for sprite in umbrella_sprite:
                             camera.apply(sprite)
 
             if event.type == pygame.MOUSEMOTION:
@@ -2769,6 +2971,12 @@ if __name__ == '__main__':
                     elif type(view.field[position[0]][position[1]]) == Creator:
                         message_text = ['"Он прекрасен...', '',
                                         '                                    Вы"']
+                    elif type(view.field[position[0]][position[1]]) == npc_stick:
+                        message_text = ['"Вот она...', '',
+                                        '                                    Вы"']
+                    elif type(view.field[position[0]][position[1]]) == umbrella:
+                        message_text = ['"Долго же он тут...', '',
+                                        '                                    Вы"']
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -2795,7 +3003,8 @@ if __name__ == '__main__':
                                     view.field[view.get_cell(event.pos)[0]][
                                         view.get_cell(event.pos)[1]]) == Mushroom or \
                                 type(
-                                    view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Berries:
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Berries:
                             if len(inventory.get_inventory()) < 90:
                                 object = type(
                                     view.field[view.get_cell(event.pos)[0]][
@@ -2824,10 +3033,15 @@ if __name__ == '__main__':
                                         object.set_hp(object, mushroom_hp)
                                     elif object == Berries:
                                         object.set_hp(object, berries_hp)
+                        elif type(view.field[view.get_cell(event.pos)[0]][
+                                      view.get_cell(event.pos)[1]]) == npc_stick or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == umbrella:
+                            hero.take(view.get_board_cell(event.pos), event.pos)
                         elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
                                 type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
                                 type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
-                            type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]).start_dialog()
+                            view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
                         elif type(view.field[view.get_cell(event.pos)[0]][
                                       view.get_cell(event.pos)[1]]) == NPS_1 or \
                                 type(view.field[view.get_cell(event.pos)[0]][
@@ -2877,6 +3091,7 @@ if __name__ == '__main__':
                                     else:
                                         hero.set_hunger(100)
                                 inventory.draw(0)
+                                hero.set_weapon('arm', 2, index)
                             elif item == 'honey':
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
@@ -2891,6 +3106,7 @@ if __name__ == '__main__':
                                     else:
                                         hero.set_hunger(100)
                                 inventory.draw(0)
+                                hero.set_weapon('arm', 2, index)
                             elif item == 'mushroom':
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
@@ -2905,6 +3121,7 @@ if __name__ == '__main__':
                                     else:
                                         hero.set_hunger(100)
                                 inventory.draw(0)
+                                hero.set_weapon('arm', 2, index)
                             elif item == 'berries':
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
@@ -2919,6 +3136,7 @@ if __name__ == '__main__':
                                     else:
                                         hero.set_hunger(100)
                                 inventory.draw(0)
+                                hero.set_weapon('arm', 2, index)
 
         # Вывод сообщений
         message_clock += 2
@@ -2999,7 +3217,15 @@ if __name__ == '__main__':
             npc_2_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in creator_sprite:
             creator_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+
+        for sprite in npc_stick_sprite:
+            npc_stick_sprite.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in umbrella_sprite:
+            umbrella_sprite.update(True, (sprite.rect.x, sprite.rect.y))
         hero_sprite.update(hero)
+
+        d_butterfly_sprite.update('animation', None)
+        d_rain_sprite.update('animation', None)
 
         all_sticks.draw(screen)
         all_stones.draw(screen)
@@ -3025,6 +3251,10 @@ if __name__ == '__main__':
         npc_1_sprite.draw(screen)
         npc_2_sprite.draw(screen)
         creator_sprite.draw(screen)
+
+        npc_stick_sprite.draw(screen)
+        umbrella_sprite.draw(screen)
+
         print_text(text_coord, message_text)
 
         # Отрисовка декораций
@@ -3038,10 +3268,10 @@ if __name__ == '__main__':
             if decoration_clock > 500:
                 decoration_clock = 0
         elif location == 'rainy-dale':
-            if decoration_clock == 1:
+            if decoration_clock == 3:
                 D_rain((x, 0), d_rain_sprite)
                 D_rain((x + 2, y), d_rain_sprite)
-            if decoration_clock > 1:
+            if decoration_clock > 3:
                 decoration_clock = 0
         elif location == 'dark-forest':
             if decoration_clock % 30 == 0:
@@ -3059,8 +3289,6 @@ if __name__ == '__main__':
         for sprite in d_rain_sprite:
             d_rain_sprite.update(True, (sprite.rect.x, sprite.rect.y))
 
-        d_butterfly_sprite.update('animation', None)
-        d_rain_sprite.update('animation', None)
         d_butterfly_sprite.draw(screen)
         d_rain_sprite.draw(screen)
 
@@ -3069,6 +3297,8 @@ if __name__ == '__main__':
             arrow_sprite.draw(screen)
         screen.blit(text_hunger, text_hunger_rect)
         screen.blit(text_hp, text_hp_rect)
+        screen.blit(text_weapon, text_weapon_rect)
+        screen.blit(text_coords, text_coords_rect)
         pygame.display.flip()
         clock.tick(FPS)
 
