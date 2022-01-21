@@ -3086,6 +3086,7 @@ if __name__ == '__main__':
                                 inventory_carrots.update('kill')
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
+                                hero.set_weapon('arm', 2, index)
                                 inventory.draw(0)
                             elif item == 'stone':
                                 inventory.delete_thing(index)
@@ -3095,6 +3096,7 @@ if __name__ == '__main__':
                                 inventory_carrots.update('kill')
                                 inventory_mushroom.update('kill')
                                 inventory_berries.update('kill')
+                                hero.set_weapon('arm', 2, index)
                                 inventory.draw(0)
                             elif item == 'carrot':
                                 inventory.delete_thing(index)
