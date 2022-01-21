@@ -686,7 +686,8 @@ class Creator:
 
         self.hero_answers_1 = [('E -Ты же здесь самый крутой', 'F -Приклоняюсь пред тобой'),
                                ('E - Да, это было трудно', 'F - Кланяюююсь'),
-                               ('E - Твоё имя', 'F - Сколько тебе лет'), ('E - Повинуюсь', 'F - Прошу прощения')]
+                               ('E - Твоё имя', 'F - Сколько тебе лет'), ('E - Повинуюсь',
+                                                                          'F - Прошу прощения')]
 
         self.answers_1 = [('Пусто', 'Пусто'), ('-Да, герой', '-Все так делают'),
                           ('-Легко не бывает', '-Да прекрати уже'),
@@ -2686,7 +2687,10 @@ if __name__ == '__main__':
             if start_time.second + 30 == now_time.second or\
                     start_time.second - 30 == now_time.second:
                 if hero.get_hunger() > 0:
-                    hero.set_hunger(hero.get_hunger() - 10)
+                    if hero.get_hunger() - 10 >= 0:
+                        hero.set_hunger(hero.get_hunger() - 10)
+                    else:
+                        hero.set_hunger(0)
                     if start_time.second + 30 < 60:
                         start_time = start_time.replace(start_time.hour, start_time.minute,
                                                         start_time.second + 30)
@@ -2731,7 +2735,8 @@ if __name__ == '__main__':
         text_coords_rect.y = 13
 
         if hero.get_hunger() == 0:
-            if start_time.second + 7 == now_time.second or start_time.second - 53 == now_time.second:
+            if start_time.second + 7 == now_time.second or \
+                    start_time.second - 53 == now_time.second:
                 if hero.get_hp() > 0:
                     hero.set_hp(hero.get_hp() - 10)
                     if start_time.second + 7 < 60:
@@ -3074,9 +3079,23 @@ if __name__ == '__main__':
                         item = inventory.get_inventory()[index]
                         if hero.get_weapon()[0] == item and hero.get_weapon()[2] == index:
                             if item == 'stick':
-                                pass
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
                             elif item == 'stone':
-                                pass
+                                inventory.delete_thing(index)
+                                inventory_sticks.update('kill')
+                                inventory_stones.update('kill')
+                                inventory_honey.update('kill')
+                                inventory_carrots.update('kill')
+                                inventory_mushroom.update('kill')
+                                inventory_berries.update('kill')
+                                inventory.draw(0)
                             elif item == 'carrot':
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
