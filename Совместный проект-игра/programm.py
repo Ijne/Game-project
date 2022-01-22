@@ -7,6 +7,7 @@ import datetime
 
 # Готовим игру к работе
 pygame.init()
+pygame.display.set_caption('The World')
 screen = pygame.display.set_mode((1180, 880))
 clock = pygame.time.Clock()
 FPS = 60
@@ -50,6 +51,9 @@ def load_image(name, colorkey=None):
             colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey)
     return image
+
+
+pygame.display.set_icon(pygame.transform.scale(load_image('logo.png'), (64, 64)))
 
 
 # Функции и классы загрузочного экрана
@@ -240,6 +244,7 @@ def end_screen():
     screen_y = 0
     speed = 50
     FPS = 60
+    update_level_save()
 
     while True:
         end_background = pygame.transform.scale(load_image('end_screen.jpg'), (1180, 880))
@@ -2684,7 +2689,7 @@ if __name__ == '__main__':
             running = False
         now_time = datetime.datetime.now().time()
         if start_time.hour == now_time.hour:
-            if start_time.second + 30 == now_time.second or\
+            if start_time.second + 30 == now_time.second or \
                     start_time.second - 30 == now_time.second:
                 if hero.get_hunger() > 0:
                     if hero.get_hunger() - 10 >= 0:
@@ -2722,16 +2727,16 @@ if __name__ == '__main__':
 
         text_weapon = font_object2.render(f'{hero.get_weapon()[0].upper()}', True, (0, 0, 0))
         text_weapon_rect = text_weapon.get_rect()
-        text_weapon_rect.x = 720
+        text_weapon_rect.x = 700
         text_weapon_rect.y = 13
 
         x = level[level.find('(') + 1:level.find(',')].strip()
         y = level[level.find(',') + 1:level.find(')')].strip()
 
-        text_coords = font_object2.render(f'{hero.position[0] + int(x) * 30} : {hero.position[1] + int(y) * 30}',
+        text_coords = font_object2.render(f'x:{hero.position[0] + int(x) * 30}  y:{hero.position[1] + int(y) * 30}',
                                           True, (0, 0, 0))
         text_coords_rect = text_coords.get_rect()
-        text_coords_rect.x = 800
+        text_coords_rect.x = 780
         text_coords_rect.y = 13
 
         if hero.get_hunger() == 0:
