@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="Test-commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="3051afde-8de6-4923-9235-734c45f234d2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, 0).txt" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/data/levels/save/level(0, 0).txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Совместный проект-игра/programm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Совместный проект-игра/programm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,6 +289,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Begining" />
