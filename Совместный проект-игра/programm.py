@@ -7,6 +7,7 @@ import datetime
 
 # Готовим игру к работе
 pygame.init()
+pygame.display.set_caption('The World')
 screen = pygame.display.set_mode((1180, 880))
 clock = pygame.time.Clock()
 FPS = 60
@@ -50,6 +51,9 @@ def load_image(name, colorkey=None):
             colorkey = image.get_at((0, 0))
         image.set_colorkey(colorkey)
     return image
+
+
+pygame.display.set_icon(pygame.transform.scale(load_image('logo.png'), (64, 64)))
 
 
 # Функции и классы загрузочного экрана
@@ -240,6 +244,7 @@ def end_screen():
     screen_y = 0
     speed = 50
     FPS = 60
+    update_level_save()
 
     while True:
         end_background = pygame.transform.scale(load_image('end_screen.jpg'), (1180, 880))
@@ -2521,33 +2526,91 @@ class Building:
     def __init__(self):
         pass
 
-    def build(self, type, position, view):
+    def build(self, type, position, view, camera):
         global all_stick_walls, board
 
         if type == 'stick':
             if view == 0:
-                position[1] -= 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] -= 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 180:
-                position[1] += 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] += 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 90:
-                position[0] += 1
+                if position[0] != 29 and position[0] != 0:
+                    position[0] += 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 270:
-                position[0] -= 1
-            element = Sticks_Wall(position)
-            board.field[position[0]][position[1]] = element
-            Sticks_Wall_image(element, all_stick_walls)
+                if position[0] != 29 and position[0] != 0:
+                    position[0] -= 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
         elif type == 'stone':
             if view == 0:
-                position[1] -= 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] -= 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 180:
-                position[1] += 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] += 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 90:
-                position[0] += 1
+                if position[0] != 29 and position[0] != 0:
+                    position[0] += 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 270:
-                position[0] -= 1
-            element = Stone_Wall(position)
-            board.field[position[0]][position[1]] = element
-            Stone_Wall_image(element, all_stone_walls)
+                if position[0] != 29 and position[0] != 0:
+                    position[0] -= 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
 
 
 # Запуск
@@ -2815,7 +2878,7 @@ if __name__ == '__main__':
     font_object = pygame.font.Font(None, 25)
     font_object2 = pygame.font.Font(None, 25)
 
-    text_hp = font_object.render(f'{hero.get_hp()}', True, ((162, 32, 32)))
+    text_hp = font_object.render(f'{hero.get_hp()}', True, (162, 32, 32))
     text_hp_rect = text_hp.get_rect()
     text_hp_rect.x = 20
     text_hp_rect.y = 2
@@ -2854,7 +2917,7 @@ if __name__ == '__main__':
             running = False
         now_time = datetime.datetime.now().time()
         if start_time.hour == now_time.hour:
-            if start_time.second + 30 == now_time.second or\
+            if start_time.second + 30 == now_time.second or \
                     start_time.second - 30 == now_time.second:
                 if hero.get_hunger() > 0:
                     if hero.get_hunger() - 10 >= 0:
@@ -2880,29 +2943,49 @@ if __name__ == '__main__':
             else:
                 start_time.replace(0, start_time.minute, start_time.second)
 
-        text_hp = font_object.render(f'{hero.get_hp()}', True, (162, 32, 32))
+        symb = '—'
+        text_hp = font_object.render(f'{symb * (int(hero.get_hp()) // 10)}', True, (162, 32, 32))
         text_hp_rect = text_hp.get_rect()
         text_hp_rect.x = 20
         text_hp_rect.y = 15
 
-        text_hunger = font_object2.render(f'{hero.get_hunger()}', True, pygame.Color('orange'))
+        text_hp_2 = font_object.render(f'{symb * (int(hero.get_hp()) // 10)}', True, (162, 32, 32))
+        text_hp_rect_2 = text_hp.get_rect()
+        text_hp_rect_2.x = 20
+        text_hp_rect_2.y = 17
+
+        text_hp_3 = font_object.render(f'{symb * (int(hero.get_hp()) // 10)}', True, (162, 32, 32))
+        text_hp_rect_3 = text_hp.get_rect()
+        text_hp_rect_3.x = 20
+        text_hp_rect_3.y = 19
+
+        text_hunger = font_object2.render(f'{symb * (int(hero.get_hunger()) // 10)}', True, pygame.Color('orange'))
         text_hunger_rect = text_hunger.get_rect()
-        text_hunger_rect.x = 100
+        text_hunger_rect.x = 200
         text_hunger_rect.y = 15
+
+        text_hunger_2 = font_object2.render(f'{symb * (int(hero.get_hunger()) // 10)}', True, pygame.Color('orange'))
+        text_hunger_rect_2 = text_hunger.get_rect()
+        text_hunger_rect_2.x = 200
+        text_hunger_rect_2.y = 17
+
+        text_hunger_3 = font_object2.render(f'{symb * (int(hero.get_hunger()) // 10)}', True, pygame.Color('orange'))
+        text_hunger_rect_3 = text_hunger.get_rect()
+        text_hunger_rect_3.x = 200
+        text_hunger_rect_3.y = 19
 
         text_weapon = font_object2.render(f'{hero.get_weapon()[0].upper()}', True, (0, 0, 0))
         text_weapon_rect = text_weapon.get_rect()
-        text_weapon_rect.x = 720
+        text_weapon_rect.x = 700
         text_weapon_rect.y = 13
 
         x = level[level.find('(') + 1:level.find(',')].strip()
         y = level[level.find(',') + 1:level.find(')')].strip()
 
-        text_coords = font_object2.render(f'{hero.position[0] + int(x) * 30} : '
-                                          f'{hero.position[1] + int(y) * 30}',
+        text_coords = font_object2.render(f'x:{hero.position[0] * int(x)}  y:{hero.position[1] * int(y)}',
                                           True, (0, 0, 0))
         text_coords_rect = text_coords.get_rect()
-        text_coords_rect.x = 800
+        text_coords_rect.x = 780
         text_coords_rect.y = 13
 
         if hero.get_hunger() == 0:
@@ -3281,9 +3364,9 @@ if __name__ == '__main__':
                             item = 0
                         if hero.get_weapon()[0] == item and hero.get_weapon()[2] == index:
                             if item == 'stick':
-                                building.build('stick', [hero.position[0] + int(x) * 30,
-                                                         hero.position[1] + int(y) * 30],
-                                               hero.view)
+                                building.build('stick', [hero.position[0],
+                                                         hero.position[1]],
+                                               hero.view, camera)
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
                                 inventory_stones.update('kill')
@@ -3294,8 +3377,8 @@ if __name__ == '__main__':
                                 hero.set_weapon('arm', 2, index)
                                 inventory.draw(0)
                             elif item == 'stone':
-                                building.build('stone', [hero.position[0] + int(x) * 30,
-                                                         hero.position[1] + int(y) * 30], hero.view)
+                                building.build('stone', [hero.position[0],
+                                                         hero.position[1]], hero.view, camera)
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
                                 inventory_stones.update('kill')
@@ -3403,7 +3486,6 @@ if __name__ == '__main__':
                 volume_music(mus, volume)
         if music_time >= 8000:
             volume -= 0.001
-            print(volume)
             volume_music(mus, volume)
             if volume <= 0:
                 stop_music(mus)
@@ -3530,7 +3612,13 @@ if __name__ == '__main__':
             pygame.mouse.set_visible(False)
             arrow_sprite.draw(screen)
         screen.blit(text_hunger, text_hunger_rect)
+        screen.blit(text_hunger_2, text_hunger_rect_2)
+        screen.blit(text_hunger_3, text_hunger_rect_3)
+
         screen.blit(text_hp, text_hp_rect)
+        screen.blit(text_hp_2, text_hp_rect_2)
+        screen.blit(text_hp_3, text_hp_rect_3)
+
         screen.blit(text_weapon, text_weapon_rect)
         screen.blit(text_coords, text_coords_rect)
         pygame.display.flip()
