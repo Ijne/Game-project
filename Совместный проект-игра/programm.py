@@ -346,6 +346,8 @@ def reload_level(new_level):
         all_honey.update(False, None)
         all_mushrooms.update(False, None)
         all_berries.update(False, None)
+        all_stick_walls.update(False, None)
+        all_stone_walls.update(False, None)
 
         d_butterfly_sprite.update(False, None)
 
@@ -408,6 +410,14 @@ def reload_level(new_level):
                     element = Berries((x, y))
                     board.field[x][y] = element
                     Berries_image(element, all_berries)
+                elif board.field[x][y] == '$':
+                    element = Sticks_Wall((x, y))
+                    board.field[x][y] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                elif board.field[x][y] == '#':
+                    element = Stone_Wall((x, y))
+                    board.field[x][y] = element
+                    Stone_Wall_image(element, all_stone_walls)
 
                 elif board.field[x][y] == '1':
                     element = NPS_1((x, y))
@@ -467,6 +477,10 @@ def reload_level(new_level):
         for sprite in all_mushrooms:
             camera.apply(sprite)
         for sprite in all_berries:
+            camera.apply(sprite)
+        for sprite in all_stick_walls:
+            camera.apply(sprite)
+        for sprite in all_stone_walls:
             camera.apply(sprite)
 
         for sprite in npc_1_sprite:
@@ -531,6 +545,10 @@ def update_level(level):
                 s += 'M'
             elif type(board.field[x][y]) == Berries:
                 s += 'B'
+            elif type(board.field[x][y]) == Sticks_Wall:
+                s += '$'
+            elif type(board.field[x][y]) == Stone_Wall:
+                s += '#'
             elif type(board.field[x][y]) == Hero:
                 s += '0'
 
@@ -747,6 +765,8 @@ class Creator:
             # Отрисовка объектов
             all_dark_grass.draw(screen)
             all_blue_fire.draw(screen)
+            all_stick_walls.draw(screen)
+            all_stone_walls.draw(screen)
 
             hero_sprite.draw(screen)
 
@@ -867,6 +887,14 @@ class D_rain(pygame.sprite.Sprite):
                     self.image = D_rain.blob
                     self.mask = pygame.mask.from_surface(self.image)
             for sprite in all_brown_stones:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_stick_walls:
+                if pygame.sprite.collide_mask(self, sprite):
+                    self.image = D_rain.blob
+                    self.mask = pygame.mask.from_surface(self.image)
+            for sprite in all_stone_walls:
                 if pygame.sprite.collide_mask(self, sprite):
                     self.image = D_rain.blob
                     self.mask = pygame.mask.from_surface(self.image)
@@ -1277,6 +1305,89 @@ class Berries:
         return self.hp
 
 
+class Sticks_Wall_image(pygame.sprite.Sprite):
+    image = load_image('stick_wall.png')
+
+    def __init__(self, sticks_wall, *group):
+        super().__init__(*group)
+        self.image = Sticks_Wall_image.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = sticks_wall.position[0] * board.cell_size + board.left
+        self.rect.y = sticks_wall.position[1] * board.cell_size + board.top
+        print(sticks_wall.position, self.rect.x, self.rect.y)
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Выглядят надёжно...', '',
+                                    '                                    Вы"']
+                    self.kill()
+
+
+class Sticks_Wall:
+    hp = 8
+
+    def __init__(self, position):
+        self.food = 30
+        self.hp = 8
+        self.position = position
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
+
+
+class Stone_Wall_image(pygame.sprite.Sprite):
+    image = load_image('stone-wall.png')
+
+    def __init__(self, stone_wall, *group):
+        super().__init__(*group)
+        self.image = Stone_Wall_image.image
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = stone_wall.position[0] * board.cell_size + board.left
+        self.rect.y = stone_wall.position[1] * board.cell_size + board.top
+
+    def update(self, arg, position):
+        global message_text
+        if not arg:
+            self.kill()
+        else:
+            if self.rect.x > 800 or self.rect.x < 40 or self.rect.y > 800 or self.rect.y < 40:
+                if self.rect.collidepoint(position):
+                    self.kill()
+            if arg and self.rect.collidepoint(position):
+                if arg == 'kill':
+                    message_text = ['"Выглядят надёжно...', '',
+                                    '                                    Вы"']
+                    self.kill()
+
+
+class Stone_Wall:
+    hp = 10
+
+    def __init__(self, position):
+        self.food = 30
+        self.hp = 10
+        self.position = position
+
+    def set_hp(self, hp):
+        self.hp = hp
+
+    def get_hp(self):
+        return self.hp
+
+
 # Классы героя
 class Hero_image(pygame.sprite.Sprite):
     image_90 = load_image('hero_90.png')
@@ -1400,6 +1511,8 @@ class Hero:
                         all_honey.draw(screen)
                         all_mushrooms.draw(screen)
                         all_berries.draw(screen)
+                        all_stick_walls.draw(screen)
+                        all_stone_walls.draw(screen)
 
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
@@ -1456,6 +1569,8 @@ class Hero:
                         all_honey.draw(screen)
                         all_mushrooms.draw(screen)
                         all_berries.draw(screen)
+                        all_stick_walls.draw(screen)
+                        all_stone_walls.draw(screen)
 
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
@@ -1512,6 +1627,8 @@ class Hero:
                         all_honey.draw(screen)
                         all_mushrooms.draw(screen)
                         all_berries.draw(screen)
+                        all_stick_walls.draw(screen)
+                        all_stone_walls.draw(screen)
 
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
@@ -1568,6 +1685,8 @@ class Hero:
                         all_honey.draw(screen)
                         all_mushrooms.draw(screen)
                         all_berries.draw(screen)
+                        all_stick_walls.draw(screen)
+                        all_stone_walls.draw(screen)
 
                         hero_sprite.draw(screen)
                         npc_1_sprite.draw(screen)
@@ -1643,6 +1762,8 @@ class Hero:
                             all_honey.update('kill', rect_position)
                             all_mushrooms.update('kill', rect_position)
                             all_berries.update('kill', rect_position)
+                            all_stick_walls.update('kill', rect_position)
+                            all_stone_walls.update('kill', rect_position)
 
                             npc_stick_sprite.update('kill', rect_position)
                             umbrella_sprite.update('kill', rect_position)
@@ -1798,6 +1919,8 @@ class NPS_1:
             all_honey.draw(screen)
             hero_sprite.draw(screen)
             npc_1_sprite.draw(screen)
+            all_stick_walls.draw(screen)
+            all_stone_walls.draw(screen)
             inventory_arm.draw(screen)
             inventory_sticks.draw(screen)
             inventory_stones.draw(screen)
@@ -1882,9 +2005,10 @@ class NPS_2:
     def __init__(self, position):
         self.position = position
         self.name = 'Незнакомка'
-        self.questions_1 = [('-Прошу помоги', '-Прошу помоги'), ('-Так что, ты поможешь?', '-Поможешь мне?'),
-                            ('-Я поделюсь запасами', '-У меня есть ягоды'), ('-Принеси мне мой зонт',
-                                                                             '-Прошу, найди мой зонт')]
+        self.questions_1 = [('-Прошу помоги', '-Прошу помоги'), ('-Так что, ты поможешь?',
+                                                                 '-Поможешь мне?'),
+                            ('-Я поделюсь запасами', '-У меня есть ягоды'),
+                            ('-Принеси мне мой зонт', '-Прошу, найди мой зонт')]
 
         self.hero_answers_1 = [('E - Что случилось?', 'F - Кто ты?'), ('E - Как же я могу отказать',
                                                                        'F - Мне нужна награда'),
@@ -1964,6 +2088,10 @@ class NPS_2:
             all_mushrooms.draw(screen)
             all_berries.draw(screen)
             hero_sprite.draw(screen)
+
+            all_stick_walls.draw(screen)
+            all_stone_walls.draw(screen)
+
             inventory_arm.draw(screen)
             inventory_sticks.draw(screen)
             inventory_stones.draw(screen)
@@ -2398,8 +2526,35 @@ class Building:
     def __init__(self):
         pass
 
-    def build(self):
-        pass
+    def build(self, type, position, view):
+        global all_stick_walls, board
+
+        if type == 'stick':
+            if view == 0:
+                position[1] -= 1
+            elif view == 180:
+                position[1] += 1
+            elif view == 90:
+                position[0] += 1
+            elif view == 270:
+                position[0] -= 1
+            element = Sticks_Wall(position)
+            board.field[position[0]][position[1]] = element
+            Sticks_Wall_image(element, all_stick_walls)
+            all_stick_walls.update(False, None)
+            all_stone_walls.update(False, None)
+        elif type == 'stone':
+            if view == 0:
+                position[1] -= 1
+            elif view == 180:
+                position[1] += 1
+            elif view == 90:
+                position[0] += 1
+            elif view == 180:
+                position[0] -= 1
+            element = Stone_Wall(position)
+            board.field[position[0]][position[1]] = element
+            Stone_Wall_image(element, all_stick_walls)
 
 
 # Запуск
@@ -2500,6 +2655,9 @@ if __name__ == '__main__':
     font = pygame.font.Font(None, 25)
     text_coord = (910, 670)
 
+    # Класс строительства
+    building = Building()
+
     # Стартовые инструменты
     inventory = Inventory()
     arr = cur.execute("""SELECT * FROM inventory""").fetchall()
@@ -2557,6 +2715,14 @@ if __name__ == '__main__':
                 element = Berries((x, y))
                 board.field[x][y] = element
                 Berries_image(element, all_berries)
+            elif board.field[x][y] == '$':
+                element = Sticks_Wall((x, y))
+                board.field[x][y] = element
+                Sticks_Wall_image(element, all_stick_walls)
+            elif board.field[x][y] == '#':
+                element = Stone_Wall((x, y))
+                board.field[x][y] = element
+                Stone_Wall_image(element, all_stone_walls)
 
             elif board.field[x][y] == '1':
                 element = NPS_1((x, y))
@@ -2623,6 +2789,10 @@ if __name__ == '__main__':
         camera.apply(sprite)
     for sprite in creator_sprite:
         camera.apply(sprite)
+    for sprite in all_stick_walls:
+        camera.apply(sprite)
+    for sprite in all_stone_walls:
+        camera.apply(sprite)
 
     for sprite in npc_stick_sprite:
         camera.apply(sprite)
@@ -2677,6 +2847,8 @@ if __name__ == '__main__':
     honey_hp = 4
     mushroom_hp = 2
     berries_hp = 2
+    stick_walls_hp = 8
+    stone_walls_hp = 10
 
     # Непосредственно запуск
     running = True
@@ -2834,6 +3006,8 @@ if __name__ == '__main__':
                             all_honey.update(False, None)
                             all_mushrooms.update(False, None)
                             all_berries.update(False, None)
+                            all_stick_walls.update(False, None)
+                            all_stone_walls.update(False, None)
 
                             npc_1_sprite.update(False, None)
                             npc_2_sprite.update(False, None)
@@ -2889,6 +3063,14 @@ if __name__ == '__main__':
                                         element = Berries((x, y))
                                         board.field[x][y] = element
                                         Berries_image(element, all_berries)
+                                    elif type(board.field[x][y]) == Sticks_Wall:
+                                        element = Sticks_Wall((x, y))
+                                        board.field[x][y] = element
+                                        Sticks_Wall_image(element, all_stick_walls)
+                                    elif type(board.field[x][y]) == Stone_Wall:
+                                        element = Stone_Wall((x, y))
+                                        board.field[x][y] = element
+                                        Stone_Wall_image(element, all_stone_walls)
 
                                     elif type(board.field[x][y]) == NPS_1:
                                         element = NPS_1((x, y))
@@ -2936,6 +3118,10 @@ if __name__ == '__main__':
                             for sprite in all_mushrooms:
                                 camera.apply(sprite)
                             for sprite in all_berries:
+                                camera.apply(sprite)
+                            for sprite in all_stick_walls:
+                                camera.apply(sprite)
+                            for sprite in all_stone_walls:
                                 camera.apply(sprite)
 
                             for sprite in npc_1_sprite:
@@ -3035,7 +3221,13 @@ if __name__ == '__main__':
                                         view.get_cell(event.pos)[1]]) == Mushroom or \
                                 type(
                                     view.field[view.get_cell(event.pos)[0]][
-                                        view.get_cell(event.pos)[1]]) == Berries:
+                                        view.get_cell(event.pos)[1]]) == Berries or \
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Sticks_Wall or \
+                                type(
+                                    view.field[view.get_cell(event.pos)[0]][
+                                        view.get_cell(event.pos)[1]]) == Stone_Wall:
                             if len(inventory.get_inventory()) < 90:
                                 object = type(
                                     view.field[view.get_cell(event.pos)[0]][
@@ -3064,15 +3256,23 @@ if __name__ == '__main__':
                                         object.set_hp(object, mushroom_hp)
                                     elif object == Berries:
                                         object.set_hp(object, berries_hp)
+                                    elif object == Sticks_Wall:
+                                        object.set_hp(object, stick_walls_hp)
+                                    elif object == Stone_Wall:
+                                        object.set_hp(object, stone_walls_hp)
                         elif type(view.field[view.get_cell(event.pos)[0]][
                                       view.get_cell(event.pos)[1]]) == npc_stick or \
                                 type(view.field[view.get_cell(event.pos)[0]][
                                          view.get_cell(event.pos)[1]]) == umbrella:
                             hero.take(view.get_board_cell(event.pos), event.pos)
-                        elif type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_1 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == NPS_2 or \
-                                type(view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]]) == Creator:
-                            view.field[view.get_cell(event.pos)[0]][view.get_cell(event.pos)[1]].start_dialog()
+                        elif type(view.field[view.get_cell(event.pos)[0]][
+                                      view.get_cell(event.pos)[1]]) == NPS_1 or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == NPS_2 or \
+                                type(view.field[view.get_cell(event.pos)[0]][
+                                         view.get_cell(event.pos)[1]]) == Creator:
+                            view.field[view.get_cell(event.pos)[0]][
+                                view.get_cell(event.pos)[1]].start_dialog()
                         elif type(view.field[view.get_cell(event.pos)[0]][
                                       view.get_cell(event.pos)[1]]) == NPS_1 or \
                                 type(view.field[view.get_cell(event.pos)[0]][
@@ -3084,7 +3284,7 @@ if __name__ == '__main__':
                             index = inventory.get_cell((event.pos[0] + 12, event.pos[1] + 6))
                             item = inventory.get_inventory()[index]
                         except Exception:
-                            pass
+                            item = 0
                         if item == 'arm':
                             hero.set_weapon('arm', 2, index)
                         elif item == 'stick':
@@ -3101,10 +3301,16 @@ if __name__ == '__main__':
                             hero.set_weapon('berries', 0, index)
                 elif event.button == 3:
                     if event.pos[0] > 880 and event.pos[1] <= 640:
-                        index = inventory.get_cell((event.pos[0] + 12, event.pos[1] + 6))
-                        item = inventory.get_inventory()[index]
+                        try:
+                            index = inventory.get_cell((event.pos[0] + 12, event.pos[1] + 6))
+                            item = inventory.get_inventory()[index]
+                        except Exception:
+                            item = 0
                         if hero.get_weapon()[0] == item and hero.get_weapon()[2] == index:
                             if item == 'stick':
+                                building.build('stick', [hero.position[0] + int(x) * 30,
+                                                         hero.position[1] + int(y) * 30],
+                                               hero.view)
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
                                 inventory_stones.update('kill')
@@ -3115,6 +3321,8 @@ if __name__ == '__main__':
                                 hero.set_weapon('arm', 2, index)
                                 inventory.draw(0)
                             elif item == 'stone':
+                                building.build('stone', [hero.position[0] + int(x) * 30,
+                                                         hero.position[1] + int(y) * 30], hero.view)
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
                                 inventory_stones.update('kill')
@@ -3257,6 +3465,10 @@ if __name__ == '__main__':
             all_mushrooms.update(True, (sprite.rect.x, sprite.rect.y))
         for sprite in all_berries:
             all_berries.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_stick_walls:
+            all_stick_walls.update(True, (sprite.rect.x, sprite.rect.y))
+        for sprite in all_stone_walls:
+            all_stone_walls.update(True, (sprite.rect.x, sprite.rect.y))
 
         for sprite in npc_1_sprite:
             npc_1_sprite.update(True, (sprite.rect.x, sprite.rect.y))
@@ -3293,6 +3505,8 @@ if __name__ == '__main__':
         all_honey.draw(screen)
         all_mushrooms.draw(screen)
         all_berries.draw(screen)
+        all_stick_walls.draw(screen)
+        all_stone_walls.draw(screen)
 
         hero_sprite.draw(screen)
         npc_1_sprite.draw(screen)
