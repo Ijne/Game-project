@@ -2715,15 +2715,36 @@ if __name__ == '__main__':
             else:
                 start_time.replace(0, start_time.minute, start_time.second)
 
-        text_hp = font_object.render(f'{hero.get_hp()}', True, (162, 32, 32))
+        symb = '—'
+        text_hp = font_object.render(f'{symb * (int(hero.get_hp()) // 10)}', True, (162, 32, 32))
         text_hp_rect = text_hp.get_rect()
         text_hp_rect.x = 20
         text_hp_rect.y = 15
 
-        text_hunger = font_object2.render(f'{hero.get_hunger()}', True, pygame.Color('orange'))
+        text_hp_2 = font_object.render(f'{symb * (int(hero.get_hp()) // 10)}', True, (162, 32, 32))
+        text_hp_rect_2 = text_hp.get_rect()
+        text_hp_rect_2.x = 20
+        text_hp_rect_2.y = 17
+
+        text_hp_3 = font_object.render(f'{symb * (int(hero.get_hp()) // 10)}', True, (162, 32, 32))
+        text_hp_rect_3 = text_hp.get_rect()
+        text_hp_rect_3.x = 20
+        text_hp_rect_3.y = 19
+
+        text_hunger = font_object2.render(f'{symb * (int(hero.get_hunger()) // 10)}', True, pygame.Color('orange'))
         text_hunger_rect = text_hunger.get_rect()
-        text_hunger_rect.x = 100
+        text_hunger_rect.x = 200
         text_hunger_rect.y = 15
+
+        text_hunger_2 = font_object2.render(f'{symb * (int(hero.get_hunger()) // 10)}', True, pygame.Color('orange'))
+        text_hunger_rect_2 = text_hunger.get_rect()
+        text_hunger_rect_2.x = 200
+        text_hunger_rect_2.y = 17
+
+        text_hunger_3 = font_object2.render(f'{symb * (int(hero.get_hunger()) // 10)}', True, pygame.Color('orange'))
+        text_hunger_rect_3 = text_hunger.get_rect()
+        text_hunger_rect_3.x = 200
+        text_hunger_rect_3.y = 19
 
         text_weapon = font_object2.render(f'{hero.get_weapon()[0].upper()}', True, (0, 0, 0))
         text_weapon_rect = text_weapon.get_rect()
@@ -2733,7 +2754,7 @@ if __name__ == '__main__':
         x = level[level.find('(') + 1:level.find(',')].strip()
         y = level[level.find(',') + 1:level.find(')')].strip()
 
-        text_coords = font_object2.render(f'x:{hero.position[0] + int(x) * 30}  y:{hero.position[1] + int(y) * 30}',
+        text_coords = font_object2.render(f'x:{hero.position[0] * int(x)}  y:{hero.position[1] * int(y)}',
                                           True, (0, 0, 0))
         text_coords_rect = text_coords.get_rect()
         text_coords_rect.x = 780
@@ -3322,7 +3343,13 @@ if __name__ == '__main__':
             pygame.mouse.set_visible(False)
             arrow_sprite.draw(screen)
         screen.blit(text_hunger, text_hunger_rect)
+        screen.blit(text_hunger_2, text_hunger_rect_2)
+        screen.blit(text_hunger_3, text_hunger_rect_3)
+
         screen.blit(text_hp, text_hp_rect)
+        screen.blit(text_hp_2, text_hp_rect_2)
+        screen.blit(text_hp_3, text_hp_rect_3)
+
         screen.blit(text_weapon, text_weapon_rect)
         screen.blit(text_coords, text_coords_rect)
         pygame.display.flip()
