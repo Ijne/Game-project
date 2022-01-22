@@ -1315,7 +1315,6 @@ class Sticks_Wall_image(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = sticks_wall.position[0] * board.cell_size + board.left
         self.rect.y = sticks_wall.position[1] * board.cell_size + board.top
-        print(sticks_wall.position, self.rect.x, self.rect.y)
 
     def update(self, arg, position):
         global message_text
@@ -2526,35 +2525,91 @@ class Building:
     def __init__(self):
         pass
 
-    def build(self, type, position, view):
+    def build(self, type, position, view, camera):
         global all_stick_walls, board
 
         if type == 'stick':
             if view == 0:
-                position[1] -= 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] -= 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 180:
-                position[1] += 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] += 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 90:
-                position[0] += 1
+                if position[0] != 29 and position[0] != 0:
+                    position[0] += 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 270:
-                position[0] -= 1
-            element = Sticks_Wall(position)
-            board.field[position[0]][position[1]] = element
-            Sticks_Wall_image(element, all_stick_walls)
-            all_stick_walls.update(False, None)
-            all_stone_walls.update(False, None)
+                if position[0] != 29 and position[0] != 0:
+                    position[0] -= 1
+                    element = Sticks_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Sticks_Wall_image(element, all_stick_walls)
+                    for sprite in all_stick_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
         elif type == 'stone':
             if view == 0:
-                position[1] -= 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] -= 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 180:
-                position[1] += 1
+                if position[1] != 29 and position[1] != 0:
+                    position[1] += 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
             elif view == 90:
-                position[0] += 1
-            elif view == 180:
-                position[0] -= 1
-            element = Stone_Wall(position)
-            board.field[position[0]][position[1]] = element
-            Stone_Wall_image(element, all_stick_walls)
+                if position[0] != 29 and position[0] != 0:
+                    position[0] += 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
+            elif view == 270:
+                if position[0] != 29 and position[0] != 0:
+                    position[0] -= 1
+                    element = Stone_Wall(position)
+                    board.field[position[0]][position[1]] = element
+                    Stone_Wall_image(element, all_stone_walls)
+                    for sprite in all_stone_walls:
+                        if sprite.rect.collidepoint((position[0] * board.cell_size + board.left,
+                                                     position[1] * board.cell_size + board.top)):
+                            camera.apply(sprite)
 
 
 # Запуск
@@ -2822,7 +2877,7 @@ if __name__ == '__main__':
     font_object = pygame.font.Font(None, 25)
     font_object2 = pygame.font.Font(None, 25)
 
-    text_hp = font_object.render(f'{hero.get_hp()}', True, ((162, 32, 32)))
+    text_hp = font_object.render(f'{hero.get_hp()}', True, (162, 32, 32))
     text_hp_rect = text_hp.get_rect()
     text_hp_rect.x = 20
     text_hp_rect.y = 2
@@ -3308,9 +3363,9 @@ if __name__ == '__main__':
                             item = 0
                         if hero.get_weapon()[0] == item and hero.get_weapon()[2] == index:
                             if item == 'stick':
-                                building.build('stick', [hero.position[0] + int(x) * 30,
-                                                         hero.position[1] + int(y) * 30],
-                                               hero.view)
+                                building.build('stick', [hero.position[0],
+                                                         hero.position[1]],
+                                               hero.view, camera)
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
                                 inventory_stones.update('kill')
@@ -3321,8 +3376,8 @@ if __name__ == '__main__':
                                 hero.set_weapon('arm', 2, index)
                                 inventory.draw(0)
                             elif item == 'stone':
-                                building.build('stone', [hero.position[0] + int(x) * 30,
-                                                         hero.position[1] + int(y) * 30], hero.view)
+                                building.build('stone', [hero.position[0],
+                                                         hero.position[1]], hero.view, camera)
                                 inventory.delete_thing(index)
                                 inventory_sticks.update('kill')
                                 inventory_stones.update('kill')
@@ -3430,7 +3485,6 @@ if __name__ == '__main__':
                 volume_music(mus, volume)
         if music_time >= 8000:
             volume -= 0.001
-            print(volume)
             volume_music(mus, volume)
             if volume <= 0:
                 stop_music(mus)
