@@ -1301,7 +1301,7 @@ class Berries:
 
 
 class Sticks_Wall_image(pygame.sprite.Sprite):
-    image = load_image('stick_wall.png')
+    image = pygame.transform.scale(load_image('stick_wall.png'), (40, 40))
 
     def __init__(self, sticks_wall, *group):
         super().__init__(*group)
@@ -2536,8 +2536,6 @@ class Building:
             element = Sticks_Wall(position)
             board.field[position[0]][position[1]] = element
             Sticks_Wall_image(element, all_stick_walls)
-            all_stick_walls.update(False, None)
-            all_stone_walls.update(False, None)
         elif type == 'stone':
             if view == 0:
                 position[1] -= 1
@@ -2545,11 +2543,11 @@ class Building:
                 position[1] += 1
             elif view == 90:
                 position[0] += 1
-            elif view == 180:
+            elif view == 270:
                 position[0] -= 1
             element = Stone_Wall(position)
             board.field[position[0]][position[1]] = element
-            Stone_Wall_image(element, all_stick_walls)
+            Stone_Wall_image(element, all_stone_walls)
 
 
 # Запуск
