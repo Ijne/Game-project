@@ -50,8 +50,7 @@ A solo pixel-art survival adventure built in Python using Pygame.
 ## 🖼️ Screenshots
 
 **Gameplay:**  
-![Gameplay 1](image.png)  
-![Gameplay 2](image.png)
+![Gameplay](image.png)  
 
 ## 🏷️ Stickers & Sprites
 
@@ -63,6 +62,7 @@ A solo pixel-art survival adventure built in Python using Pygame.
 ## 💖 Credits
 
 Developed by [Ijne](https://github.com/Ijne).
+             [Nachille1](https://github.com/Nachille1).
 
 ## 📄 License
 
