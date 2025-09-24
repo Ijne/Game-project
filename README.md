@@ -50,15 +50,15 @@ A solo pixel-art survival adventure built in Python using Pygame.
 ## 🖼️ Screenshots
 
 **Gameplay:**  
-![Gameplay 1](pictures/image1)  
-![Gameplay 2](pictures/image2)
+![Gameplay 1](image)  
+![Gameplay 2](image)
 
 ## 🏷️ Stickers & Sprites
 
 **Some sprites:**  
-![Purple umbrella](pictures/image3)  
+![Purple umbrella](umbrella)  
 
-![NPC](pictures/image4)
+![NPC](npc-1)
 
 ## 💖 Credits
 
